@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>The greatest news app ever</title>
+  <!-- Required Stylesheets -->
+  <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+  <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+  
+  </head>
+
+<body>
+  <div id="app">
+
+    <div>
+      <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar-brand href="#">NavBar</b-navbar-brand>
+    
+      </b-navbar>
+    </div>
+
+    <b-container>
+
+      <br/>
+    
+      <b-form-group horizontal :label-cols="4" label="Enter your name">
+        <b-form-input v-model.trim="term"></b-form-input>
+        
+      </b-form-group>
+      <b-button variant="primary" @click="getall(term)">Submit</b-button>
+
+    <div v-for="result in results6" class="mt-5">
+      <b-img center v-if="result.thumbnail" v-bind:src="result.thumbnail.value" style="max-height: 20rem;" alt="Center image"></b-img>
+      <h3 class="text-center mt-4">{{ result.label.value }}</h3>
+      <p class="text-center">{{ result.comment.value }}</p>
+    </div>
+
+    <h2 class="text-center mt-5">関連ギャラリー</h2>
+
+    <b-row class="mt-4">
+      <b-col cols="2" v-for="result in results3">
+        <b-img center @click="getall(result.plabel.value)" v-if="result.pthumbnail" v-bind:src="result.pthumbnail.value" style="max-height: 20rem; max-width: 100%;" alt="Center image">
+        </b-img>
+        <h3 class="mt-4" @click="getall(result.plabel.value)">{{ result.plabel.value }}</h3>
+        <!-- <p>{{ result.pcomment.value }}</p> -->
+      </b-col>
+    </b-row>
+
+    <hr/>
+
+
+    <!-- ./index.html -->
+    <div class="columns medium-3" v-for="result in results">
+      <div class="card">
+        <div class="card-divider">
+          {{ result.label.value }}
+        </div>
+        <div class="card-section">
+          <img v-if="result.thumbnail" v-bind:src="result.thumbnail.value" />
+          <br />
+          {{ result.cho.value }}
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+   
+
+    <hr/>
+
+    <h3 class="text-center">関連する展示会</h3>
+    
+    <div class="columns medium-3" v-for="result in results4">
+      <div class="card">
+        <div class="card-divider">
+          {{ result.label.value }}
+        </div>
+        <div class="card-section">
+          <img v-if="result.pthumbnail" v-bind:src="result.pthumbnail.value" />
+        </div>
+      </div>
+    </div>
+    
+    <hr />
+
+    <h3 class="text-center">関連する人物の作品</h3>
+
+    <div class="columns medium-3" v-for="result in results2">
+      <div class="card">
+        <div class="card-divider">
+          {{ result.label.value }}
+        </div>
+        <div class="card-section">
+          <img v-if="result.thumbnail" v-bind:src="result.thumbnail.value" />
+          <br />
+          {{ result.plabel.value }}
+          <br/>
+          {{ result.cho.value }}
+        </div>
+      </div>
+    </div>
+
+
+    </b-container>
+  </div>
+
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- Required scripts -->
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
