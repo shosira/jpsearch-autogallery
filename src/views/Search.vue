@@ -29,30 +29,7 @@
             </v-card>
         </v-flex>
     
-    
-    
-    
-        <v-container grid-list-md text-xs-center v-show="results_related.length > 0">
-            <br/><br/><br/>
-            <h2>関連ギャラリー<br/><small><a target="_blank" :href=link_related>すべてを見る</a></small></h2>
-            <br/>
-            <v-layout row wrap>
-                <v-flex xs12 sm2 v-for="result in results_related">
-                    <v-card>
-                        <a @click="getAll(result.plabel.value)">
-                            <v-img v-if="result.pthumbnail" v-bind:src="result.pthumbnail.value" style="max-height: 20rem;"></v-img>
-                        </a>
-                        <v-card-title primary-title>
-                            <div>
-                                <h3 class="headline mb-0">
-                                    <router-link :to="{ path: '/search', query: { q: result.plabel.value }}">{{ result.plabel.value }}</router-link>
-                                </h3>
-                            </div>
-                        </v-card-title>
-                    </v-card>
-                </v-flex>
-            </v-layout>
-        </v-container>
+        <div class="my-5"></div>
     
         <v-container grid-list-md text-xs-center v-show="results_items.length > 0">
             <h2 class="my-5">作品で知る<br/><small><a target="_blank" :href=link_items>すべてを見る</a></small></h2>
@@ -75,6 +52,29 @@
                 <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
             </div>
         </v-container>
+
+        <div class="my-5"></div>
+    
+        <v-container grid-list-md text-xs-center v-show="results_related.length > 0">
+            <h2 class="my-5">関連ギャラリー<br/><small><a target="_blank" :href=link_related>すべてを見る</a></small></h2>
+            <v-layout row wrap>
+                <v-flex xs12 sm2 v-for="result in results_related">
+                    <v-card>
+                        <a @click="getAll(result.plabel.value)">
+                            <v-img v-if="result.pthumbnail" v-bind:src="result.pthumbnail.value" style="max-height: 20rem;"></v-img>
+                        </a>
+                        <v-card-title primary-title>
+                            <div>
+                                <h3 class="headline mb-0">
+                                    <router-link :to="{ path: '/search', query: { q: result.plabel.value }}">{{ result.plabel.value }}</router-link>
+                                </h3>
+                            </div>
+                        </v-card-title>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+            <iframe :src="iframe_url" width="100%" height="600px" style="border: 0;" scrolling="no" class="mt-5"></iframe>
+        </v-container>    
     
         <div class="my-5"></div>
     
@@ -296,13 +296,15 @@ export default {
         link_items: "",
         //Map
         zoom: 7,
-        center: L.latLng(47.413220, -1.219482),
+        center: L.latLng(35.681489, 139.767136),
         url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         markers: [],
         //chart
         chartData: [],
-        chartOptions: {}
+        chartOptions: {},
+        //iframe
+        iframe_url: ""
     }),
     watch: {
         '$route' (to, from) {
@@ -325,6 +327,7 @@ export default {
             this.$router.push({ query: query })
         },
         getAll(term) {
+            this.iframe_url = "timeline.html?q=" + term
             this.term = term;
             this.getTargetAgent(term);
             this.getItems(term);
@@ -442,7 +445,7 @@ export default {
                         long += Number(obj.long.value)
                     }
 
-                    this.center = L.latLng(lat / this.results_event.length, long / this.results_event.length)
+                    this.center = L.latLng(lat / results_event.length, long / results_event.length)
                 }).catch(error => { console.log(error); });
         },
         showChart(term) {

@@ -6,8 +6,8 @@
                 <v-layout column align-center justify-center class="white--text">
                     <h1 class="white--text mb-2 display-1 text-xs-center">電子展示プロトタイプ</h1>
                     <div class="subheading mb-3 text-xs-center">Japan Searchの活用例</div>
-                    <v-btn class="blue lighten-2 mt-5" dark large href="#/search?q=歌川広重">
-                        「歌川広重」を見てみる
+                    <v-btn class="blue lighten-2 mt-5" dark large href="#/search?q=葛飾北斎">
+                        「葛飾北斎」を見てみる
                     </v-btn>
                 </v-layout>
             </v-parallax>
@@ -22,8 +22,8 @@
                         <div class="text-xs-center">
                             <h2 class="headline">メニュー</h2>
                             <span class="subheading">
-                    いずれも開発中のものです。
-                  </span>
+                        いずれも開発中のものです。
+                      </span>
                         </div>
                     </v-flex>
                     <v-flex xs12>
