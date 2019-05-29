@@ -75,7 +75,8 @@
       })
       // Ajaxリクエストが失敗した時発動
       .fail((data) => {
-        alert(data.statusText);
+        //alert(data.statusText);
+        console.log(data.statusText)
       })
       // Ajaxリクエストが成功・失敗どちらでも発動
       .always((data) => {

@@ -52,7 +52,7 @@
                 <GChart type="ColumnChart" :data="chartData" :options="chartOptions" />
             </div>
         </v-container>
-    
+
         <div class="my-5"></div>
     
         <v-container grid-list-md text-xs-center v-show="results_related.length > 0">
@@ -73,8 +73,8 @@
                     </v-card>
                 </v-flex>
             </v-layout>
-            <iframe :src="iframe_url" width="100%" height="600px" style="border: 0; display: none;" scrolling="no" class="mt-5"></iframe>
-        </v-container>
+            <iframe :src="iframe_url" width="100%" height="600px" style="border: 0;" scrolling="no" class="mt-5"></iframe>
+        </v-container>    
     
         <div class="my-5"></div>
     
@@ -138,6 +138,19 @@
 </template>
 
 <script>
+function buildTargetAgentUrl(term) {
+    let query = "PREFIX schema: <http://schema.org/> \n";
+    query += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n";
+    query += "SELECT distinct * WHERE { \n";
+    query += "?s rdfs:label ?label. \n";
+    query += "filter (?s = <http://ja.dbpedia.org/resource/" + term + ">) . \n";
+    query += "?s rdfs:comment ?comment. \n";
+    query += "OPTIONAL {?s <http://dbpedia.org/ontology/thumbnail> ?thumbnail} \n";
+    query += "} \n";
+    query += "LIMIT 1 \n";
+    return query
+}
+
 function buildItemsUrl(term) {
     let query = "PREFIX schema: <http://schema.org/> \n";
     query += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n";
@@ -148,6 +161,44 @@ function buildItemsUrl(term) {
     query += "OPTIONAL {?cho schema:image ?thumbnail} \n";
     query += "} \n";
     query += "LIMIT 12 \n";
+    return query
+}
+
+function buildRelatedAgentsUrl(term) {
+    let query = "";
+
+    query += "select distinct ?plabel ?pthumbnail ?pcomment where { \n";
+    query += "    <http://ja.dbpedia.org/resource/" + term + "> <http://dbpedia.org/ontology/wikiPageWikiLink> ?o .   \n";
+    query += "?o rdfs:label ?plabel.  \n";
+    query += "?o rdfs:comment ?pcomment.  \n";
+    query += "?o <http://dbpedia.org/ontology/thumbnail> ?pthumbnail.  \n";
+    query += "?o <http://www.w3.org/2002/07/owl#sameAs> ?e \n";
+    query += "           FILTER(strstarts(str(?e), \"http://www.wikidata.org/\")) \n";
+    //query += "   ?o rdf:type <http://schema.org/Person> .  \n";
+    query += "   SERVICE <https://jpsearch.go.jp/rdf/sparql> { \n";
+    query += "  ?cho rdfs:label ?label; \n";
+    query += "   owl:sameAs? ?e.  \n";
+    //query += "   ?e rdf:type <https://jpsearch.go.jp/term/type/Agent> .  \n";
+    query += "   ?cho schema:image ?thumbnail \n";
+    query += " } \n";
+    query += "} LIMIT 12 \n";
+    return query
+}
+
+function buildRelatedPeopleUrl(term) {
+    let query = "";
+
+    query += "select distinct ?cho ?label ?thumbnail ?plabel where { \n";
+    query += "    <http://ja.dbpedia.org/resource/" + term + "> <http://dbpedia.org/ontology/wikiPageWikiLink> ?o .   \n";
+    query += "?o rdfs:label ?plabel.  \n";
+    query += "?o <http://www.w3.org/2002/07/owl#sameAs> ?e \n";
+    query += "           FILTER(strstarts(str(?e), \"http://www.wikidata.org/\")) \n";
+    query += "   SERVICE <https://jpsearch.go.jp/rdf/sparql> { \n";
+    query += "  ?cho rdfs:label ?label; \n";
+    query += "   schema:creator/owl:sameAs? ?e.  \n";
+    query += "   ?cho schema:image ?thumbnail \n";
+    query += " } \n";
+    query += "} LIMIT 12 \n";
     return query
 }
 
@@ -281,6 +332,7 @@ export default {
             this.getTargetAgent(term);
             this.getItems(term);
             this.getRelatedAgents(term);
+            this.getRelatedPosts(term);
             this.getEventItems(term);
             this.getEuropeanaItems(term);
             this.getDPLAItems(term);
@@ -293,28 +345,9 @@ export default {
                 label: "",
                 comment: ""
             }
+            let query = buildTargetAgentUrl(term);
 
-            let query = "PREFIX schema: <http://schema.org/> \n";
-            query += "SELECT distinct * WHERE { \n";
-            query += "?s rdfs:label ?label. \n";
-            query += "filter (?s = chname:" + term + ") . \n";
-            query += "OPTIONAL {?s schema:description ?comment} \n";
-            query += "OPTIONAL {?s schema:image ?thumbnail} \n";
-            /*
-            query += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n";
-            query += "SELECT distinct * WHERE { \n";
-            query += "?s rdfs:label ?label. \n";
-            query += "FILTER (lang(?label) = 'ja')";
-            query += "?s owl:sameAs ?s2. \n";
-            query += "filter (?s2 = <http://ja.dbpedia.org/resource/" + term + ">) . \n";
-            query += "?s rdfs:comment ?comment. \n";
-            query += "FILTER (lang(?comment) = 'ja')";
-            query += "OPTIONAL {?s <http://dbpedia.org/ontology/thumbnail> ?thumbnail} \n";
-            */
-            query += "} \n";
-            query += "LIMIT 1 \n";
-
-            axios.get("https://jpsearch.go.jp/rdf/sparql?query=" + encodeURIComponent(query) + "&output=json")
+            axios.get("http://ja.dbpedia.org/sparql?query=" + encodeURIComponent(query) + "&output=json")
                 .then(response => {
                     this.result_target = response.data.results.bindings[0]
                 }).catch(error => { console.log(error); });
@@ -332,24 +365,22 @@ export default {
                     this.results_items = response.data.results.bindings
                 }).catch(error => { console.log(error); });
         },
+        getRelatedPosts(term) {
+            this.results2 = [];
+            let query = buildRelatedPeopleUrl(term);
+
+            axios.get("http://ja.dbpedia.org/sparql?query=" + encodeURIComponent(query) + "&output=json")
+                .then(response => {
+                    this.results2 = response.data.results.bindings
+                }).catch(error => { console.log(error); });
+        },
         getRelatedAgents(term) {
             this.results_related = [];
+            let query = buildRelatedAgentsUrl(term);
 
-            let query = "";
+            this.link_related = "http://ja.dbpedia.org/sparql?query=" + encodeURIComponent(query.split("LIMIT ")[0])
 
-            query += "SELECT DISTINCT ?dest ?plabel ?pthumbnail WHERE { \n";
-            query += "	?s jps:agential\n";
-            query += "		[jps:relationType/skos:broader?/rdfs:label \"制作\"; jps:value/owl:sameAs? chname:" + term + " ],\n";
-            query += "		[jps:relationType/skos:broader?/rdfs:label \"制作\"; jps:value ?dest ]\n";
-            query += "	FILTER(?dest != chname:" + term + ")\n";
-            query += "	FILTER(strstarts(str(?dest), \"https://jpsearch.go.jp/entity/chname/\"))\n";
-            query += "  ?dest schema:image ?pthumbnail;\n";
-            query += "      rdfs:label ?plabel\n";
-            query += "} LIMIT 12 \n";
-
-            this.link_related = "https://jpsearch.go.jp/rdf/sparql/easy/?query=" + encodeURIComponent(query.split("LIMIT ")[0])
-
-            axios.get("https://jpsearch.go.jp/rdf/sparql?query=" + encodeURIComponent(query) + "&output=json")
+            axios.get("http://ja.dbpedia.org/sparql?query=" + encodeURIComponent(query) + "&output=json")
                 .then(response => {
                     this.results_related = response.data.results.bindings
                 }).catch(error => { console.log(error); });
