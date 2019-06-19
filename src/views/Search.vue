@@ -73,7 +73,7 @@
                     </v-card>
                 </v-flex>
             </v-layout>
-            <iframe :src="iframe_url" width="100%" height="600px" style="border: 0; display: none;" scrolling="no" class="mt-5"></iframe>
+            <iframe :src="iframe_url" width="100%" height="600px" style="border: 0; display: block;" scrolling="no" class="mt-5"></iframe>
         </v-container>
     
         <div class="my-5"></div>

@@ -2,17 +2,10 @@
 <html lang="ja">
 
 <head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
   <div id="my-timeline" class="py-5"></div>
-
-  <p id="loading" class="text-center">
-    <img src="assets/loading.gif" /><br />
-    <span>Loading timeline ...</span>
-  </p>
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -24,35 +17,37 @@
   <script>
 
     var arg = getParam()
-    var term = arg["q"] != null ? arg["q"] : "葛飾北斎";
+    var term = arg["q"] != null ? arg["q"] : "";
 
     let query = "";
 
-    query += " PREFIX schema: <http://schema.org/> \n";
-    query += " PREFIX chname: <https://jpsearch.go.jp/entity/chname/> \n";
-    query += " PREFIX jps: <https://jpsearch.go.jp/term/property#> \n";
-    query += " select distinct ?plabel ?pthumbnail ?bd ?dd ?pcomment ?e where { \n";
+    query += "select distinct ?plabel ?pthumbnail ?bd ?dd ?pcomment ?e where { \n";
+    query += "    <http://ja.dbpedia.org/resource/" + term + "> <http://dbpedia.org/ontology/wikiPageWikiLink> ?o .   \n";
+    query += "?o rdfs:label ?plabel.  \n";
+    query += "?o rdfs:comment ?pcomment.  \n";
+    query += "?o <http://dbpedia.org/ontology/thumbnail> ?pthumbnail.  \n";
 
-    query += "  SERVICE <https://jpsearch.go.jp/rdf/sparql> {\n";
-    query += "    ?s jps:agential [jps:relationType/skos:broader?/rdfs:label \"制作\"; jps:value ?x ] . \n";
-    query += "    ?x rdfs:label ?xlabel . filter(?xlabel = '" + term + "')\n";
-    query += "    ?s jps:agential [jps:relationType/skos:broader?/rdfs:label \"制作\"; jps:value ?dest ] . \n";
-    query += "    ?dest rdfs:label ?plabel.filter(?plabel != '" + term + "')\n";
-    query += "    ?dest schema:image ?pthumbnail.\n";
-    query += "    FILTER(strstarts(str(?dest), \"https://jpsearch.go.jp/entity/\"))\n";
-    query += "    ?dest owl:sameAs? ?e.\n";
-    query += "    FILTER(strstarts(str(?e), \"http://www.wikidata.org/\"))\n";
-    query += "  }\n";
-    query += "  SERVICE <https://query.wikidata.org/sparql> { \n";
-    query += "    ?e <http://www.wikidata.org/prop/direct/P569> ?bd;  \n";
-    query += "      <http://www.wikidata.org/prop/direct/P570> ?dd;\n";
-    query += "      schema:description ?pcomment.\n";
-    query += "    filter(lang(?pcomment) = \"ja\")\n";
-    query += "  } \n";
+    query += "?o <http://www.w3.org/2002/07/owl#sameAs> ?e \n";
+    query += "           FILTER(strstarts(str(?e), \"http://www.wikidata.org/\")) \n";
+    //query += "   ?o rdf:type <http://schema.org/Person> .  \n";
+
+    query += "   SERVICE <https://query.wikidata.org/sparql> { \n";
+    query += "  ?e <http://www.wikidata.org/prop/direct/P569> ?bd;  \n";
+    query += "  <http://www.wikidata.org/prop/direct/P570> ?dd. \n";
     query += " } \n";
 
+    query += "   SERVICE <https://jpsearch.go.jp/rdf/sparql> { \n";
+    query += "  ?cho rdfs:label ?label; \n";
+    query += "   owl:sameAs? ?e.  \n";
+    //query += "   ?e rdf:type <https://jpsearch.go.jp/term/type/Agent> .  \n";
+    query += "   ?cho schema:image ?thumbnail \n";
+    query += " } \n";
+    query += "} "//LIMIT 12 \n";
+
+    console.log(query)
+
     $.ajax({
-      url: 'https://sparql.dl.itc.u-tokyo.ac.jp',
+      url: 'http://ja.dbpedia.org/sparql?query=',
       type: 'POST',
       data: {
         query: query,
