@@ -2,6 +2,7 @@
 <html lang="ja">
 
 <head>
+  <meta charset="utf-8" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -13,6 +14,8 @@
     <img src="assets/loading.gif" /><br />
     <span>Loading timeline ...</span>
   </p>
+
+  <p id="result" class="text-center container"></p>
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -34,9 +37,9 @@
     query += " select distinct ?plabel ?pthumbnail ?bd ?dd ?pcomment ?e where { \n";
 
     query += "  SERVICE <https://jpsearch.go.jp/rdf/sparql> {\n";
-    query += "    ?s jps:agential [jps:relationType/skos:broader?/rdfs:label \"制作\"; jps:value ?x ] . \n";
+    query += "    ?s jps:agential [ jps:relationType/skos:broader?/rdfs:label '制作'; jps:value ?x ] . \n";
     query += "    ?x rdfs:label ?xlabel . filter(?xlabel = '" + term + "')\n";
-    query += "    ?s jps:agential [jps:relationType/skos:broader?/rdfs:label \"制作\"; jps:value ?dest ] . \n";
+    query += "    ?s jps:agential [jps:relationType/skos:broader?/rdfs:label '制作'; jps:value ?dest ] . \n";
     query += "    ?dest rdfs:label ?plabel.filter(?plabel != '" + term + "')\n";
     query += "    ?dest schema:image ?pthumbnail.\n";
     query += "    FILTER(strstarts(str(?dest), \"https://jpsearch.go.jp/entity/\"))\n";
@@ -50,6 +53,8 @@
     query += "    filter(lang(?pcomment) = \"ja\")\n";
     query += "  } \n";
     query += " } \n";
+
+    console.log(query)
 
     $.ajax({
       url: 'https://sparql.dl.itc.u-tokyo.ac.jp',
@@ -82,6 +87,7 @@
       .fail((data) => {
         //alert(data.statusText);
         console.log(data.statusText)
+        $("#result").append('<div class="alert alert-warning" role="alert">Sorry, something went wrong.</div>')
       })
       // Ajaxリクエストが成功・失敗どちらでも発動
       .always((data) => {

@@ -51,7 +51,7 @@
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
                                             <div class="headline text-xs-center">
-                                                <a href="../vis.html">ネットワーク</a>
+                                                <a href="./vis.html">ネットワーク</a>
                                             </div>
                                         </v-card-title>
                                         <v-card-text>
