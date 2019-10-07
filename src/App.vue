@@ -2,12 +2,15 @@
     <v-app>
         <v-toolbar>
             <v-toolbar-title class="headline">
-                電子展示プロトタイプ
+                JPS自動ギャラリー
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
                 <v-btn flat>
                     <router-link to="/">Home</router-link>
+                </v-btn>
+                <v-btn flat>
+                    <router-link v-bind:to="{path: 'list'}">著者から探す</router-link>
                 </v-btn>
             </v-toolbar-items>
         </v-toolbar>
@@ -21,7 +24,6 @@
     
                 <v-card-actions class="grey darken-3 justify-center my-5">
                     Satoru Nakamura
-                    <!-- （国立国会図書館　次世代システム開発研究室） -->
                 </v-card-actions>
             </v-card>
         </v-footer>

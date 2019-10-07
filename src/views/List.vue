@@ -1,19 +1,14 @@
 <template>
-    <v-container grid-list-md text-xs-center v-show="results.length > 0">
+    <v-container grid-list-md text-xs-center>
         <h2 class="my-5">作品数の多い著者100人</h2>
-        <v-layout row wrap>
-            <v-flex xs12 sm2 v-for="result in results">
+        <v-layout row wrap v-show="results.length > 0">
+            <v-flex xs12 sm2 v-for="(result, index) in results" :key="index">
                 <v-card>
-                    <a>
-                        <v-img v-if="result.thumbnail" v-bind:src="result.thumbnail.value" style="max-height: 20rem;"></v-img>
-                    </a>
+                    <v-img v-if="result.thumbnail" v-bind:src="result.thumbnail.value"/>
                     <v-card-title primary-title>
-                        <div>
-                            <h3 class="headline mb-0">
-                                <router-link v-bind:to="{ path: '/search', query: { q: result.label.value}}">{{result.label.value}}</router-link>
-                                <!-- <router-link v-bind:to="{ name: 'search', params: { id: result.label.value}}">{{result.label.value}}</router-link> -->
-                            </h3>
-                        </div>
+                        <h3 class="headline">
+                            <router-link v-bind:to="{ path: 'search', query: { q: result.label.value}}">{{result.label.value}}</router-link>
+                        </h3>
                     </v-card-title>
                 </v-card>
             </v-flex>
@@ -29,10 +24,10 @@ export default {
         results: []
     }),
     mounted() {
-        this.getAll();
+        this.search();
     },
     methods: {
-        getAll() {
+        search() {
             let query = "";
 
             query += "select distinct count(?s) as ?count ?cho ?label ?thumbnail where { \n";
