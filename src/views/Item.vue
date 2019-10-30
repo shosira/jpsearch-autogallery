@@ -15,22 +15,20 @@ export default {
     ShowItem
   },
   data: () => ({
-    id: "cobas-49911"
+    id: ""
   }),
   watch: {
     $route() {
-      if (this.$route.query.id != "") {
-        this.id = this.$route.query.id;
-      }
+      this.id = this.$route.query.id;
     }
   },
   mounted() {
     let query_id = this.$route.query.id;
-    if (query_id != "" && query_id != null) {
-      this.id = query_id;
-    } else {
-      this.$router.replace({ name: "item", query: { id: this.id } }, () => {}, () => {});
+    if (query_id == "" || query_id == null) {
+      query_id = "dignl-1901899"
     }
+    this.id = query_id
+    this.$router.replace({ name: "item", query: { id: this.id } }, () => {}, () => {});
   }
 };
 </script>

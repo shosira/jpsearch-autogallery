@@ -18,7 +18,7 @@
           </router-link>
           <v-card-title primary-title>
             <h3 class="headline mb-0">
-              <a v-bind:href="result.cho.value">{{ result.label.value }}</a>
+              <router-link v-bind:to="{ name : 'item', query : { id: result.cho.value.split('/data/')[1] }}">{{ result.label.value }}</router-link>
             </h3>
           </v-card-title>
         </v-card>

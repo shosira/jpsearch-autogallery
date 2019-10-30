@@ -2,7 +2,7 @@
   <v-card>
     <v-card-text>
       <h1 class="my-4">
-        {{creator.split("name/")[1]}}の作品&nbsp;
+        {{label}}の作品&nbsp;
         <v-btn text small @click="show_flg = !show_flg">
           <template v-if="show_flg">非表示</template>
           <template v-else>表示</template>
@@ -27,6 +27,7 @@
                 <b>{{obj.label.value}}</b>
               </router-link>
               <p class="my-1">{{obj.p_label.value}}</p>
+              <!-- <p class="my-1">{{obj.creator.value}}</p> -->
             </v-card-text>
           </v-card>
         </v-flex>
@@ -38,7 +39,7 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["id", "creator"],
+  props: ["id", "creator", "label"],
   data: () => ({
     results: [],
     show_flg: false
@@ -46,6 +47,7 @@ export default {
   methods: {
     search() {
       this.show_flg = false;
+      this.results = []
 
       let id = this.id;
       let creator = this.creator;
@@ -54,7 +56,8 @@ export default {
 
       let query = "PREFIX schema: <http://schema.org/> \n";
       query += "SELECT distinct * WHERE { \n";
-      query += "?cho schema:creator/owl:sameAs? <" + creator + ">. \n";
+      query += "?cho schema:creator/owl:sameAs? ?creator . \n";
+      query += "filter(?creator = <" + creator + ">) . \n";
       query += "filter(?cho != <" + cho + ">) . \n";
       query += "?cho rdfs:label ?label . \n";
       query += "OPTIONAL {?cho schema:image ?thumbnail . } \n";

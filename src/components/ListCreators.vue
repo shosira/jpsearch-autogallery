@@ -9,12 +9,12 @@
         </v-btn>
       </h1>
 
-      <v-card color="#F9F9F9" v-for="(obj, index) in results" v-bind:key="index" v-show="show_flg">
+      <v-card class="mb-5" color="#F9F9F9" v-for="(obj, index) in results" v-bind:key="index" v-show="show_flg">
         <v-card-text>
           <v-layout row>
             <v-flex xs12 sm2 class="px-2 py-2">
               <v-img
-                v-bind:src="results[0].thumbnail ? results[0].thumbnail.value : 'http://simpleicon.com/wp-content/uploads/user1.png'"
+                v-bind:src="obj.thumbnail ? obj.thumbnail.value : 'http://simpleicon.com/wp-content/uploads/user1.png'"
               />
             </v-flex>
             <v-flex xs12 sm10 class="px-2 py-2">
@@ -23,7 +23,7 @@
             </v-flex>
           </v-layout>
 
-          <ListItemsWithSameCreator :id="id" :creator="obj.creator.value" class="mt-5" />
+          <ListItemsWithSameCreator :id="id" :label="obj.label.value" :creator="obj.creator.value" class="mt-5" />
         </v-card-text>
       </v-card>
     </v-card-text>
@@ -46,6 +46,7 @@ export default {
   methods: {
     search() {
       this.show_flg = false;
+      this.results = []
 
       let id = this.id;
 
