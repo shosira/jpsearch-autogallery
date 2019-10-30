@@ -36,7 +36,7 @@
                                             </div>
                                         </v-card-title>
                                         <v-card-text class="text-xs-center">
-                                            作品数の多い著者100人から探す
+                                            著者から探す
                                             <v-btn class="blue lighten-2 mt-4" dark to="/list">
                                             探す
                                         </v-btn>
@@ -64,16 +64,20 @@
                                 <v-flex xs12 md4>
                                     <v-card class="elevation-0 transparent">
                                         <v-card-text class="text-xs-center">
-                                            <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
+                                            <v-icon x-large class="blue--text text--lighten-2">image</v-icon>
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
-                                            <div class="headline text-xs-center">開発中</div>
+                                            <div class="headline text-xs-center">
+                                                アイテム
+                                            </div>
                                         </v-card-title>
-                                        <!-- 
-                                                        <v-card-text>
-                                                            開発中です。
-                                                        </v-card-text>
-                                                        -->
+                                        <v-card-text class="text-xs-center">
+                                            アイテムから探す
+                                            <v-btn class="blue lighten-2 mt-4" dark to="/item">
+                                            探す
+                                        </v-btn>
+                                        </v-card-text>
+                                        
                                     </v-card>
                                 </v-flex>
                                 <v-flex xs12 md4>

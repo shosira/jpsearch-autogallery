@@ -6,6 +6,7 @@ import List from './views/List.vue'
 import Search from './views/Search.vue'
 import Search2 from './views/Search2.vue'
 import Vis from './views/Vis.vue'
+import Item from './views/Item.vue'
 
 Vue.use(Router)
 
@@ -45,6 +46,11 @@ export default new Router({
       path: '/vis',
       name: 'vis',
       component: Vis
+    },
+    {
+      path: '/item',
+      name: 'item',
+      component: Item
     }
   ]
 })
