@@ -9,7 +9,7 @@
         </v-btn>
       </h1>
 
-      <v-layout row wrap v-show="show_flg">
+      <v-layout row wrap v-show="show_flg || show_all_flg">
         <v-flex xs12 sm2 v-for="(obj, index) in results" v-bind:key="index">
           <v-card class="my-2 mx-2">
             <router-link
@@ -39,7 +39,7 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["id", "creator", "label"],
+  props: ["id", "creator", "label", "property", "show_all_flg"],
   data: () => ({
     results: [],
     show_flg: false
@@ -56,7 +56,7 @@ export default {
 
       let query = "PREFIX schema: <http://schema.org/> \n";
       query += "SELECT distinct * WHERE { \n";
-      query += "?cho schema:creator/owl:sameAs? ?creator . \n";
+      query += "?cho "+this.property+"/owl:sameAs? ?creator . \n";
       query += "filter(?creator = <" + creator + ">) . \n";
       query += "filter(?cho != <" + cho + ">) . \n";
       query += "?cho rdfs:label ?label . \n";

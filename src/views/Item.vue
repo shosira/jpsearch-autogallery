@@ -1,7 +1,17 @@
 <template>
   <v-container>
     <ShowItem :id="id" class="mt-5" />
-    <ListCreators :id="id" class="mt-5" />
+
+    <v-btn text small @click="show_all_flg = !show_all_flg" color="primary">
+          <template v-if="show_all_flg">すべて非表示</template>
+          <template v-else>すべて表示</template>
+        </v-btn>
+
+    <ListCreators :id="id" label="Creator" property="schema:creator" :show_all_flg="show_all_flg" class="mt-5" />
+    <ListCreators :id="id" label="Publisher" property="schema:publisher" :show_all_flg="show_all_flg" class="mt-5" />
+    <ListCreators :id="id" label="Spatial" property="schema:spatial" :show_all_flg="show_all_flg" class="mt-5" />
+    <ListCreators :id="id" label="Temporal" property="schema:temporal" :show_all_flg="show_all_flg" class="mt-5" />
+    <ListCreators :id="id" label="Type" property="rdf:type" :show_all_flg="show_all_flg" class="mt-5" />
   </v-container>
 </template>
 
@@ -15,7 +25,8 @@ export default {
     ShowItem
   },
   data: () => ({
-    id: ""
+    id: "",
+    show_all_flg: false
   }),
   watch: {
     $route() {
