@@ -7,21 +7,21 @@
           <template v-else>すべて表示</template>
         </v-btn>
 
-    <ListCreators :id="id" label="Creator" property="schema:creator" :show_all_flg="show_all_flg" class="mt-5" />
-    <ListCreators :id="id" label="Publisher" property="schema:publisher" :show_all_flg="show_all_flg" class="mt-5" />
-    <ListCreators :id="id" label="Spatial" property="schema:spatial" :show_all_flg="show_all_flg" class="mt-5" />
-    <ListCreators :id="id" label="Temporal" property="schema:temporal" :show_all_flg="show_all_flg" class="mt-5" />
-    <ListCreators :id="id" label="Type" property="rdf:type" :show_all_flg="show_all_flg" class="mt-5" />
+    <ListCategories :id="id" label="Creator" property="schema:creator" :show_all_flg="show_all_flg" class="mt-5" />
+    <ListCategories :id="id" label="Publisher" property="schema:publisher" :show_all_flg="show_all_flg" class="mt-5" />
+    <ListCategories :id="id" label="Spatial" property="schema:spatial" :show_all_flg="show_all_flg" class="mt-5" />
+    <ListCategories :id="id" label="Temporal" property="schema:temporal" :show_all_flg="show_all_flg" class="mt-5" />
+    <ListCategories :id="id" label="Type" property="rdf:type" :show_all_flg="show_all_flg" class="mt-5" />
   </v-container>
 </template>
 
 <script>
 import ShowItem from "../components/ShowItem.vue";
-import ListCreators from "../components/ListCreators.vue";
+import ListCategories from "../components/ListCategories.vue";
 
 export default {
   components: {
-    ListCreators,
+    ListCategories,
     ShowItem
   },
   data: () => ({

@@ -2,7 +2,7 @@
   <v-card>
     <v-card-text>
       <h1 class="my-4">
-        {{label}}の作品&nbsp;
+        作品（ランダムに最大{{size}}件を表示）&nbsp;
         <v-btn text small @click="show_flg = !show_flg">
           <template v-if="show_flg">非表示</template>
           <template v-else>表示</template>
@@ -10,7 +10,7 @@
       </h1>
 
       <v-layout row wrap v-show="show_flg || show_all_flg">
-        <v-flex xs12 sm2 v-for="(obj, index) in results" v-bind:key="index">
+        <v-flex xs12 sm3 v-for="(obj, index) in results" v-bind:key="index">
           <v-card class="my-2 mx-2">
             <router-link
               v-bind:to="{ name : 'item', query : { id: obj.cho.value.split('/data/')[1] }}"
@@ -38,11 +38,15 @@
 
 <script>
 import axios from "axios";
+
+let search_size = 1000
+
 export default {
   props: ["id", "creator", "label", "property", "show_all_flg"],
   data: () => ({
     results: [],
-    show_flg: false
+    show_flg: false,
+    size: 40
   }),
   methods: {
     search() {
@@ -60,14 +64,15 @@ export default {
       query += "filter(?creator = <" + creator + ">) . \n";
       query += "filter(?cho != <" + cho + ">) . \n";
       query += "?cho rdfs:label ?label . \n";
-      query += "OPTIONAL {?cho schema:image ?thumbnail . } \n";
+      //query += "OPTIONAL {?cho schema:image ?thumbnail . } \n";
+      query += "?cho schema:image ?thumbnail . \n";
 
       query += "?cho jps:sourceInfo ?sourceInfo . \n";
       query += "?sourceInfo schema:provider ?p . \n";
       query += "?p rdfs:label ?p_label . \n";
 
       query += "} \n";
-      query += "LIMIT 40 \n";
+      query += "LIMIT "+search_size+" \n";
 
       axios
         .get(
@@ -78,7 +83,33 @@ export default {
         .then(response => {
           let results = response.data.results.bindings;
 
-          this.results = results;
+
+          var arr = [];
+          for(let i = 0; i < results.length; i++){
+            arr.push(i)
+          }
+          var a = arr.length;
+          
+          //シャッフルアルゴリズム
+          while (a) {
+              var j = Math.floor( Math.random() * a );
+              var t = arr[--a];
+              arr[a] = arr[j];
+              arr[j] = t;
+          }
+
+          let max = this.size
+          if(arr.length < max){
+            max = arr.length
+          }
+
+          //新しい配列
+          let results2 = []
+          for(let i = 0; i < max; i++){
+            results2.push(results[arr[i]])
+          }
+
+          this.results = results2;
         })
         .catch(error => {
           console.log(error);

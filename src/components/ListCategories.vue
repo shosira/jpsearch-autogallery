@@ -23,7 +23,7 @@
             </v-flex>
           </v-layout>
 
-          <ListItemsWithSameCreator :id="id" :label="obj.label.value" :creator="obj.creator.value" :property="property" :show_all_flg="show_all_flg" class="mt-5" />
+          <ListItemsOfCategory :id="id" :label="obj.label.value" :creator="obj.creator.value" :property="property" :show_all_flg="show_all_flg" class="mt-5" />
         </v-card-text>
       </v-card>
     </v-card-text>
@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import ListItemsWithSameCreator from "../components/ListItemsWithSameCreator";
+import ListItemsOfCategory from "../components/ListItemsOfCategory";
 
 import axios from "axios";
 export default {
   components: {
-    ListItemsWithSameCreator
+    ListItemsOfCategory
   },
   props: ["id", "label", "property", "show_all_flg"],
   data: () => ({
