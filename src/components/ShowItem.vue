@@ -6,9 +6,13 @@
           target="jps"
           :href="'https://jpsearch.go.jp/item/' + results[0].cho.value.split('/data/')[1]"
         >
-          <v-img
-            v-bind:src="results[0].thumbnail ? results[0].thumbnail.value : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png'"
-          />
+          <div style="background-color: black; height:300px;">
+            <v-img
+              cotain="true"
+              height="300px"
+              v-bind:src="results[0].thumbnail ? results[0].thumbnail.value : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png'"
+            />
+          </div>
         </a>
       </v-flex>
       <v-flex xs12 sm10 class="px-2 py-2">

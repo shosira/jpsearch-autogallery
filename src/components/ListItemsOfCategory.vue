@@ -1,57 +1,49 @@
 <template>
-  <v-card>
-    <v-card-text>
-      <h1 class="my-4">
-        作品（ランダムに最大{{size}}件を表示）&nbsp;
-        <v-btn text small @click="show_flg = !show_flg">
-          <template v-if="show_flg">非表示</template>
-          <template v-else>表示</template>
-        </v-btn>
-      </h1>
+  <div>
+    <ul class="horizontal-list my-5">
+      <li v-for="(obj, index) in results" v-bind:key="index">
+        <v-card class="my-2 mx-2">
+          <router-link
+            v-bind:to="{ name : 'item', query : { id: obj.cho.value.split('/data/')[1] }}"
+          >
+            <div style="background-color: black; height: 300px;">
+              <v-img
+                height="300px"
+                contain="true"
+                v-bind:src="obj.thumbnail ? obj.thumbnail.value : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png'"
+              />
+            </div>
+          </router-link>
 
-      <v-layout row wrap v-show="show_flg || show_all_flg">
-        <v-flex xs12 sm3 v-for="(obj, index) in results" v-bind:key="index">
-          <v-card class="my-2 mx-2">
+          <v-card-text>
             <router-link
               v-bind:to="{ name : 'item', query : { id: obj.cho.value.split('/data/')[1] }}"
             >
-              <v-img
-                v-bind:src="obj.thumbnail ? obj.thumbnail.value : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png'"
-              />
+              <b>{{obj.label.value}}</b>
             </router-link>
-
-            <v-card-text>
-              <router-link
-                v-bind:to="{ name : 'item', query : { id: obj.cho.value.split('/data/')[1] }}"
-              >
-                <b>{{obj.label.value}}</b>
-              </router-link>
-              <p class="my-1">{{obj.p_label.value}}</p>
-              <!-- <p class="my-1">{{obj.creator.value}}</p> -->
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-card-text>
-  </v-card>
+            <p class="my-1">{{obj.p_label.value}}</p>
+            <!-- <p class="my-1">{{obj.creator.value}}</p> -->
+          </v-card-text>
+        </v-card>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 
-let search_size = 1000
+let search_size = 200;
 
 export default {
   props: ["id", "creator", "label", "property", "show_all_flg"],
   data: () => ({
-    results: [],
-    show_flg: false,
-    size: 40
+    results: []
   }),
   methods: {
     search() {
       this.show_flg = false;
-      this.results = []
+      this.results = [];
 
       let id = this.id;
       let creator = this.creator;
@@ -60,7 +52,7 @@ export default {
 
       let query = "PREFIX schema: <http://schema.org/> \n";
       query += "SELECT distinct * WHERE { \n";
-      query += "?cho "+this.property+"/owl:sameAs? ?creator . \n";
+      query += "?cho " + this.property + "/owl:sameAs? ?creator . \n";
       query += "filter(?creator = <" + creator + ">) . \n";
       query += "filter(?cho != <" + cho + ">) . \n";
       query += "?cho rdfs:label ?label . \n";
@@ -72,7 +64,7 @@ export default {
       query += "?p rdfs:label ?p_label . \n";
 
       query += "} \n";
-      query += "LIMIT "+search_size+" \n";
+      query += "LIMIT " + search_size + " \n";
 
       axios
         .get(
@@ -83,30 +75,29 @@ export default {
         .then(response => {
           let results = response.data.results.bindings;
 
-
           var arr = [];
-          for(let i = 0; i < results.length; i++){
-            arr.push(i)
+          for (let i = 0; i < results.length; i++) {
+            arr.push(i);
           }
           var a = arr.length;
-          
+
           //シャッフルアルゴリズム
           while (a) {
-              var j = Math.floor( Math.random() * a );
-              var t = arr[--a];
-              arr[a] = arr[j];
-              arr[j] = t;
+            var j = Math.floor(Math.random() * a);
+            var t = arr[--a];
+            arr[a] = arr[j];
+            arr[j] = t;
           }
 
-          let max = this.size
-          if(arr.length < max){
-            max = arr.length
+          let max = search_size;
+          if (arr.length < max) {
+            max = arr.length;
           }
 
           //新しい配列
-          let results2 = []
-          for(let i = 0; i < max; i++){
-            results2.push(results[arr[i]])
+          let results2 = [];
+          for (let i = 0; i < max; i++) {
+            results2.push(results[arr[i]]);
           }
 
           this.results = results2;
@@ -128,3 +119,17 @@ export default {
   }
 };
 </script>
+
+<style>
+.horizontal-list {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;
+}
+
+.horizontal-list li {
+  /* 横スクロール用 */
+  display: inline-block;
+}
+</style>

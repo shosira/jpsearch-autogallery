@@ -9,18 +9,27 @@
     </h2>
 
     <v-layout row wrap>
-      <v-flex xs12 sm2 v-for="(result, index) in results" v-bind:key="index">
+      <v-flex xs12 sm2 class="py-3 px-3" v-for="(result, index) in results" v-bind:key="index">
         <v-card>
           <router-link
             v-bind:to="{ name : 'item', query : { id: result.cho.value.split('/data/')[1] }}"
           >
-            <v-img v-if="result.thumbnail" v-bind:src="result.thumbnail.value" />
+            <div style="background-color: black; height: 300px;">
+              <v-img
+                height="300px"
+                contain="true"
+                v-if="result.thumbnail"
+                v-bind:src="result.thumbnail.value"
+              />
+            </div>
           </router-link>
-          <v-card-title primary-title>
-            <h3 class="headline mb-0">
-              <router-link v-bind:to="{ name : 'item', query : { id: result.cho.value.split('/data/')[1] }}">{{ result.label.value }}</router-link>
+          <v-card-text>
+            <h3>
+              <router-link
+                v-bind:to="{ name : 'item', query : { id: result.cho.value.split('/data/')[1] }}"
+              >{{ result.label.value }}</router-link>
             </h3>
-          </v-card-title>
+          </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
