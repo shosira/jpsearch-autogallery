@@ -1,31 +1,32 @@
 <template>
   <div>
     <ul class="horizontal-list my-5">
-      <li v-for="(obj, index) in results" v-bind:key="index">
-        <v-card class="my-2 mx-2">
-          <router-link
-            v-bind:to="{ name : 'item', query : { id: obj.cho.value.split('/data/')[1] }}"
-          >
-            <div style="background-color: black; height: 300px;">
-              <v-img
-                height="300px"
-                contain="true"
-                v-bind:src="obj.thumbnail ? obj.thumbnail.value : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png'"
-              />
-            </div>
-          </router-link>
-
-          <v-card-text>
+      <template v-for="(result, index2) in results">
+        <li v-for="(obj, index) in result" v-bind:key="index2+'_'+index">
+          <v-card class="my-2 mx-2">
             <router-link
               v-bind:to="{ name : 'item', query : { id: obj.cho.value.split('/data/')[1] }}"
             >
-              <b>{{obj.label.value}}</b>
+              <div style="background-color: black; height: 300px;">
+                <v-img
+                  contain
+                  height="300px"
+                  v-bind:src="obj.thumbnail ? obj.thumbnail.value : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png'"
+                />
+              </div>
             </router-link>
-            <p class="my-1">{{obj.p_label.value}}</p>
-            <!-- <p class="my-1">{{obj.creator.value}}</p> -->
-          </v-card-text>
-        </v-card>
-      </li>
+
+            <v-card-text>
+              <router-link
+                v-bind:to="{ name : 'item', query : { id: obj.cho.value.split('/data/')[1] }}"
+              >
+                <b>{{obj.label.value}}</b>
+              </router-link>
+              <p class="my-1">{{obj.p_label.value}}</p>
+            </v-card-text>
+          </v-card>
+        </li>
+      </template>
     </ul>
   </div>
 </template>
@@ -33,17 +34,18 @@
 <script>
 import axios from "axios";
 
-let search_size = 200;
+let search_size = 500;
 
 export default {
-  props: ["id", "creator", "label", "property", "show_all_flg"],
+  props: ["id", "creator", "label", "property"],
   data: () => ({
-    results: []
+    results: {
+      results_w_thumbnail: [],
+      results_wo_thumbnail: []
+    }
   }),
   methods: {
-    search() {
-      this.show_flg = false;
-      this.results = [];
+    search(thumbnail_flg) {
 
       let id = this.id;
       let creator = this.creator;
@@ -56,8 +58,11 @@ export default {
       query += "filter(?creator = <" + creator + ">) . \n";
       query += "filter(?cho != <" + cho + ">) . \n";
       query += "?cho rdfs:label ?label . \n";
-      //query += "OPTIONAL {?cho schema:image ?thumbnail . } \n";
-      query += "?cho schema:image ?thumbnail . \n";
+      if (thumbnail_flg) {
+        query += "?cho schema:image ?thumbnail . \n";
+      } else {
+        query += "MINUS {?cho schema:image ?thumbnail . } \n";
+      }
 
       query += "?cho jps:sourceInfo ?sourceInfo . \n";
       query += "?sourceInfo schema:provider ?p . \n";
@@ -99,23 +104,25 @@ export default {
           for (let i = 0; i < max; i++) {
             results2.push(results[arr[i]]);
           }
-
-          this.results = results2;
+          if (thumbnail_flg) {
+            this.results.results_w_thumbnail = results2;
+          } else {
+            this.results.results_wo_thumbnail = results2;
+          }
         })
-        .catch(error => {
-          console.log(error);
-        });
     }
   },
 
   watch: {
     id: function() {
-      this.search();
+      this.search(true);
+      this.search(false);
     }
   },
 
   created() {
-    this.search();
+    this.search(true);
+    this.search(false);
   }
 };
 </script>

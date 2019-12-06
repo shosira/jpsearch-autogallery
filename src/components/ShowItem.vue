@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-layout row>
+    <v-layout row v-if="results.length > 0">
       <v-flex xs12 sm2 class="px-2 py-2">
         <a
           target="jps"
@@ -8,7 +8,7 @@
         >
           <div style="background-color: black; height:300px;">
             <v-img
-              cotain="true"
+              contain
               height="300px"
               v-bind:src="results[0].thumbnail ? results[0].thumbnail.value : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png'"
             />
@@ -67,12 +67,8 @@ export default {
         )
         .then(response => {
           let results = response.data.results.bindings;
-
           this.results = results;
         })
-        .catch(error => {
-          console.log(error);
-        });
     }
   },
 

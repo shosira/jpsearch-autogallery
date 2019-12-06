@@ -37,6 +37,20 @@
     />
     <ListCategories
       :id="id"
+      label="About"
+      property="schema:about"
+      :show_all_flg="show_all_flg"
+      class="mt-5"
+    />
+    <ListCategories
+      :id="id"
+      label="PartOf"
+      property="schema:isPartOf"
+      :show_all_flg="show_all_flg"
+      class="mt-5"
+    />
+    <ListCategories
+      :id="id"
       label="Type"
       property="rdf:type"
       :show_all_flg="show_all_flg"

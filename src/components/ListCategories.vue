@@ -20,23 +20,19 @@
           <v-layout row>
             <v-flex xs12 sm2 class="px-2 py-2">
               <div style="background-color: black; height: 300px;">
-                <v-img
-                  contain="true"
-                  height="300px"
-                  v-bind:src="obj.thumbnail ? obj.thumbnail.value : (property=='schema:creator' || property=='schema:publisher' ? 'http://simpleicon.com/wp-content/uploads/user1.png' : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png')"
-                />
+                <v-img contain height="300px" v-bind:src="obj.thumbnail.value" />
               </div>
             </v-flex>
             <v-flex xs12 sm10 class="px-2 py-2">
-              <h1>{{obj.label.value}}</h1>
+              <h1>{{obj.label ? obj.label.value : obj.category.value.split("/").slice(-1)[0]}}</h1>
               <p class="mt-2" v-if="obj.comment">{{obj.comment.value}}</p>
             </v-flex>
           </v-layout>
 
           <ListItemsOfCategory
             :id="id"
-            :label="obj.label.value"
-            :creator="obj.creator.value"
+            :label="label"
+            :creator="obj.category.value"
             :property="property"
             :show_all_flg="show_all_flg"
             class="mt-5"
@@ -73,13 +69,54 @@ export default {
 
       let query = "PREFIX schema: <http://schema.org/> \n";
       query += "SELECT distinct * WHERE { \n";
-      query += "?cho " + property + " ?creator. \n";
+      query += "?cho " + property + " ?category. \n";
       query += "filter (?cho = <" + cho + ">)  \n";
 
-      query += "?creator rdfs:label ?label . \n";
-      query += "OPTIONAL {?creator schema:description ?comment . } \n";
-      query += "OPTIONAL {?creator schema:image ?thumbnail . } \n";
+      query += "OPTIONAL {?category rdfs:label ?label . } \n";
+      query += "OPTIONAL {?category schema:description ?comment . } \n";
+      query += "OPTIONAL {?category schema:image ?thumbnail . } \n";
 
+      query += "} \n";
+      query += "LIMIT 40 \n";
+
+      //console.log(query)
+
+      axios
+        .get(
+          "https://jpsearch.go.jp/rdf/sparql?query=" +
+            encodeURIComponent(query) +
+            "&output=json"
+        )
+        .then(response => {
+          let results = response.data.results.bindings;
+          //console.log(results)
+          /*
+
+          obj.thumbnail ? obj.thumbnail.value : (property=='schema:creator' || property=='schema:publisher' ? 'https://www.shoshinsha-design.com/wp-content/uploads/2018/07/user_icon.png' : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png')
+
+          */
+          for (let i = 0; i < results.length; i++) {
+            let obj = results[i];
+            if (!obj.thumbnail) {
+              obj.thumbnail = {
+                value: this.get_thumbnail(obj.category.value)
+              };
+              //console.log(obj);
+              /*
+              obj.thumbnail = {
+                "value" : (property=='schema:creator' || property=='schema:publisher' ? 'https://www.shoshinsha-design.com/wp-content/uploads/2018/07/user_icon.png' : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png')
+              }
+              */
+            }
+            this.results.push(obj);
+          }
+          //this.results = results;
+        })
+    },
+    get_thumbnail(uri) {
+      let query = "PREFIX schema: <http://schema.org/> \n";
+      query += "SELECT distinct * WHERE { \n";
+      query += " <"+uri+"> ?v ?o \n";
       query += "} \n";
       query += "LIMIT 40 \n";
 
@@ -91,13 +128,23 @@ export default {
         )
         .then(response => {
           let results = response.data.results.bindings;
-
-          this.results = results;
+          if (results.length > 0) {
+            return "aaa";
+          }
         })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+      
+      let flg = true
+      if(uri == null){
+        flg = false
+      }
+
+      if(flg){
+        return "https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png";
+      }
+
+      
+    },
+    
   },
 
   watch: {
