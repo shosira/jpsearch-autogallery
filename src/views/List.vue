@@ -9,8 +9,8 @@
               <v-img
                 v-if="result.thumbnail"
                 v-bind:src="result.thumbnail.value"
-                contain="true"
-                height="300px"
+                contain
+                height="150px"
               />
             </div>
           </router-link>
@@ -59,7 +59,7 @@ export default {
         )
         .then(response => {
           this.results = response.data.results.bindings;
-        })
+        });
     }
   }
 };

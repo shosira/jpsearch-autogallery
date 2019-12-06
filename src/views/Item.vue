@@ -6,7 +6,7 @@
       <template v-if="show_all_flg">すべて非表示</template>
       <template v-else>すべて表示</template>
     </v-btn>
-
+    <ListGalleries :id="id" :show_all_flg="show_all_flg" class="mt-5" />
     <ListCategories
       :id="id"
       label="Creator"
@@ -62,10 +62,12 @@
 <script>
 import ShowItem from "../components/ShowItem.vue";
 import ListCategories from "../components/ListCategories.vue";
+import ListGalleries from "../components/ListGalleries.vue";
 
 export default {
   components: {
     ListCategories,
+    ListGalleries,
     ShowItem
   },
   data: () => ({

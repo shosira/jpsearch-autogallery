@@ -6,10 +6,10 @@
           target="jps"
           :href="'https://jpsearch.go.jp/item/' + results[0].cho.value.split('/data/')[1]"
         >
-          <div style="background-color: black; height:300px;">
+          <div style="background-color: black; height:150px;">
             <v-img
               contain
-              height="300px"
+              height="150px"
               v-bind:src="results[0].thumbnail ? results[0].thumbnail.value : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png'"
             />
           </div>
@@ -25,7 +25,10 @@
 
         <p class="mt-2">{{results[0].p_label.value}}</p>
         <p class="mt-2">
-          <a target="snorql" :href="results[0].cho.value">JPS利活用スキーマ</a>
+          <a target="snorql" :href="results[0].cho.value">
+            JPS利活用スキーマ
+            <i class="fas fa-external-link-alt"></i>
+          </a>
         </p>
       </v-flex>
     </v-layout>
@@ -68,7 +71,7 @@ export default {
         .then(response => {
           let results = response.data.results.bindings;
           this.results = results;
-        })
+        });
     }
   },
 

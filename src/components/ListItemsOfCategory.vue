@@ -3,14 +3,14 @@
     <ul class="horizontal-list my-5">
       <template v-for="(result, index2) in results">
         <li v-for="(obj, index) in result" v-bind:key="index2+'_'+index">
-          <v-card class="my-2 mx-2">
+          <v-card class="my-2 mx-2" style="max-width : 300px">
             <router-link
               v-bind:to="{ name : 'item', query : { id: obj.cho.value.split('/data/')[1] }}"
             >
-              <div style="background-color: black; height: 300px;">
+              <div style="background-color: black; height: 150px;">
                 <v-img
                   contain
-                  height="300px"
+                  height="150px"
                   v-bind:src="obj.thumbnail ? obj.thumbnail.value : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png'"
                 />
               </div>
@@ -46,7 +46,6 @@ export default {
   }),
   methods: {
     search(thumbnail_flg) {
-
       let id = this.id;
       let creator = this.creator;
 
@@ -109,7 +108,7 @@ export default {
           } else {
             this.results.results_wo_thumbnail = results2;
           }
-        })
+        });
     }
   },
 

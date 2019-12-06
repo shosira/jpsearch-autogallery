@@ -28,6 +28,15 @@
             <v-list-item-title>著者から探す</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-item link :to="{name: 'listInGalleries'}">
+          <v-list-item-action>
+            <v-icon>mdi-image</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>ギャラリーに使用されているアイテム</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 

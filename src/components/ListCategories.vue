@@ -19,8 +19,8 @@
         <v-card-text>
           <v-layout row>
             <v-flex xs12 sm2 class="px-2 py-2">
-              <div style="background-color: black; height: 300px;">
-                <v-img contain height="300px" v-bind:src="obj.thumbnail.value" />
+              <div style="background-color: black; height: 150px;">
+                <v-img contain height="150px" v-bind:src="obj.thumbnail.value" />
               </div>
             </v-flex>
             <v-flex xs12 sm10 class="px-2 py-2">
@@ -89,34 +89,21 @@ export default {
         )
         .then(response => {
           let results = response.data.results.bindings;
-          //console.log(results)
-          /*
-
-          obj.thumbnail ? obj.thumbnail.value : (property=='schema:creator' || property=='schema:publisher' ? 'https://www.shoshinsha-design.com/wp-content/uploads/2018/07/user_icon.png' : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png')
-
-          */
           for (let i = 0; i < results.length; i++) {
             let obj = results[i];
             if (!obj.thumbnail) {
               obj.thumbnail = {
                 value: this.get_thumbnail(obj.category.value)
               };
-              //console.log(obj);
-              /*
-              obj.thumbnail = {
-                "value" : (property=='schema:creator' || property=='schema:publisher' ? 'https://www.shoshinsha-design.com/wp-content/uploads/2018/07/user_icon.png' : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png')
-              }
-              */
             }
             this.results.push(obj);
           }
-          //this.results = results;
-        })
+        });
     },
     get_thumbnail(uri) {
       let query = "PREFIX schema: <http://schema.org/> \n";
       query += "SELECT distinct * WHERE { \n";
-      query += " <"+uri+"> ?v ?o \n";
+      query += " <" + uri + "> ?v ?o \n";
       query += "} \n";
       query += "LIMIT 40 \n";
 
@@ -131,20 +118,17 @@ export default {
           if (results.length > 0) {
             return "aaa";
           }
-        })
-      
-      let flg = true
-      if(uri == null){
-        flg = false
+        });
+
+      let flg = true;
+      if (uri == null) {
+        flg = false;
       }
 
-      if(flg){
+      if (flg) {
         return "https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png";
       }
-
-      
-    },
-    
+    }
   },
 
   watch: {
