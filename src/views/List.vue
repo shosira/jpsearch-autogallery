@@ -59,11 +59,7 @@ export default {
         )
         .then(response => {
           this.results = response.data.results.bindings;
-          console.log(this.results);
         })
-        .catch(error => {
-          console.log(error);
-        });
     }
   }
 };
