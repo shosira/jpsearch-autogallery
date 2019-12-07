@@ -72,7 +72,7 @@ export default {
   },
   data: () => ({
     id: "",
-    show_all_flg: false
+    show_all_flg: true
   }),
   watch: {
     $route() {

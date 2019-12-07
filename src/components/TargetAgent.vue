@@ -1,39 +1,34 @@
 <template>
-  <v-card v-show="label">
-    <div style="background-color: black; height: 300px;">
-      <v-img contain="true" height="300px" v-if="thumbnail" v-bind:src="thumbnail" />
+  <v-card v-if="obj">
+    <div style="background-color: black; height: 150px;">
+      <v-img contain height="150px" v-if="obj.thumbnail" v-bind:src="obj.thumbnail.value" />
     </div>
-
-    <v-card-title primary-title>
-      <div>
-        <h3 class="headline mb-0">{{label}}</h3>
-        <div v-show="comment">{{comment}}</div>
-      </div>
-    </v-card-title>
+    <v-card-text>
+      <b>{{obj.label.value}}</b>
+      <p class="my-1">{{obj.comment.value}}</p>
+    </v-card-text>
   </v-card>
 </template>
 
 <script>
 import axios from "axios";
 export default {
-  props: ["term"],
+  props: ["u"],
   data: () => ({
-    label: null,
-    comment: null,
-    thumbnail: null
+    obj: null
   }),
   methods: {
-    search(term) {
-      this.label = null;
-      this.comment = null;
-      this.thumbnail = null;
+    search() {
+      this.obj = null;
 
       let query = "PREFIX schema: <http://schema.org/> \n";
       query += "SELECT distinct * WHERE { \n";
       query += "?s rdfs:label ?label. \n";
-      query += "filter (?s = chname:" + term + ") . \n";
+      query += "filter (?s = <" + this.u + ">) . \n";
       query += "OPTIONAL {?s schema:description ?comment . } \n";
       query += "OPTIONAL {?s schema:image ?thumbnail . } \n";
+      query +=
+        "OPTIONAL {?s owl:sameAs ?wid . ?wid rdfs:isDefinedBy <http://www.wikidata.org/> } \n";
       query += "} \n";
       query += "LIMIT 1 \n";
 
@@ -45,26 +40,38 @@ export default {
         )
         .then(response => {
           let obj = response.data.results.bindings[0];
-          this.label = obj.label.value;
-          if (obj.comment) {
-            this.comment = obj.comment.value;
+          if (!obj.thumbnail && obj.wid) {
+            this.search4wiki(obj.wid.value);
           }
-          if (obj.thumbnail) {
-            this.thumbnail = obj.thumbnail.value;
-          }
+          this.obj = obj;
         })
-        .catch(error => {
-          console.log(error);
-        });
+    },
+    search4wiki(u) {
+      let query = "PREFIX schema: <http://schema.org/> \n";
+      query += "SELECT distinct * WHERE { \n";
+      query += "<" + u + "> wdt:P18 ?thumbnail. \n";
+      query += "} \n";
+      query += "LIMIT 1 \n";
+
+      axios
+        .get(
+          "https://query.wikidata.org/sparql?query=" +
+            encodeURIComponent(query) +
+            "&output=json"
+        )
+        .then(response => {
+          let obj = response.data.results.bindings[0];
+          this.obj.thumbnail = obj.thumbnail.value;
+        })
     }
   },
   watch: {
-    term: function() {
-      this.search(this.term);
+    u: function() {
+      this.search();
     }
   },
   created() {
-    this.search(this.term);
+    this.search();
   }
 };
 </script>

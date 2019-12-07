@@ -1,62 +1,66 @@
 <template>
   <v-container grid-list-md text-xs-center>
-    <h2 class="my-5">
+    <h3 class="mt-5">
       作品で知る
-      <br />
-      <small>
-        <a :href="link">すべてを見る</a>
-      </small>
-    </h2>
+    </h3>
 
-    <v-layout row wrap>
-      <v-flex xs12 sm2 class="py-3 px-3" v-for="(result, index) in results" v-bind:key="index">
-        <v-card>
-          <router-link
-            v-bind:to="{ name : 'item', query : { id: result.cho.value.split('/data/')[1] }}"
-          >
-            <div style="background-color: black; height: 300px;">
-              <v-img
-                height="300px"
-                contain="true"
-                v-if="result.thumbnail"
-                v-bind:src="result.thumbnail.value"
-              />
-            </div>
-          </router-link>
-          <v-card-text>
-            <h3>
-              <router-link
-                v-bind:to="{ name : 'item', query : { id: result.cho.value.split('/data/')[1] }}"
-              >{{ result.label.value }}</router-link>
-            </h3>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <a :href="link" target="_blank">
+          すべてを見る
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+
+    <ShowItems :map="results" v-if="Object.keys(results).length > 0" class="mt-5" />
   </v-container>
 </template>
 
 <script>
 import axios from "axios";
+import ShowItems from "../components/ShowItems";
+
 export default {
-  props: ["term"],
+  components: {
+    ShowItems
+  },
+  props: ["u"],
   data: () => ({
-    results: [],
+    results: {
+      results_w_thumbnail: [],
+      results_wo_thumbnail: []
+    },
     link: null
   }),
   methods: {
-    search(term) {
-      this.results = [];
-
+    init() {
+      for (let key in this.results) {
+        this.results[key] = [];
+      }
+      this.search(true);
+      this.search(false);
+    },
+    search(thumbnail_flg) {
       let query = "PREFIX schema: <http://schema.org/> \n";
       query += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n";
-      query += "SELECT ?cho ?label ?thumbnail WHERE { \n";
+      query += "SELECT ?cho ?label ?thumbnail ?p_label WHERE { \n";
       query += "?cho rdfs:label ?label; \n";
-      query += "schema:creator/owl:sameAs? chname:" + term + " . \n";
+      query += "schema:creator/owl:sameAs? <" + this.u + "> . \n";
 
-      query += "OPTIONAL {?cho schema:image ?thumbnail} \n";
+      if (thumbnail_flg) {
+        query += "?cho schema:image ?thumbnail . \n";
+      } else {
+        query += "MINUS {?cho schema:image ?thumbnail . } \n";
+      }
+
+      query += " ?cho jps:sourceInfo ?sourceInfo . \n";
+      query += " ?sourceInfo schema:provider ?p . \n";
+      query += " ?p rdfs:label ?p_label . \n";
+
       query += "} \n";
-      query += "LIMIT 12 \n";
+      query += "ORDER BY RAND() \n";
+      if (thumbnail_flg) {
+        query += "LIMIT 70 \n";
+      } else {
+        query += "LIMIT 30 \n";
+      }
 
       this.link =
         "https://jpsearch.go.jp/rdf/sparql/easy/?query=" +
@@ -69,20 +73,35 @@ export default {
             "&output=json"
         )
         .then(response => {
-          this.results = response.data.results.bindings;
+          let results = response.data.results.bindings;
+
+          for (let i = 0; i < results.length; i++) {
+            let obj = results[i];
+            let n_obj = {
+              label: obj.label.value,
+              thumbnail: obj.thumbnail
+                ? obj.thumbnail.value
+                : "https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png",
+              provider: obj.p_label.value,
+              id: obj.cho.value.split("/data/")[1]
+            };
+
+            if (thumbnail_flg) {
+              this.results.results_w_thumbnail.push(n_obj);
+            } else {
+              this.results.results_wo_thumbnail.push(n_obj);
+            }
+          }
         })
-        .catch(error => {
-          console.log(error);
-        });
     }
   },
   watch: {
     term: function() {
-      this.search(this.term);
+      this.init();
     }
   },
   created() {
-    this.search(this.term);
+    this.init();
   }
 };
 </script>

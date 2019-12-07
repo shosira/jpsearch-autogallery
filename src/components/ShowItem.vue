@@ -3,7 +3,7 @@
     <v-layout row v-if="results.length > 0">
       <v-flex xs12 sm2 class="px-2 py-2">
         <a
-          target="jps"
+          target="_blank"
           :href="'https://jpsearch.go.jp/item/' + results[0].cho.value.split('/data/')[1]"
         >
           <div style="background-color: black; height:150px;">
@@ -18,14 +18,14 @@
       <v-flex xs12 sm10 class="px-2 py-2">
         <h1 class="mb-4">
           <a
-            target="jps"
+            target="_blank"
             :href="'https://jpsearch.go.jp/item/' + results[0].cho.value.split('/data/')[1]"
           >{{results[0].label.value}}</a>
         </h1>
 
         <p class="mt-2">{{results[0].p_label.value}}</p>
         <p class="mt-2">
-          <a target="snorql" :href="results[0].cho.value">
+          <a target="_blank" :href="results[0].cho.value">
             JPS利活用スキーマ
             <i class="fas fa-external-link-alt"></i>
           </a>

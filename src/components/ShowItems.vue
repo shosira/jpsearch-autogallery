@@ -1,7 +1,8 @@
 <template>
   <div>
     <ul class="horizontal-list my-5">
-      <li v-for="(obj, index) in arr" v-bind:key="index">
+      <template v-for="(result, index2) in map">
+      <li v-for="(obj, index) in result" v-bind:key="index2+'_'+index">
         <v-card class="my-2 mx-2" style="max-width : 300px">
           <router-link v-bind:to="{ name : 'item', query : { id: obj.id }}">
             <div style="background-color: black; height: 150px;">
@@ -11,19 +12,20 @@
 
           <v-card-text>
             <router-link v-bind:to="{ name : 'item', query : { id: obj.id }}">
-              <b>{{obj.label}}</b>
+              <b>{{obj.label.length > 20 ? obj.label.substr(0, 20)+"..." : obj.label}}</b>
             </router-link>
             <p class="my-1">{{obj.provider}}</p>
           </v-card-text>
         </v-card>
       </li>
+      </template>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["arr"]
+  props: ["map"]
 };
 </script>
 

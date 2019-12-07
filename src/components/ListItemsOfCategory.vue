@@ -20,7 +20,7 @@
               <router-link
                 v-bind:to="{ name : 'item', query : { id: obj.cho.value.split('/data/')[1] }}"
               >
-                <b>{{obj.label.value}}</b>
+                <b>{{obj.label.value.length > 20 ? obj.label.value.substr(0, 20)+"..." : obj.label.value}}</b>
               </router-link>
               <p class="my-1">{{obj.p_label.value}}</p>
             </v-card-text>
@@ -33,8 +33,6 @@
 
 <script>
 import axios from "axios";
-
-let search_size = 500;
 
 export default {
   props: ["id", "creator", "label", "property"],
@@ -66,9 +64,15 @@ export default {
       query += "?cho jps:sourceInfo ?sourceInfo . \n";
       query += "?sourceInfo schema:provider ?p . \n";
       query += "?p rdfs:label ?p_label . \n";
-
+      
       query += "} \n";
-      query += "LIMIT " + search_size + " \n";
+      query += "ORDER BY RAND() \n";
+      if (thumbnail_flg) {
+        query += "LIMIT 70 \n";
+      } else {
+        query += "LIMIT 30 \n";
+      }
+      
 
       axios
         .get(
@@ -78,35 +82,10 @@ export default {
         )
         .then(response => {
           let results = response.data.results.bindings;
-
-          var arr = [];
-          for (let i = 0; i < results.length; i++) {
-            arr.push(i);
-          }
-          var a = arr.length;
-
-          //シャッフルアルゴリズム
-          while (a) {
-            var j = Math.floor(Math.random() * a);
-            var t = arr[--a];
-            arr[a] = arr[j];
-            arr[j] = t;
-          }
-
-          let max = search_size;
-          if (arr.length < max) {
-            max = arr.length;
-          }
-
-          //新しい配列
-          let results2 = [];
-          for (let i = 0; i < max; i++) {
-            results2.push(results[arr[i]]);
-          }
           if (thumbnail_flg) {
-            this.results.results_w_thumbnail = results2;
+            this.results.results_w_thumbnail = results;
           } else {
-            this.results.results_wo_thumbnail = results2;
+            this.results.results_wo_thumbnail = results;
           }
         });
     }

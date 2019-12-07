@@ -18,13 +18,22 @@
       >
         <v-card-text>
           <v-layout row>
-            <v-flex xs12 sm2 class="px-2 py-2">
-              <div style="background-color: black; height: 150px;">
-                <v-img contain height="150px" v-bind:src="obj.thumbnail.value" />
+            <v-flex xs12 sm1 class="px-2 py-2">
+              <div>
+                <v-img contain max-height="90px" v-bind:src="obj.thumbnail.value" />
               </div>
             </v-flex>
-            <v-flex xs12 sm10 class="px-2 py-2">
-              <h1>{{obj.label ? obj.label.value : obj.category.value.split("/").slice(-1)[0]}}</h1>
+            <v-flex xs12 sm11 class="px-2 py-2">
+              <template v-if="obj.wid">
+                <h1>
+                  <router-link
+                    v-bind:to="{ name : 'search', query : {u: obj.category.value }}"
+                  >{{obj.label ? obj.label.value : obj.category.value.split("/").slice(-1)[0]}}</router-link>
+                </h1>
+              </template>
+              <template v-else>
+                <h1>{{obj.label ? obj.label.value : obj.category.value.split("/").slice(-1)[0]}}</h1>
+              </template>
               <p class="mt-2" v-if="obj.comment">{{obj.comment.value}}</p>
             </v-flex>
           </v-layout>
@@ -76,6 +85,11 @@ export default {
       query += "OPTIONAL {?category schema:description ?comment . } \n";
       query += "OPTIONAL {?category schema:image ?thumbnail . } \n";
 
+      if(property == "schema:creator"){
+        query +=
+        "OPTIONAL {?category rdfs:isDefinedBy ?wid . filter (?wid = <https://jpsearch.go.jp/entity/chname/> ) } \n";
+      }
+      
       query += "} \n";
       query += "LIMIT 40 \n";
 

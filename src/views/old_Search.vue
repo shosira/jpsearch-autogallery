@@ -1,15 +1,23 @@
 <template>
   <v-container>
+    <v-layout row wrap class="mt-5">
+      <v-flex xs12 sm10>
+        <v-form ref="form">
+          <v-text-field v-model="term"></v-text-field>
+        </v-form>
+      </v-flex>
+      <v-flex xs12 sm2>
+        <v-btn color="primary" @click="search()">
+          <v-icon>fas fa-search</v-icon>
+        </v-btn>
+      </v-flex>
+    </v-layout>
 
     <v-flex xs12 sm4 offset-sm4>
-      <TargetAgent v-if="u" :u="u" class="mt-5" />
+      <TargetAgent :term="term" class="mt-5" />
     </v-flex>
 
     <div class="my-5"></div>
-
-    <Items v-if="u" :u="u" />
-
-    <!-- 
 
     <Items :term="term" />
 
@@ -32,44 +40,36 @@
     <div class="my-5"></div>
 
     <DPLA :term="term" />
-    -->
   </v-container>
 </template>
 
 <script>
 import TargetAgent from "../components/TargetAgent";
-import Items from "../components/Items";
-/*
 import Chart from "../components/Chart";
 import Items from "../components/Items";
 import RelatedGallery from "../components/RelatedGallery";
 import Event from "../components/Event";
 import Europeana from "../components/Europeana";
 import DPLA from "../components/DPLA";
-*/
 
 export default {
   components: {
     TargetAgent,
-    Items,
-    /*
     Chart,
     Items,
     RelatedGallery,
     Event,
     Europeana,
     DPLA
-    */
   },
   data: () => ({
     term: "歌川広重",
     link_related: "",
     link_items: "",
-    u: null,
+
     //iframe
     iframe_url: ""
   }),
-  /*
   watch: {
     $route() {
       if (this.$route.query.q != "") {
@@ -78,12 +78,21 @@ export default {
       this.getAll(this.term);
     }
   },
-  */
   mounted() {
-    if (this.$route.query.u != "") {
-      let u = this.$route.query.u;
-      this.u = u
-      //this.iframe_url = "timeline.html?q=" + u;
+    if (this.$route.query.q != "") {
+      this.term = this.$route.query.q;
+    }
+    this.getAll(this.term);
+  },
+  methods: {
+    search() {
+      var query = Object.assign({}, this.$route.query);
+      query.q = this.term;
+      this.$router.push({ query: query });
+    },
+    getAll(term) {
+      this.iframe_url = "timeline.html?q=" + term;
+      this.term = term;
     }
   }
 };

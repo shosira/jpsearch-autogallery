@@ -18,21 +18,21 @@
       >
         <v-card-text>
           <v-layout row>
-            <v-flex xs12 sm2 class="px-2 py-2">
-              <div style="background-color: black; height: 150px;">
+            <v-flex xs12 sm1 class="px-2 py-2">
+              <div>
                 <v-img
                   contain
-                  height="150px"
+                  max-height="90px"
                   src="https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png"
                 />
               </div>
             </v-flex>
-            <v-flex xs12 sm10 class="px-2 py-2">
+            <v-flex xs12 sm11 class="px-2 py-2">
               <h1>{{index}}</h1>
             </v-flex>
           </v-layout>
 
-          <ShowItems :arr="arr" v-if="arr.length > 0" class="mt-5" />
+          <ShowItems :map="{key : arr}" v-if="arr.length > 0" class="mt-5" />
         </v-card-text>
       </v-card>
     </v-card-text>
@@ -51,7 +51,7 @@ export default {
   data: () => ({
     results: {},
     show_flg: false,
-    label: "ギャラリー"
+    label: "Gallery"
   }),
   methods: {
     search() {
@@ -70,7 +70,6 @@ export default {
       query += " ?gallery rdfs:label ?glabel .  \n";
       query += " ?gallery oa:hasTarget ?cho . \n";
       query += " filter(?cho != <" + cho + ">) . \n";
-
       query += " SERVICE SILENT <https://jpsearch.go.jp/rdf/sparql> { \n";
       query += " ?cho rdfs:label ?label . \n";
       query += " optional { ?cho schema:image ?thumbnail . } \n";
@@ -81,6 +80,7 @@ export default {
       query += " } . \n";
 
       query += " } \n";
+      query += "ORDER BY RAND() \n";
 
       axios
         .get(
