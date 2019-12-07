@@ -82,10 +82,38 @@ export default {
         )
         .then(response => {
           let results = response.data.results.bindings;
+          let arr = []
+          let map = {}
+          for(let i = 0; i < results.length; i++){
+            let obj = results[i]
+            let p_label = obj.p_label.value
+            if(!map[p_label]){
+              map[p_label] = []
+            }
+            map[p_label].push(obj)
+          }
+
+          let index = 0
+          let flg = true
+          while(flg){
+            let tmp_flg = false
+            for(let key in map){
+              let tmp = map[key]
+              if(tmp[index]){
+                arr.push(tmp[index])
+                tmp_flg = true
+              }
+            }
+            if(!tmp_flg){
+              flg = false
+            }
+            index += 1
+          }
+
           if (thumbnail_flg) {
-            this.results.results_w_thumbnail = results;
+            this.results.results_w_thumbnail = arr//results;
           } else {
-            this.results.results_wo_thumbnail = results;
+            this.results.results_wo_thumbnail = arr//results;
           }
         });
     }
