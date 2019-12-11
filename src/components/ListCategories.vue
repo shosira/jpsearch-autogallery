@@ -2,11 +2,14 @@
   <v-card v-show="results.length > 0">
     <v-card-text>
       <h1 class="my-4">
-        {{label}}&nbsp;
-        <v-btn text small @click="show_flg = !show_flg">
+        {{label}}
+        <!--
+        &nbsp;
+        <v-btn color="info" small @click="show_flg = !show_flg">
           <template v-if="show_flg">非表示</template>
           <template v-else>表示</template>
         </v-btn>
+        -->
       </h1>
 
       <v-card
@@ -78,18 +81,23 @@ export default {
 
       let query = "PREFIX schema: <http://schema.org/> \n";
       query += "SELECT distinct * WHERE { \n";
-      query += "?cho " + property + " ?category. \n";
+      if (property != "jps:sourceInfo" && property != "jps:accessInfo") {
+        query += "?cho " + property + " ?category. \n";
+      } else {
+        query += "?cho " + property + " ?info. \n";
+        query += "?info schema:provider ?category. \n";
+      }
       query += "filter (?cho = <" + cho + ">)  \n";
 
       query += "OPTIONAL {?category rdfs:label ?label . } \n";
       query += "OPTIONAL {?category schema:description ?comment . } \n";
       query += "OPTIONAL {?category schema:image ?thumbnail . } \n";
 
-      if(property == "schema:creator"){
+      if (property == "schema:creator") {
         query +=
-        "OPTIONAL {?category rdfs:isDefinedBy ?wid . filter (?wid = <https://jpsearch.go.jp/entity/chname/> ) } \n";
+          "OPTIONAL {?category rdfs:isDefinedBy ?wid . filter (?wid = <https://jpsearch.go.jp/entity/chname/> ) } \n";
       }
-      
+
       query += "} \n";
       query += "LIMIT 40 \n";
 

@@ -2,7 +2,7 @@
   <v-container>
     <ShowItem :id="id" class="mt-5" />
 
-    <v-btn text small @click="show_all_flg = !show_all_flg" color="primary">
+    <v-btn color="info" small @click="show_all_flg = !show_all_flg">
       <template v-if="show_all_flg">すべて非表示</template>
       <template v-else>すべて表示</template>
     </v-btn>
@@ -53,6 +53,20 @@
       :id="id"
       label="Type"
       property="rdf:type"
+      :show_all_flg="show_all_flg"
+      class="mt-5"
+    />
+    <ListCategories
+      :id="id"
+      label="Source"
+      property="jps:sourceInfo"
+      :show_all_flg="show_all_flg"
+      class="mt-5"
+    />
+    <ListCategories
+      :id="id"
+      label="Access"
+      property="jps:accessInfo"
       :show_all_flg="show_all_flg"
       class="mt-5"
     />

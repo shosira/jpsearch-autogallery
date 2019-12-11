@@ -1,5 +1,9 @@
 <template>
   <div>
+    <v-btn color="info" small @click="db_flg = !db_flg">
+      <template v-if="db_flg">DBの絞り込みを解除</template>
+      <template v-else>DBで絞り込み</template>
+    </v-btn>
     <ul class="horizontal-list my-5">
       <template v-for="(result, index2) in results">
         <li v-for="(obj, index) in result" v-bind:key="index2+'_'+index">
@@ -40,19 +44,36 @@ export default {
     results: {
       results_w_thumbnail: [],
       results_wo_thumbnail: []
-    }
+    },
+    db_flg: false
   }),
   methods: {
+    init() {
+      for (let key in this.results) {
+        this.results[key] = [];
+      }
+      this.search(true);
+      this.search(false);
+    },
     search(thumbnail_flg) {
       let id = this.id;
-      let creator = this.creator;
+      let category = this.creator;
+      let property = this.property;
 
       let cho = "https://jpsearch.go.jp/data/" + id;
 
       let query = "PREFIX schema: <http://schema.org/> \n";
       query += "SELECT distinct * WHERE { \n";
-      query += "?cho " + this.property + "/owl:sameAs? ?creator . \n";
-      query += "filter(?creator = <" + creator + ">) . \n";
+
+      if (property != "jps:sourceInfo" && property != "jps:accessInfo") {
+        query += "?cho " + property + " ?category. \n";
+      } else {
+        query += "?cho " + property + " ?info. \n";
+        query += "?info schema:provider ?category. \n";
+      }
+
+      //query += "?cho " + this.property + "/owl:sameAs? ?category . \n";
+      query += "filter(?category = <" + category + ">) . \n";
       query += "filter(?cho != <" + cho + ">) . \n";
       query += "?cho rdfs:label ?label . \n";
       if (thumbnail_flg) {
@@ -63,8 +84,15 @@ export default {
 
       query += "?cho jps:sourceInfo ?sourceInfo . \n";
       query += "?sourceInfo schema:provider ?p . \n";
+
+      if (this.db_flg) {
+        query += "<" + cho + "> jps:sourceInfo ?sourceInfo2 . \n";
+        query += "?sourceInfo2 schema:provider ?p2 . \n";
+        query += "filter(?p = ?p2) . \n";
+      }
+
       query += "?p rdfs:label ?p_label . \n";
-      
+
       query += "} \n";
       query += "ORDER BY RAND() \n";
       if (thumbnail_flg) {
@@ -72,7 +100,6 @@ export default {
       } else {
         query += "LIMIT 30 \n";
       }
-      
 
       axios
         .get(
@@ -82,38 +109,38 @@ export default {
         )
         .then(response => {
           let results = response.data.results.bindings;
-          let arr = []
-          let map = {}
-          for(let i = 0; i < results.length; i++){
-            let obj = results[i]
-            let p_label = obj.p_label.value
-            if(!map[p_label]){
-              map[p_label] = []
+          let arr = [];
+          let map = {};
+          for (let i = 0; i < results.length; i++) {
+            let obj = results[i];
+            let p_label = obj.p_label.value;
+            if (!map[p_label]) {
+              map[p_label] = [];
             }
-            map[p_label].push(obj)
+            map[p_label].push(obj);
           }
 
-          let index = 0
-          let flg = true
-          while(flg){
-            let tmp_flg = false
-            for(let key in map){
-              let tmp = map[key]
-              if(tmp[index]){
-                arr.push(tmp[index])
-                tmp_flg = true
+          let index = 0;
+          let flg = true;
+          while (flg) {
+            let tmp_flg = false;
+            for (let key in map) {
+              let tmp = map[key];
+              if (tmp[index]) {
+                arr.push(tmp[index]);
+                tmp_flg = true;
               }
             }
-            if(!tmp_flg){
-              flg = false
+            if (!tmp_flg) {
+              flg = false;
             }
-            index += 1
+            index += 1;
           }
 
           if (thumbnail_flg) {
-            this.results.results_w_thumbnail = arr//results;
+            this.results.results_w_thumbnail = arr; //results;
           } else {
-            this.results.results_wo_thumbnail = arr//results;
+            this.results.results_wo_thumbnail = arr; //results;
           }
         });
     }
@@ -121,14 +148,15 @@ export default {
 
   watch: {
     id: function() {
-      this.search(true);
-      this.search(false);
+      this.init();
+    },
+    db_flg: function() {
+      this.init();
     }
   },
 
   created() {
-    this.search(true);
-    this.search(false);
+    this.init();
   }
 };
 </script>
