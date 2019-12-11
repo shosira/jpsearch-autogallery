@@ -37,6 +37,17 @@
             <v-list-item-title>ギャラリーに使用されているアイテム</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-item link href="https://docs.google.com/spreadsheets/d/1LvUfXWZexjx5ByNu0ML1R-PftTGZDGZp1hmYqa_joYM/edit?usp=sharing">
+          <v-list-item-action>
+            <v-icon>mdi-table</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>検索サンプル</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        
       </v-list>
     </v-navigation-drawer>
 
