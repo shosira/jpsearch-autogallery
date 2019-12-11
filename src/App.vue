@@ -7,14 +7,13 @@
 
     <br/>
 
-    <!-- 
     <v-footer :dark="true" class="mt-5">
       <v-container>
         <p class="text-center my-5">
+          hogehoge
         </p>
       </v-container>
     </v-footer>
-    -->
   </v-app>
 </template>
 

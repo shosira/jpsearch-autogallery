@@ -4,7 +4,7 @@
     <v-layout row wrap v-show="results.length > 0">
       <v-flex xs12 sm2 class="px-3 py-3" v-for="(result, index) in results" :key="index">
         <v-card>
-          <router-link v-bind:to="{ path: 'search', query: { u : result.cho.value}}">
+          <router-link v-bind:to="{ path: 'search', query: { id : result.cho.value}}">
             <div style="background-color: black;">
               <v-img
                 v-if="result.thumbnail"
@@ -18,7 +18,7 @@
           <v-card-text>
             <b>
               <router-link
-                v-bind:to="{ path: 'search', query: { u: result.cho.value}}"
+                v-bind:to="{ path: 'search', query: { id: result.cho.value}}"
               >{{result.label.value}}</router-link>
             </b>
           </v-card-text>

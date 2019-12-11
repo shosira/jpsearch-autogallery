@@ -6,7 +6,7 @@
           <h1 class="white--text mb-2 display-1 text-center">
             <b>JPS自動ギャラリー</b>
           </h1>
-          <v-btn large class="mt-5" :to="{name: 'search'}" color="primary">試してみる</v-btn>
+          <v-btn large class="mt-5" :to="{name: 'item'}" color="primary">試してみる</v-btn>
         </v-layout>
       </v-parallax>
     </section>

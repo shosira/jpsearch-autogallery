@@ -96,7 +96,7 @@ export default {
     }
   },
   watch: {
-    term: function() {
+    u: function() {
       this.init();
     }
   },

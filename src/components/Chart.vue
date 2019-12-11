@@ -6,7 +6,7 @@
 import axios from 'axios';
 import { GChart } from 'vue-google-charts';
 export default {
-    props: ['term'],
+    props: ['u'],
     components: {
         GChart
     },
@@ -15,13 +15,15 @@ export default {
         chartOptions: {}
     }),
     methods: {
-        search(term) {
+        search() {
+
+            this.chartData = []
 
             let query = "PREFIX schema: <http://schema.org/> \n";
             query += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n";
             query += "SELECT ?cho ?label ?thumbnail ?pLabel WHERE { \n";
             query += "?cho rdfs:label ?label; \n";
-            query += "schema:creator/owl:sameAs? chname:" + term + " . \n";
+            query += "schema:creator/owl:sameAs? <"+this.u+"> . \n";
 
             query += "OPTIONAL {?cho schema:image ?thumbnail} \n";
 
@@ -35,6 +37,7 @@ export default {
                 .then(response => {
 
                     let results_items = response.data.results.bindings
+
                     let source_map = {}
                     for (let i = 0; i < results_items.length; i++) {
                         let obj = results_items[i]
@@ -63,12 +66,12 @@ export default {
         }
     },
     watch: {
-        term: function() {
-            this.search(this.term);
+        u: function() {
+            this.search();
         }
     },
     created() {
-        this.search(this.term);
+        this.search();
     }
 }
 </script>

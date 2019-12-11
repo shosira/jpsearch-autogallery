@@ -2,88 +2,58 @@
   <v-container>
 
     <v-flex xs12 sm4 offset-sm4>
-      <TargetAgent v-if="u" :u="u" class="mt-5" />
+      <TargetAgent v-if="id" :u="id" class="my-5" />
     </v-flex>
 
-    <div class="my-5"></div>
 
-    <Items v-if="u" :u="u" />
+    <Items v-if="id" :u="id" class="my-5"/>
 
-    <!-- 
+    <Chart :u="id" class="my-5"/>
 
-    <Items :term="term" />
+    <RelatedGallery :u="id" class="my-5"/>
 
-    <v-card style="width : 100%;" class="mt-5">
-      <Chart :term="term" />
-    </v-card>
+    <Event :u="id" class="my-5"/>
 
-    <div class="my-5"></div>
+    <Europeana :u="id" class="my-5"/>
 
-    <RelatedGallery :term="term" />
-
-    <div class="my-5"></div>
-
-    <Event :term="term" />
-
-    <div class="my-5"></div>
-
-    <Europeana :term="term" />
-
-    <div class="my-5"></div>
-
-    <DPLA :term="term" />
-    -->
+    <DPLA :u="id" class="my-5"/>
   </v-container>
 </template>
 
 <script>
 import TargetAgent from "../components/TargetAgent";
 import Items from "../components/Items";
-/*
 import Chart from "../components/Chart";
-import Items from "../components/Items";
 import RelatedGallery from "../components/RelatedGallery";
 import Event from "../components/Event";
 import Europeana from "../components/Europeana";
 import DPLA from "../components/DPLA";
-*/
 
 export default {
   components: {
     TargetAgent,
     Items,
-    /*
     Chart,
-    Items,
     RelatedGallery,
     Event,
     Europeana,
     DPLA
-    */
   },
   data: () => ({
-    term: "歌川広重",
+    //term: "歌川広重",
     link_related: "",
     link_items: "",
-    u: null,
-    //iframe
-    iframe_url: ""
+    id: null
   }),
-  /*
   watch: {
     $route() {
-      if (this.$route.query.q != "") {
-        this.term = this.$route.query.q;
-      }
-      this.getAll(this.term);
+      this.id = this.$route.query.id;
     }
   },
-  */
   mounted() {
-    if (this.$route.query.u != "") {
-      let u = this.$route.query.u;
-      this.u = u
-      //this.iframe_url = "timeline.html?q=" + u;
+    if (this.$route.query.id != "") {
+      let id = this.$route.query.id;
+      this.id = id
     }
   }
 };

@@ -27,7 +27,7 @@
               <template v-if="obj.wid">
                 <h1>
                   <router-link
-                    v-bind:to="{ name : 'search', query : {u: obj.category.value }}"
+                    v-bind:to="{ name : 'search', query : {id: obj.category.value }}"
                   >{{obj.label ? obj.label.value : obj.category.value.split("/").slice(-1)[0]}}</router-link>
                 </h1>
               </template>

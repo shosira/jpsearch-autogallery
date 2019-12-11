@@ -1,42 +1,45 @@
 <template>
-  <v-container grid-list-md text-xs-center v-show="results.length > 0">
-    <h2 class="mt-5 mb-5">Europeanaで探す</h2>
-    <v-layout row wrap>
-      <v-flex xs12 sm2 v-for="(result, index) in results" v-bind:key="index">
-        <v-card>
-          <a v-bind:href="result.uri.value">
-            <div style="background-color: black; height: 300px">
-              <v-img
-                height="300px"
-                contain="true"
-                v-if="result.image"
-                v-bind:src="result.image.value"
-              />
-            </div>
-          </a>
-          <v-card-text>
-            <h3>
-              <a target="snorql" v-bind:href="result.uri.value">{{ result.label.value }}</a>
-            </h3>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
+  <v-container grid-list-md text-xs-center v-show="results.results_w_thumbnail.length > 0">
+    <h3 class="mt-5">Europeanaで探す</h3>
+    <a :href="link" target="_blank">
+      すべてを見る
+      <i class="fas fa-external-link-alt"></i>
+    </a>
+    
+    <ShowItems :map="results" target="direct" v-if="results.results_w_thumbnail.length > 0" class="mt-5" />
   </v-container>
 </template>
 
 <script>
 import axios from "axios";
+import ShowItems from "../components/ShowItems";
 
 export default {
-  props: ["term"],
+  components: {
+    ShowItems
+  },
+  props: ["u"],
   data: () => ({
-    results: [],
+    results: {
+      results_w_thumbnail: []
+    },
     link: null
   }),
   methods: {
-    search(term) {
-      this.results = [];
+    init() {
+      for (let key in this.results) {
+        this.results[key] = [];
+      }
+      this.search();
+    },
+    search() {
+
+      if(this.u == null){
+          return;
+      }
+
+      let u = this.u.split("/")
+      let term = u[u.length - 1]
 
       let query = "";
       query += "PREFIX dc: <http://purl.org/dc/elements/1.1/> \n";
@@ -58,7 +61,13 @@ export default {
       query += "			?uri ore:proxyIn [edm:isShownBy ?image ] \n";
       query += "		} \n";
       query += "		} \n";
-      query += "} limit 12\n";
+      query += "} \n";
+      query += "ORDER BY RAND() \n";
+      query += "LIMIT 100\n";
+
+      this.link =
+        "https://jpsearch.go.jp/rdf/sparql/easy/?query=" +
+        encodeURIComponent(query.split("LIMIT ")[0]);
 
       axios
         .get(
@@ -67,20 +76,28 @@ export default {
             "&output=json"
         )
         .then(response => {
-          this.results = response.data.results.bindings;
+          let results = response.data.results.bindings;
+          for (let i = 0; i < results.length; i++) {
+            let obj = results[i];
+            let n_obj = {
+              label: obj.label.value,
+              thumbnail: obj.image
+                ? obj.image.value
+                : "https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png",
+              id: obj.uri.value
+            };
+            this.results.results_w_thumbnail.push(n_obj);
+          }
         })
-        .catch(error => {
-          console.log(error);
-        });
     }
   },
   watch: {
-    term: function() {
-      this.search(this.term);
+    u: function() {
+      this.init();
     }
   },
   created() {
-    this.search(this.term);
+    this.init();
   }
 };
 </script>
