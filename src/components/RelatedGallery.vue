@@ -1,12 +1,12 @@
 <template>
-  <v-container grid-list-md text-xs-center v-show="Object.keys(results).length > 0">
+  <v-container grid-list-md text-xs-center v-if="results.results_w_thumbnail.length > 0">
     <h3 class="mt-5">関連する人物</h3>
 
     <a :href="link" target="_blank">
       すべてを見る
       <i class="fas fa-external-link-alt"></i>
     </a>
-    <ShowItems :map="results" target="search" v-if="Object.keys(results).length > 0" class="mt-5" />
+    <ShowItems :map="results" target="search" class="mt-5" />
   </v-container>
 </template>
 
@@ -33,6 +33,9 @@ export default {
       this.search();
     },
     search() {
+
+      let limit = 100
+
       let query = "";
 
       query += "SELECT DISTINCT ?dest ?plabel ?pthumbnail WHERE { \n";
@@ -50,7 +53,7 @@ export default {
       query += "      rdfs:label ?plabel\n";
       query += "} \n";
       query += "ORDER BY RAND() \n";
-      query += "LIMIT 100 \n";
+      query += "LIMIT "+limit+" \n";
 
       this.link =
         "https://jpsearch.go.jp/rdf/sparql/easy/?query=" +

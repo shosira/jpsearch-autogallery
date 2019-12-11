@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-md text-xs-center>
+  <v-container grid-list-md text-xs-center v-if="markers.length > 0">
     <h3 class="my-5">過去の展覧会を探す</h3>
 
     <div style="width : 100%; height : 600px">
@@ -44,6 +44,7 @@ export default {
     //Map
     zoom: 7,
     center: [35.681489, 139.767136],
+    center2: [],
     url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
     attribution:
       '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -103,7 +104,7 @@ export default {
               lat / results_event.length,
               long / results_event.length
             ];
-            this.center = center
+            this.center2 = center
           }
         })
     }

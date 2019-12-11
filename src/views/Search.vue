@@ -8,7 +8,8 @@
 
     <Items v-if="id" :u="id" class="my-5"/>
 
-    <Chart :u="id" class="my-5"/>
+    <!-- 
+    <Chart :u="id" class="my-5"/> -->
 
     <RelatedGallery :u="id" class="my-5"/>
 
@@ -23,7 +24,7 @@
 <script>
 import TargetAgent from "../components/TargetAgent";
 import Items from "../components/Items";
-import Chart from "../components/Chart";
+//import Chart from "../components/Chart";
 import RelatedGallery from "../components/RelatedGallery";
 import Event from "../components/Event";
 import Europeana from "../components/Europeana";
@@ -33,7 +34,7 @@ export default {
   components: {
     TargetAgent,
     Items,
-    Chart,
+    //Chart,
     RelatedGallery,
     Event,
     Europeana,

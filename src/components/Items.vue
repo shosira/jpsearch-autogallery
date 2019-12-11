@@ -1,15 +1,17 @@
 <template>
-  <v-container grid-list-md text-xs-center>
-    <h3 class="mt-5">
-      作品で知る
-    </h3>
+  <v-container
+    grid-list-md
+    text-xs-center
+    v-if="results.results_w_thumbnail.length > 0 || results.results_wo_thumbnail.length > 0"
+  >
+    <h3 class="mt-5">作品で知る</h3>
 
     <a :href="link" target="_blank">
-          すべてを見る
-          <i class="fas fa-external-link-alt"></i>
-        </a>
+      すべてを見る
+      <i class="fas fa-external-link-alt"></i>
+    </a>
 
-    <ShowItems :map="results" v-if="Object.keys(results).length > 0" class="mt-5" />
+    <ShowItems :map="results" class="mt-5" />
   </v-container>
 </template>
 
@@ -92,7 +94,7 @@ export default {
               this.results.results_wo_thumbnail.push(n_obj);
             }
           }
-        })
+        });
     }
   },
   watch: {
