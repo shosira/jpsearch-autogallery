@@ -7,6 +7,10 @@
       <template v-else>すべて表示</template>
     </v-btn>
     <ListGalleries :id="id" :show_all_flg="show_all_flg" class="mt-5" />
+    <RelatedItems
+      :id="id"
+      class="mt-5"
+    />
     <ListCategories
       :id="id"
       label="Creator"
@@ -77,12 +81,14 @@
 import ShowItem from "../components/ShowItem.vue";
 import ListCategories from "../components/ListCategories.vue";
 import ListGalleries from "../components/ListGalleries.vue";
+import RelatedItems from "../components/RelatedItems.vue";
 
 export default {
   components: {
     ListCategories,
     ListGalleries,
-    ShowItem
+    ShowItem,
+    RelatedItems
   },
   data: () => ({
     id: "",
