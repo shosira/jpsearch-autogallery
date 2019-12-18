@@ -6,7 +6,11 @@
 
     <Items v-if="id" :u="id" class="my-5" />
 
-    <Chart :u="id" class="my-5" />
+    <v-card class="my-5">
+      <v-card-text>
+        <Chart height="300" :u="id" class="my-5" />
+      </v-card-text>
+    </v-card>
 
     <RelatedGallery :u="id" class="my-5" />
 

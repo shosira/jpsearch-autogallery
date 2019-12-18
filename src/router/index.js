@@ -5,6 +5,7 @@ import List from '../views/List.vue'
 import Search from '../views/Search.vue'
 import Vis from '../views/Vis.vue'
 import Item from '../views/Item.vue'
+import Item2 from '../views/Item2.vue'
 import ListInGalleries from '../views/ListInGalleries.vue'
 
 Vue.use(VueRouter)
@@ -34,6 +35,11 @@ const routes = [
     path: '/item',
     name: 'item',
     component: Item
+  },
+  {
+    path: '/item2',
+    name: 'item2',
+    component: Item2
   },
   {
     path: '/listInGalleries',

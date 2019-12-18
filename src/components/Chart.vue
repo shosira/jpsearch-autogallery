@@ -1,77 +1,86 @@
-<template>
-    <GChart type="ColumnChart" :data="chartData" :options="chartOptions" v-show="chartData.length > 0" />
-</template>
-
 <script>
-import axios from 'axios';
-import { GChart } from 'vue-google-charts';
+import { Bar } from "vue-chartjs";
+import axios from "axios";
+
 export default {
-    props: ['u'],
-    components: {
-        GChart
-    },
-    data: () => ({
-        chartData: [],
-        chartOptions: {}
-    }),
-    methods: {
-        search() {
+  extends: Bar,
+  name: "chart",
+  props: ["u"],
+  methods: {
+    init() {
+      this.chartData = [];
 
-            this.chartData = []
+      let query = "PREFIX schema: <http://schema.org/> \n";
+      query += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n";
+      query += "SELECT (count(?cho) as ?c) ?pLabel WHERE { \n";
+      query += "?cho rdfs:label ?label; \n";
+      query += "schema:creator/owl:sameAs? <" + this.u + "> . \n";
 
-            let query = "PREFIX schema: <http://schema.org/> \n";
-            query += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n";
-            query += "SELECT ?cho ?label ?thumbnail ?pLabel WHERE { \n";
-            query += "?cho rdfs:label ?label; \n";
-            query += "schema:creator/owl:sameAs? <"+this.u+"> . \n";
+      query += "OPTIONAL {?cho schema:image ?thumbnail} \n";
 
-            query += "OPTIONAL {?cho schema:image ?thumbnail} \n";
+      query += "?cho jps:sourceInfo ?source . \n";
+      query += "?source schema:provider ?provider . \n";
+      query += "?provider rdfs:label ?pLabel . \n";
 
-            query += "?cho jps:sourceInfo ?source . \n";
-            query += "?source schema:provider ?provider . \n";
-            query += "?provider rdfs:label ?pLabel . \n";
+      query += "} group by ?pLabel order by desc(?c) \n";
 
-            query += "} \n";
+      axios
+        .get(
+          "https://jpsearch.go.jp/rdf/sparql?query=" +
+            encodeURIComponent(query) +
+            "&output=json"
+        )
+        .then(response => {
+          let results = response.data.results.bindings;
 
-            axios.get("https://jpsearch.go.jp/rdf/sparql?query=" + encodeURIComponent(query) + "&output=json")
-                .then(response => {
+          let labels = [];
+          let values = [];
+          for (let i = 0; i < results.length; i++) {
+            let obj = results[i];
 
-                    let results_items = response.data.results.bindings
+            labels.push(obj.pLabel.value);
+            values.push(obj.c.value);
+          }
 
-                    let source_map = {}
-                    for (let i = 0; i < results_items.length; i++) {
-                        let obj = results_items[i]
-                        let source = obj.pLabel.value
+          let data = {
+            labels: labels,
+            datasets: [
+              {
+                label: "Item",
+                data: values,
+                borderWidth: 1
+              }
+            ]
+          };
 
-                        if (!source_map[source]) {
-                            source_map[source] = 0
-                        }
+          let options = {
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    beginAtZero: TextTrackCue
+                  }
+                }
+              ]
+            },
+            responsive: true,
+            maintainAspectRatio: false
+          };
 
-                        source_map[source] += 1
-                    }
-
-                    let arr = []
-                    arr.push(['Source', '# of items'])
-
-                    let keysSorted = Object.keys(source_map).sort(function(a, b) { return -(source_map[a] - source_map[b]) })
-
-                    for (let i = 0; i < keysSorted.length; i++) {
-                        let source = keysSorted[i]
-                        arr.push([source, source_map[source]])
-                    }
-
-                    this.chartData = arr
-
-                }).catch(error => { console.log(error); });
-        }
-    },
-    watch: {
-        u: function() {
-            this.search();
-        }
-    },
-    created() {
-        this.search();
+          this.renderChart(data, options);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
-}
+  },
+  watch: {
+    u: function() {
+      this.init();
+    }
+  },
+  created() {
+    this.init();
+  }
+};
 </script>
