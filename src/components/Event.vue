@@ -104,9 +104,9 @@ export default {
               lat / results_event.length,
               long / results_event.length
             ];
-            this.center2 = center
+            this.center2 = center;
           }
-        })
+        });
     }
   },
   watch: {

@@ -5,7 +5,7 @@
     </div>
     <v-card-text>
       <b>{{obj.label.value}}</b>
-      <p class="my-1">{{obj.comment.value}}</p>
+      <p class="my-1" v-if="obj.comment">{{obj.comment.value}}</p>
     </v-card-text>
   </v-card>
 </template>
@@ -44,7 +44,7 @@ export default {
             this.search4wiki(obj.wid.value);
           }
           this.obj = obj;
-        })
+        });
     },
     search4wiki(u) {
       let query = "PREFIX schema: <http://schema.org/> \n";
@@ -62,7 +62,7 @@ export default {
         .then(response => {
           let obj = response.data.results.bindings[0];
           this.obj.thumbnail = obj.thumbnail.value;
-        })
+        });
     }
   },
   watch: {

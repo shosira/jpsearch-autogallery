@@ -33,8 +33,7 @@ export default {
       this.search();
     },
     search() {
-
-      let limit = 100
+      let limit = 100;
 
       let query = "";
 
@@ -53,7 +52,7 @@ export default {
       query += "      rdfs:label ?plabel\n";
       query += "} \n";
       query += "ORDER BY RAND() \n";
-      query += "LIMIT "+limit+" \n";
+      query += "LIMIT " + limit + " \n";
 
       this.link =
         "https://jpsearch.go.jp/rdf/sparql/easy/?query=" +
@@ -78,7 +77,7 @@ export default {
             };
             this.results.results_w_thumbnail.push(n_obj);
           }
-        })
+        });
     }
   },
   watch: {

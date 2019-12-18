@@ -2,6 +2,24 @@
   <v-container>
     <ShowItem :id="id" class="mt-5" />
 
+    <br />
+
+    <hr class="my-5" />
+
+    <br />
+
+    <v-card class="my-5">
+      <v-card-text>
+        <RelatedItems :id="id" />
+      </v-card-text>
+    </v-card>
+
+    <br />
+
+    <hr class="my-5" />
+
+    <br />
+
     <v-btn color="info" small @click="show_all_flg = !show_all_flg">
       <template v-if="show_all_flg">すべて非表示</template>
       <template v-else>すべて表示</template>
@@ -77,12 +95,14 @@
 import ShowItem from "../components/ShowItem.vue";
 import ListCategories from "../components/ListCategories.vue";
 import ListGalleries from "../components/ListGalleries.vue";
+import RelatedItems from "../components/RelatedItems.vue";
 
 export default {
   components: {
     ListCategories,
     ListGalleries,
-    ShowItem
+    ShowItem,
+    RelatedItems
   },
   data: () => ({
     id: "",

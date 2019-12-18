@@ -13,8 +13,17 @@ export default {
       let query = "PREFIX schema: <http://schema.org/> \n";
       query += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n";
       query += "SELECT (count(?cho) as ?c) ?pLabel WHERE { \n";
+
+      query += " { ";
       query += "?cho rdfs:label ?label; \n";
       query += "schema:creator/owl:sameAs? <" + this.u + "> . \n";
+      query += " } UNION { ";
+      query += "?cho rdfs:label ?label; \n";
+      query +=
+        "?x ?y . ?y <https://jpsearch.go.jp/term/property#value> <" +
+        this.u +
+        "> . \n";
+      query += " } ";
 
       query += "OPTIONAL {?cho schema:image ?thumbnail} \n";
 
@@ -68,9 +77,6 @@ export default {
           };
 
           this.renderChart(data, options);
-        })
-        .catch(error => {
-          console.log(error);
         });
     }
   },

@@ -98,9 +98,6 @@ export default {
           lat / this.results_event.length,
           long / this.results_event.length
         );
-      })
-      .catch(error => {
-        console.log(error);
       });
   }
 };
