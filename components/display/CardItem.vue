@@ -4,7 +4,7 @@
     :class="horizontal ? '' : 'mb-4'"
     :style="horizontal ? 'width: ' + width + 'px;' : ''"
   >
-    <a :href="item._source._url" target="_blank">
+    <nuxt-link :to="item.to">
       <v-img
         :src="item._source._thumbnail"
         contain
@@ -12,7 +12,7 @@
         width="100%"
         class="grey lighten-2"
       ></v-img>
-    </a>
+    </nuxt-link>
 
     <div
       class="pa-4"
@@ -26,10 +26,10 @@
           : ''
       "
     >
-      <a :href="item._source._url" target="_blank">
+      <nuxt-link :to="item.to">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <b v-html="item._source._label"></b>
-      </a>
+      </nuxt-link>
       <template v-if="item._source.description">
         <div class="mt-2">
           {{ item._source.description }}

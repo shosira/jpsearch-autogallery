@@ -94,33 +94,35 @@
           </v-list>
         </v-menu>
 
-        <template v-if="isSignedIn">
-          <v-menu left bottom>
-            <template #activator="{ on }">
-              <v-btn icon v-on="on">
-                <v-avatar size="36">
-                  <img :src="userPic" :alt="userName" />
-                </v-avatar>
-              </v-btn>
-            </template>
+        <div v-if="false">
+          <template v-if="isSignedIn">
+            <v-menu left bottom>
+              <template #activator="{ on }">
+                <v-btn icon v-on="on">
+                  <v-avatar size="36">
+                    <img :src="userPic" :alt="userName" />
+                  </v-avatar>
+                </v-btn>
+              </template>
 
-            <v-list>
-              <!--
+              <v-list>
+                <!--
               <v-list-item @click="dialog = !dialog">
                 <v-list-item-title>プロフィール編集</v-list-item-title>
               </v-list-item>
               -->
-              <v-list-item @click="signOut">
-                <v-list-item-title>ログアウト</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </template>
-        <template v-else>
-          <v-btn color="error" @click="dialog4login = !dialog4login">{{
-            $t('login')
-          }}</v-btn>
-        </template>
+                <v-list-item @click="signOut">
+                  <v-list-item-title>ログアウト</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </template>
+          <template v-else>
+            <v-btn color="error" @click="dialog4login = !dialog4login">{{
+              $t('login')
+            }}</v-btn>
+          </template>
+        </div>
       </v-app-bar>
     </div>
 

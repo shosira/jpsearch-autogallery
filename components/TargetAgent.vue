@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, Watch } from 'nuxt-property-decorator'
 import axios from 'axios'
 import ResultOption from '~/components/display/ResultOption.vue'
 
@@ -47,11 +47,16 @@ export default class about extends Vue {
     return this.$i18n.locale
   }
 
-  created() {
-    this.search()
+  @Watch('$route')
+  watchR(): void {
+    this.init()
   }
 
-  async search() {
+  created() {
+    this.init()
+  }
+
+  async init() {
     const id = this.u
     const lang = this.lang
 
@@ -97,7 +102,6 @@ export default class about extends Vue {
     let label = obj.label.value
     label = obj.name ? obj.name.value : label
 
-    // this.obj = obj
     const item = {
       _id: obj.s.value,
       _source: {
@@ -105,7 +109,7 @@ export default class about extends Vue {
         kana: obj.kana ? obj.kana.value : '',
         description: obj.comment ? obj.comment.value : '',
         _thumbnail: obj.thumbnail ? obj.thumbnail.value : '',
-        _url: obj.s.value,
+        _url: process.env.BASE_URL + this.$route.fullPath,
       },
     }
     this.item = item

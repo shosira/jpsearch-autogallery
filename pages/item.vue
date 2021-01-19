@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="id">
     <v-sheet color="grey lighten-2">
       <v-container fluid class="py-4">
         <v-breadcrumbs class="py-0" :items="items">
@@ -9,7 +9,8 @@
         </v-breadcrumbs>
       </v-container>
     </v-sheet>
-    <TargetAgent v-if="id" :u="id" class="mb-5" />
+    <TargetAgent :u="id" class="mb-5" />
+    <RelatedGallery :u="id" class="my-5" />
     <v-container class="my-10">
       <div class="text-center">
         <small>
@@ -48,13 +49,16 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'nuxt-property-decorator'
+
 import Grid from '~/components/Grid.vue'
 import TargetAgent from '~/components/TargetAgent.vue'
+import RelatedGallery from '~/components/RelatedGallery.vue'
 
 @Component({
   components: {
     Grid,
     TargetAgent,
+    RelatedGallery,
   },
 })
 export default class about extends Vue {

@@ -51,6 +51,5 @@ export default class Header extends Vue {
 
   /* 見た目調整 */
   margin-right: 16px;
-  margin-left: 16px;
 }
 </style>
