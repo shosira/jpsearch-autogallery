@@ -4,15 +4,28 @@
     :class="horizontal ? '' : 'mb-4'"
     :style="horizontal ? 'width: ' + width + 'px;' : ''"
   >
-    <nuxt-link :to="item.to">
-      <v-img
-        :src="item._source._thumbnail"
-        contain
-        style="height: 150px"
-        width="100%"
-        class="grey lighten-2"
-      ></v-img>
-    </nuxt-link>
+    <template v-if="item.to">
+      <nuxt-link :to="item.to">
+        <v-img
+          :src="item._source._thumbnail"
+          contain
+          style="height: 150px"
+          width="100%"
+          class="grey lighten-2"
+        ></v-img>
+      </nuxt-link>
+    </template>
+    <template v-else>
+      <a :href="item.href" target="_blank">
+        <v-img
+          :src="item._source._thumbnail"
+          contain
+          style="height: 150px"
+          width="100%"
+          class="grey lighten-2"
+        ></v-img>
+      </a>
+    </template>
 
     <div
       class="pa-4"
@@ -26,10 +39,18 @@
           : ''
       "
     >
-      <nuxt-link :to="item.to">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <b v-html="item._source._label"></b>
-      </nuxt-link>
+      <template v-if="item.to">
+        <nuxt-link :to="item.to">
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <h4 v-html="item._source._label"></h4>
+        </nuxt-link>
+      </template>
+      <template v-else>
+        <a :href="item.href" target="_blank">
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <h4 v-html="item._source._label"></h4>
+        </a>
+      </template>
       <template v-if="item._source.description">
         <div class="mt-2">
           {{ item._source.description }}

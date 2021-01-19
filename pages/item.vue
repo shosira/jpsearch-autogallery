@@ -10,7 +10,8 @@
       </v-container>
     </v-sheet>
     <TargetAgent :u="id" class="mb-5" />
-    <RelatedGallery :u="id" class="my-5" />
+    <RelatedGallery :u="id" class="mt-10 mb-5" />
+    <Items :u="id" class="mt-10 mb-5" />
     <v-container class="my-10">
       <div class="text-center">
         <small>
@@ -53,12 +54,14 @@ import { Vue, Component, Watch } from 'nuxt-property-decorator'
 import Grid from '~/components/Grid.vue'
 import TargetAgent from '~/components/TargetAgent.vue'
 import RelatedGallery from '~/components/RelatedGallery.vue'
+import Items from '~/components/Items.vue'
 
 @Component({
   components: {
     Grid,
     TargetAgent,
     RelatedGallery,
+    Items,
   },
 })
 export default class about extends Vue {
