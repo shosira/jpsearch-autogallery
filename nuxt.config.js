@@ -7,7 +7,7 @@ const routerBase =
   process.env.DEPLOY_ENV === 'GH_PAGES'
     ? {
         router: {
-          base: '/repo/',
+          base: '/jpsearch2/',
         },
       }
     : {}
@@ -23,7 +23,8 @@ const basePath = baseUrl + baseDir
 const lang = 'ja'
 const siteName = 'JPS自動ギャラリー'
 env.siteName = siteName
-const siteDesc = 'ジャパンサーチ利活用スキーマを用いたギャラリーの自動生成アプリです。'
+const siteDesc =
+  'ジャパンサーチ利活用スキーマを用いたギャラリーの自動生成アプリです。'
 env.siteDesc = siteDesc
 const siteKeywords = 'Linked Open Data'
 
