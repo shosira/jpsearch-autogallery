@@ -31,6 +31,26 @@ export class Utils {
 
     return data
   }
+
+  formatArrayValue(arr: string[], delimiter: string = ', '): any {
+    if (arr == null) {
+      return ''
+    }
+    if (arr.length === 1) {
+      return arr[0]
+    } else {
+      const value: string = arr.join(delimiter)
+      return value
+    }
+  }
+
+  truncate(str: any, length: number): string {
+    if (str && str['@id']) {
+      return ''
+    }
+    str = String(str)
+    return str.length <= length ? str : str.substring(0, length) + '...'
+  }
 }
 
 export default (_: any, inject: any) => {

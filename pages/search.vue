@@ -1,17 +1,12 @@
 <template>
   <div>
-    <v-sheet color="grey lighten-3">
-      <v-container class="py-4">
-        <h1>
-          <template v-if="$i18n.locale === 'ja'">
-            {{ $t(title) }}{{ $t('browse_by') }}
+    <v-sheet color="grey lighten-2">
+      <v-container fluid class="py-4">
+        <v-breadcrumbs class="py-0" :items="items">
+          <template #divider>
+            <v-icon>mdi-chevron-right</v-icon>
           </template>
-          <template v-else>
-            {{ $t('browse_by') }}
-            {{ $t(title) }}
-          </template>
-          （{{ total.toLocaleString() }}）
-        </h1>
+        </v-breadcrumbs>
       </v-container>
     </v-sheet>
     <v-container>
@@ -78,7 +73,6 @@ import Grid from '~/components/Grid.vue'
   components: {
     Grid,
   },
-  watchQuery: true,
 })
 export default class about extends Vue {
   endpoint: string = 'https://jpsearch.go.jp/rdf/sparql?query='
@@ -86,7 +80,7 @@ export default class about extends Vue {
   title: any = this.$t('人物')
 
   total: number = 0
-  perPage: number = 20
+  perPage: number = 24
 
   people: any[] = []
 
@@ -138,6 +132,25 @@ export default class about extends Vue {
     return Math.ceil(this.total / this.perPage)
   }
 
+  get lang() {
+    return this.$i18n.locale
+  }
+
+  get items() {
+    return [
+      {
+        text: this.$t('top'),
+        disabled: false,
+        to: this.localePath({ name: 'index' }),
+      },
+      {
+        text:
+          this.$t('search') +
+          (this.total > 0 ? '（' + this.total.toLocaleString() + '）' : ''),
+      },
+    ]
+  }
+
   async search() {
     this.loadingFlag = true
 
@@ -150,6 +163,8 @@ export default class about extends Vue {
     const from = Number(this.$route.query.from) || 0
     this.currentPage = from / this.perPage + 1
 
+    const lang = this.lang
+
     const query = `
       PREFIX schema: <http://schema.org/>
       PREFIX type: <https://jpsearch.go.jp/term/type/>
@@ -161,10 +176,15 @@ export default class about extends Vue {
       PREFIX dct: <http://purl.org/dc/terms/>
       PREFIX hpdb: <https://w3id.org/hpdb/api/>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
-      select distinct count(?s) as ?count ?cho ?label ?thumbnail WHERE {
+      select distinct count(?s) as ?count ?cho ?label ?name ?thumbnail WHERE {
         ?s schema:creator ?cho .
         ?cho rdfs:label ?label;
         schema:image ?thumbnail . 
+        ${
+          lang === 'ja'
+            ? ''
+            : "OPTIONAL {?cho schema:name ?name . filter (lang(?name) = 'en')} "
+        }
         ${keyword !== '' ? '?label bif:contains \'"' + keyword + '"\'' : ''}
       }
       ORDER BY desc(?count)
@@ -182,9 +202,11 @@ export default class about extends Vue {
         for (let i = 0; i < results.length; i++) {
           const obj = results[i]
 
+          let label = obj.label.value
+          label = obj.name ? obj.name.value : label
+
           const person: any = {
-            label: obj.label.value,
-            description: this.$t('Item') + ': ' + obj.count.value,
+            label,
             path: {
               name: 'item',
               query: {

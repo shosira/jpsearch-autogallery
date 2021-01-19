@@ -268,4 +268,7 @@ export default class search extends Vue {
 .teiPlaceName {
   background-color: #c8e6c9;
 }
+a {
+  text-decoration: none;
+}
 </style>

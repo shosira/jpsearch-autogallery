@@ -13,7 +13,7 @@
         </nuxt-link>
         <div class="pa-4">
           <nuxt-link :to="localePath(obj.path)">
-            <b>{{ obj.label }}</b>
+            <h3>{{ obj.label }}</h3>
           </nuxt-link>
 
           <p v-if="obj.description" class="mt-2 mb-0">{{ obj.description }}</p>
@@ -24,7 +24,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
+              <template #activator="{ on }">
                 <a target="_blank" :href="obj.url" v-on="on"
                   ><img width="30px" :src="baseUrl + '/img/icons/rdf-logo.svg'"
                 /></a>
