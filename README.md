@@ -1,4 +1,8 @@
-# fb2
+# JPS Auto Generated Gallery
+
+![github pages](https://github.com/nakamura196/jpsearch2/workflows/github%20pages/badge.svg)
+
+ジャパンサーチの利活用スキーマを使用して、ギャラリーを自動生成するアプリケーションです。
 
 ## Build Setup
 

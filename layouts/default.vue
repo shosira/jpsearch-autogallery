@@ -30,10 +30,10 @@
 
           <v-list-item link target="_blank" href="https://jpsearch.go.jp">
             <v-list-item-action>
-              <v-icon>mdi-magnify</v-icon>
+              <v-icon>mdi-database</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>ジャパンサーチ</v-list-item-title>
+              <v-list-item-title>{{ $t('ジャパンサーチ') }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -43,12 +43,14 @@
             href="https://jpsearch.go.jp/rdf/sparql/easy/"
           >
             <v-list-item-action>
-              <v-icon>mdi-magnify</v-icon>
+              <v-icon>mdi-database</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-content>
                 <v-list-item-title
-                  >ジャパンサーチ利活用スキーマ</v-list-item-title
+                  >{{ $t('ジャパンサーチ') }}<br />{{
+                    $t('利活用スキーマ')
+                  }}</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item-content>

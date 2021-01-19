@@ -13,6 +13,8 @@
     <RelatedGallery :u="id" class="mt-10 mb-5" />
     <Items :u="id" class="mt-10 mb-5" />
     <Event :u="id" class="mt-10 mb-5" />
+    <Europeana :u="id" class="mt-10 mb-5" />
+    <DPLA :u="id" class="mt-10 mb-5" />
     <v-container class="my-10">
       <div class="text-center">
         <small>
@@ -58,6 +60,9 @@ import RelatedGallery from '~/components/RelatedGallery.vue'
 import Items from '~/components/Items.vue'
 import Event from '~/components/Event.vue'
 
+import Europeana from '~/components/Europeana.vue'
+import DPLA from '~/components/DPLA.vue'
+
 @Component({
   components: {
     Grid,
@@ -65,6 +70,8 @@ import Event from '~/components/Event.vue'
     RelatedGallery,
     Items,
     Event,
+    Europeana,
+    DPLA,
   },
 })
 export default class about extends Vue {
