@@ -44,19 +44,19 @@ import { Vue, Component } from 'nuxt-property-decorator'
 @Component({})
 export default class about extends Vue {
   baseUrl: string = process.env.BASE_URL || ''
-  // siteName: string = $t(process.env.siteName) || ''
-  // siteDesc: string = $t(process.env.siteDesc) || ''
 
-  get siteName() {
-    return this.$t(process.env.siteName) || ''
+  get siteName(): any {
+    const siteName: any = process.env.siteName || ''
+    return this.$t(siteName)
   }
 
-  get siteDesc() {
-    return this.$t(process.env.siteDesc) || ''
+  get siteDesc(): any {
+    const siteDesc: any = process.env.siteDesc || ''
+    return this.$t(siteDesc)
   }
 
   head() {
-    const title = this.$t(this.siteName)
+    const title = this.siteName
     return {
       titleTemplate: null,
       title,

@@ -54,7 +54,7 @@
           ></v-pagination>
         </div>
 
-        <grid cols="12" :sm="2" :list="people"></grid>
+        <Grid cols="12" :sm="2" :list="people"></Grid>
 
         <div class="text-center my-5">
           <v-pagination
@@ -72,18 +72,18 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'nuxt-property-decorator'
 import axios from 'axios'
-import grid from '~/components/grid.vue'
+import Grid from '~/components/Grid.vue'
 
 @Component({
   components: {
-    grid,
+    Grid,
   },
   watchQuery: true,
 })
 export default class about extends Vue {
   endpoint: string = 'https://jpsearch.go.jp/rdf/sparql?query='
 
-  title: string = this.$t('人物')
+  title: any = this.$t('人物')
 
   total: number = 0
   perPage: number = 20
@@ -94,7 +94,7 @@ export default class about extends Vue {
 
   currentPage: number = 1
 
-  keywordStr: string = ''
+  keywordStr: any = ''
 
   @Watch('$route')
   watchR(): void {
