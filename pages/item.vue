@@ -82,7 +82,7 @@ export default class about extends Vue {
   title: any = this.$t('Item')
   id: any = null
 
-  name: string = "search"
+  name: string = 'search'
   type: string = 'agential'
 
   get items() {
@@ -118,7 +118,9 @@ export default class about extends Vue {
       this.$route.query.id + '' ||
       'https://jpsearch.go.jp/entity/chname/葛飾北斎'
     this.id = id
-    this.title = id.replace('ncname', 'chname').split('chname/')[1]
+
+    const es = id.split('/')
+    this.title = es[es.length - 1]
   }
 
   head() {
