@@ -72,7 +72,7 @@ export default class about extends Vue {
           ?cho jps:sourceInfo ?source .
 
           ?source schema:provider ?provider .
-          ?provider rdfs:label ?pLabel . 
+          optional { ?provider rdfs:label ?pLabel . }
 
           ${
             lang === 'ja'
@@ -113,7 +113,7 @@ export default class about extends Vue {
         PREFIX dct: <http://purl.org/dc/terms/>
         PREFIX hpdb: <https://w3id.org/hpdb/api/>
         PREFIX sh: <http://www.w3.org/ns/shacl#>
-        SELECT distinct ?cho ?label ?thumbnail ?p_label ?name ?p_name WHERE {
+        SELECT distinct ?cho ?label ?thumbnail ?p ?p_label ?name ?p_name WHERE {
           {
             ?cho rdfs:label ?label;
             schema:about <${u}> .
@@ -126,7 +126,7 @@ export default class about extends Vue {
           }
           ?cho jps:sourceInfo ?sourceInfo .
           ?sourceInfo schema:provider ?p .
-          ?p rdfs:label ?p_label .
+          optional { ?p rdfs:label ?p_label . } 
 
           ${
             lang === 'ja'
@@ -151,7 +151,8 @@ export default class about extends Vue {
       let label = obj.label.value
       label = obj.name ? obj.name.value : label
 
-      let plabel = obj.p_label.value
+      const es = obj.p.value.split('/')
+      let plabel = obj.p_label ? obj.p_label.value : es[es.length - 1]
       plabel = obj.p_name ? obj.p_name.value : plabel
 
       const nObj = {

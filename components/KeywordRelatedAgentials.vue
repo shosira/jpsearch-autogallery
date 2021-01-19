@@ -93,8 +93,6 @@ export default class about extends Vue {
 
     const results = result.data.results.bindings
 
-    console.log(results.length)
-
     for (let i = 0; i < results.length; i++) {
       const obj = results[i]
 

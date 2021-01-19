@@ -8,6 +8,7 @@ export default {
   props: ['query', 'type', 'u'],
   data: () => ({
     uris: [],
+    total: 0,
   }),
   watch: {
     u() {
@@ -73,19 +74,26 @@ export default {
         .then((response) => {
           const results = response.data.results.bindings
 
+          let total = 0
+
           const labels = []
           const values = []
           const uris = []
           for (let i = 0; i < results.length; i++) {
             const obj = results[i]
 
-            let label = obj.pLabel.value
+            const es = obj.provider.value.split('/')
+            let label = obj.pLabel ? obj.pLabel.value : es[es.length - 1]
             label = obj.name ? obj.name.value : label
 
             labels.push(label)
             values.push(Number(obj.c.value))
             uris.push(obj.provider.value)
+
+            total += Number(obj.c.value)
           }
+
+          this.total = 0
 
           this.uris = uris
 

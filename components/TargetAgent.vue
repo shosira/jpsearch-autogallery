@@ -1,6 +1,6 @@
 <template>
   <div v-if="Object.keys(item).length > 0">
-    <v-sheet color="grey lighten-4">
+    <v-sheet v-if="item._source._thumbnail" color="grey lighten-4">
       <v-img
         :src="item._source._thumbnail"
         contain
@@ -100,15 +100,13 @@ export default class about extends Vue {
     let label = obj.label.value
     label = obj.name ? obj.name.value : label
 
-    console.log(obj.thumbnail, process.env.NO_IMG)
-
     const item = {
       _id: obj.s.value,
       _source: {
         _label: label,
         kana: obj.kana ? obj.kana.value : '',
         description: obj.comment ? obj.comment.value : '',
-        _thumbnail: obj.thumbnail ? obj.thumbnail.value : process.env.NO_IMG,
+        _thumbnail: obj.thumbnail ? obj.thumbnail.value : null, // process.env.NO_IMG,
         _url: process.env.BASE_URL + this.$route.fullPath,
       },
     }
@@ -132,7 +130,7 @@ export default class about extends Vue {
       const obj = result.data.results.bindings[0]
       return obj.thumbnail.value
     } else {
-      return process.env.NO_IMG
+      return null // process.env.NO_IMG
     }
   }
 }

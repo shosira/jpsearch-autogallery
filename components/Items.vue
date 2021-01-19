@@ -50,7 +50,7 @@ export default class about extends Vue {
     this.search()
   }
 
-  async search() {
+  async search(searchNoThumbFlag = false) {
     const limit = 20
 
     const u = this.u
@@ -76,7 +76,11 @@ export default class about extends Vue {
             ?cho rdfs:label ?label;
               ?x ?y . ?y <https://jpsearch.go.jp/term/property#value> <${u}>
           }
-          ?cho schema:image ?thumbnail .
+          ${
+            searchNoThumbFlag
+              ? 'MINUS { ?cho schema:image ?thumbnail } '
+              : '?cho schema:image ?thumbnail .'
+          }
           ?cho jps:sourceInfo ?sourceInfo .
           ?sourceInfo schema:provider ?p .
           ?p rdfs:label ?p_label .
@@ -118,6 +122,10 @@ export default class about extends Vue {
         },
       }
       this.results.results_w_thumbnail.push(nObj)
+    }
+
+    if (!searchNoThumbFlag && results.length < 10) {
+      this.search(true)
     }
   }
 }
