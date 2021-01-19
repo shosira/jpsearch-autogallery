@@ -9,7 +9,7 @@
           <h3 class="mb-5">{{ $t('データベース（上位10件）') }}</h3>
         </small>
       </div>
-      <Chart :height="300" :u="u" />
+      <Chart :height="300" :query="query" />
     </v-card>
   </v-container>
 </template>
@@ -18,7 +18,7 @@
 import { Vue, Component, Watch, Prop } from 'nuxt-property-decorator'
 import axios from 'axios'
 import HorizontalItems from '~/components/display/HorizontalItems.vue'
-import Chart from '~/components/Chart.vue'
+import Chart from '~/components/ChartQ.vue'
 
 @Component({
   components: {
@@ -41,6 +41,78 @@ export default class about extends Vue {
 
   created() {
     this.init()
+  }
+
+  get query() {
+    const lang = this.$i18n.locale
+
+    const u = this.u
+
+    const query = `
+        PREFIX schema: <http://schema.org/>
+        PREFIX type: <https://jpsearch.go.jp/term/type/>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX dct: <http://purl.org/dc/terms/>
+        PREFIX hpdb: <https://w3id.org/hpdb/api/>
+        PREFIX sh: <http://www.w3.org/ns/shacl#>
+        SELECT (count(distinct ?cho) as ?c) ?pLabel ?name ?provider WHERE {
+          {
+            ?cho rdfs:label ?label;
+            schema:about <${u}> .
+          } 
+
+          OPTIONAL {?cho schema:image ?thumbnail}
+          
+          ?cho jps:sourceInfo ?source .
+
+          ?source schema:provider ?provider .
+          ?provider rdfs:label ?pLabel . 
+
+          ${
+            lang === 'ja'
+              ? ''
+              : '?provider schema:name ?name . filter(lang(?name) = "en")'
+          }
+        }
+        group by ?pLabel ?name ?provider order by desc(?c)
+        LIMIT 10
+    `
+
+    /*
+    let query = 'PREFIX schema: <http://schema.org/> \n'
+    query += 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n'
+    query +=
+      'SELECT (count(distinct ?cho) as ?c) ?pLabel ?name ?provider WHERE { \n'
+
+    query += ' { '
+    query += '?cho rdfs:label ?label; \n'
+    query += 'schema:creator/owl:sameAs? <' + this.u + '> . \n'
+    query += ' } UNION { '
+    query += '?cho rdfs:label ?label; \n'
+    query +=
+      '?x ?y . ?y <https://jpsearch.go.jp/term/property#value> <' +
+      this.u +
+      '> . \n'
+    query += ' } '
+
+    query += 'OPTIONAL {?cho schema:image ?thumbnail} \n'
+
+    query += '?cho jps:sourceInfo ?source . \n'
+    query += '?source schema:provider ?provider . \n'
+    query += '?provider rdfs:label ?pLabel . \n'
+
+    query +=
+      lang === 'en'
+        ? '?provider schema:name ?name . filter(lang(?name) = "en") . \n'
+        : ''
+
+    query += '} group by ?pLabel ?name ?provider order by desc(?c) limit 10\n'
+    */
+    return query
   }
 
   init() {
@@ -71,11 +143,8 @@ export default class about extends Vue {
         SELECT distinct ?cho ?label ?thumbnail ?p_label ?name ?p_name WHERE {
           {
             ?cho rdfs:label ?label;
-            schema:creator/owl:sameAs? <${u}> .
-          } UNION {
-            ?cho rdfs:label ?label;
-              ?x ?y . ?y <https://jpsearch.go.jp/term/property#value> <${u}>
-          }
+            schema:about <${u}> .
+          } 
           ?cho schema:image ?thumbnail .
           ?cho jps:sourceInfo ?sourceInfo .
           ?sourceInfo schema:provider ?p .

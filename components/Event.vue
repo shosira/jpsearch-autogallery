@@ -45,7 +45,7 @@ export default {
     // results: [],
     link: null,
     // Map
-    zoom: 7,
+    zoom: 4,
     center: [35.681489, 139.767136],
     center2: [],
     url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',

@@ -1,16 +1,7 @@
 <template>
   <v-container v-if="results.results_w_thumbnail.length > 0">
-    <h2 class="mt-5 mb-3 text-center">{{ $t('Items') }}</h2>
+    <h2 class="mt-5 mb-3 text-center">{{ $t('Related Keywords') }}</h2>
     <HorizontalItems :data="results.results_w_thumbnail" />
-
-    <v-card flat class="my-5 pa-5">
-      <div class="text-center">
-        <small>
-          <h3 class="mb-5">{{ $t('データベース（上位10件）') }}</h3>
-        </small>
-      </div>
-      <Chart :height="300" :u="u" />
-    </v-card>
   </v-container>
 </template>
 
@@ -18,12 +9,10 @@
 import { Vue, Component, Watch, Prop } from 'nuxt-property-decorator'
 import axios from 'axios'
 import HorizontalItems from '~/components/display/HorizontalItems.vue'
-import Chart from '~/components/Chart.vue'
 
 @Component({
   components: {
     HorizontalItems,
-    Chart,
   },
 })
 export default class about extends Vue {
@@ -68,26 +57,18 @@ export default class about extends Vue {
         PREFIX dct: <http://purl.org/dc/terms/>
         PREFIX hpdb: <https://w3id.org/hpdb/api/>
         PREFIX sh: <http://www.w3.org/ns/shacl#>
-        SELECT distinct ?cho ?label ?thumbnail ?p_label ?name ?p_name WHERE {
-          {
-            ?cho rdfs:label ?label;
-            schema:creator/owl:sameAs? <${u}> .
-          } UNION {
-            ?cho rdfs:label ?label;
-              ?x ?y . ?y <https://jpsearch.go.jp/term/property#value> <${u}>
-          }
-          ?cho schema:image ?thumbnail .
-          ?cho jps:sourceInfo ?sourceInfo .
-          ?sourceInfo schema:provider ?p .
-          ?p rdfs:label ?p_label .
-
+        SELECT DISTINCT ?label ?name ?keyword count(?s) as ?count WHERE { 
+          ?s jps:agential
+          [jps:relationType/skos:broader?/rdfs:label "制作"; jps:value/owl:sameAs? <${u}> ] . 
+          ?s schema:about ?keyword . 
+          ?keyword rdfs:label ?label . 
           ${
             lang === 'ja'
               ? ''
-              : "OPTIONAL {?cho schema:name ?name . filter (lang(?name) = 'en')} OPTIONAL {?p schema:name ?p_name . filter (lang(?p_name) = 'en')}"
+              : "OPTIONAL {?keyword schema:name ?name . filter (lang(?name) = 'en')}"
           }
         }
-        ORDER BY RAND()
+        ORDER BY desc(?count)
         LIMIT ${limit}
       `
 
@@ -104,17 +85,21 @@ export default class about extends Vue {
       let label = obj.label.value
       label = obj.name ? obj.name.value : label
 
-      let plabel = obj.p_label.value
-      plabel = obj.p_name ? obj.p_name.value : plabel
-
       const nObj = {
-        _id: obj.cho.value,
-        href: obj.cho.value.replace('/data/', '/item/'),
+        _id: obj.keyword.value,
+        to: this.localePath({
+          name: 'keyword',
+          query: {
+            id: obj.keyword.value,
+          },
+        }),
         _source: {
           _label: label,
-          description: plabel,
-          _url: obj.cho.value,
-          _thumbnail: obj.thumbnail ? obj.thumbnail.value : process.env.NO_IMG,
+          description: obj.description ? obj.description.value : '',
+          _url: obj.keyword.value,
+          _thumbnail: obj.pthumbnail
+            ? obj.pthumbnail.value
+            : process.env.NO_IMG,
         },
       }
       this.results.results_w_thumbnail.push(nObj)

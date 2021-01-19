@@ -88,9 +88,7 @@ export default class about extends Vue {
         _source: {
           _label: label,
           _url: obj.uri.value,
-          _thumbnail: obj.image
-            ? obj.image.value
-            : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png',
+          _thumbnail: obj.image ? obj.image.value : process.env.NO_IMG,
         },
       }
       this.results.results_w_thumbnail.push(nObj)

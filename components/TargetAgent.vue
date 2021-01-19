@@ -106,7 +106,9 @@ export default class about extends Vue {
         _label: label,
         kana: obj.kana ? obj.kana.value : '',
         description: obj.comment ? obj.comment.value : '',
-        _thumbnail: obj.thumbnail ? obj.thumbnail.value : '',
+        _thumbnail: obj.thumbnail
+          ? obj.thumbnail.value
+          : 'https://jpsearch.go.jp/assets/img/no-image/curation-no-image_greylighter.png',
         _url: process.env.BASE_URL + this.$route.fullPath,
       },
     }

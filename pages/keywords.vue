@@ -77,8 +77,8 @@ import Grid from '~/components/Grid.vue'
 export default class about extends Vue {
   endpoint: string = 'https://jpsearch.go.jp/rdf/sparql?query='
 
-  name: string = "search"
-  type: string = 'agential'
+  name: string = "keywords"
+  type: string = 'keyword'
 
   total: number = 0
   perPage: number = 24
@@ -91,6 +91,8 @@ export default class about extends Vue {
 
   keywordStr: any = ''
 
+  
+
   @Watch('$route')
   watchR(): void {
     this.search()
@@ -98,6 +100,9 @@ export default class about extends Vue {
 
   async getTotal() {
     const keyword = this.keywordStr
+
+    const p = 'schema:about'
+
     const query = `
       PREFIX schema: <http://schema.org/>
       PREFIX type: <https://jpsearch.go.jp/term/type/>
@@ -110,9 +115,8 @@ export default class about extends Vue {
       PREFIX hpdb: <https://w3id.org/hpdb/api/>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       SELECT DISTINCT (count(distinct ?cho) as ?c) WHERE {
-        ?s schema:creator ?cho .
-        ?cho rdfs:label ?label;
-        schema:image ?thumbnail . 
+        ?s ${p} ?cho .
+        ?cho rdfs:label ?label . 
         ${keyword !== '' ? '?label bif:contains \'"' + keyword + '"\'' : ''}
       }
     `
@@ -169,6 +173,8 @@ export default class about extends Vue {
 
     const lang = this.lang
 
+    const p = 'schema:about'
+
     const query = `
       PREFIX schema: <http://schema.org/>
       PREFIX type: <https://jpsearch.go.jp/term/type/>
@@ -181,9 +187,9 @@ export default class about extends Vue {
       PREFIX hpdb: <https://w3id.org/hpdb/api/>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       select distinct count(?s) as ?count ?cho ?label ?name ?thumbnail WHERE {
-        ?s schema:creator ?cho .
-        ?cho rdfs:label ?label;
-        schema:image ?thumbnail . 
+        ?s ${p} ?cho . 
+        ?cho rdfs:label ?label . 
+        optional { ?cho schema:image ?thumbnail . }
         ${
           lang === 'ja'
             ? ''
@@ -191,10 +197,11 @@ export default class about extends Vue {
         }
         ${keyword !== '' ? '?label bif:contains \'"' + keyword + '"\'' : ''}
       }
-      ORDER BY desc(?count)
+      ORDER BY RAND()
       LIMIT ${this.perPage}
       OFFSET ${from}
     `
+    // ORDER BY desc(?count)
 
     axios
       .get(this.endpoint + encodeURIComponent(query) + '&output=json')
@@ -212,7 +219,7 @@ export default class about extends Vue {
           const person: any = {
             label,
             path: {
-              name: 'item',
+              name: 'keyword',
               query: {
                 id: obj.cho.value,
               },
@@ -222,7 +229,7 @@ export default class about extends Vue {
           if (obj.thumbnail) {
             person.image = obj.thumbnail.value
           } else {
-            person.image = process.env.BASE_URL + '/img/icons/no-image.png'
+            person.image = process.env.NO_IMG
           }
 
           people.push(person)
@@ -240,7 +247,7 @@ export default class about extends Vue {
     query.from = from
     this.$router.push(
       this.localePath({
-        name: 'search',
+        name: name,
         query,
       }),
       () => {},
@@ -277,7 +284,7 @@ export default class about extends Vue {
 
     this.$router.push(
       this.localePath({
-        name: 'search',
+        name: this.name,
         query,
       }),
       () => {},
@@ -286,7 +293,7 @@ export default class about extends Vue {
   }
 
   head() {
-    const title = this.$t('search')
+    const title = this.$t('keyword')
     return {
       title,
     }

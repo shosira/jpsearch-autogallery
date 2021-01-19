@@ -1,6 +1,6 @@
 <template>
   <v-container v-if="results.results_w_thumbnail.length > 0">
-    <h2 class="mt-5 mb-3 text-center">{{ $t('Related Gallaries') }}</h2>
+    <h2 class="mt-5 mb-3 text-center">{{ $t('Related agential') }}</h2>
     <HorizontalItems :data="results.results_w_thumbnail" />
   </v-container>
 </template>
@@ -104,7 +104,7 @@ export default class about extends Vue {
           _url: obj.dest.value,
           _thumbnail: obj.pthumbnail
             ? obj.pthumbnail.value
-            : 'https://www.gumtree.com/static/1/resources/assets/rwd/images/orphans/a37b37d99e7cef805f354d47.noimage_thumbnail.png',
+            : process.env.NO_IMG,
         },
       }
       this.results.results_w_thumbnail.push(nObj)

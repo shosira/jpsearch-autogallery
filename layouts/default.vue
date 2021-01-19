@@ -24,7 +24,23 @@
               <v-icon>mdi-magnify</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>{{ $t('search') }}</v-list-item-title>
+              <v-list-item-title>{{ $t('agential') }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item
+            link
+            :to="
+              localePath({
+                name: 'keywords',
+              })
+            "
+          >
+            <v-list-item-action>
+              <v-icon>mdi-magnify</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ $t('keyword') }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 

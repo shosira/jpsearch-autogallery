@@ -10,9 +10,10 @@
       </v-container>
     </v-sheet>
     <TargetAgent :u="id" class="mb-5" />
-    <RelatedGallery :u="id" class="mt-10 mb-5" />
+    <RelatedKeywords :u="id" class="mt-10 mb-5" />
     <Keywords :u="id" class="mt-10 mb-5" />
-    <Items :u="id" class="mt-10 mb-5" />
+    <KeywordRelatedAgentials :u="id" type="agential" class="mt-10 mb-5" />
+    <KeywordRelatedItems :u="id" class="mt-10 mb-5" />
     <Event :u="id" class="mt-10 mb-5" />
     <Europeana :u="id" class="mt-10 mb-5" />
     <DPLA :u="id" class="mt-10 mb-5" />
@@ -57,8 +58,9 @@ import { Vue, Component, Watch } from 'nuxt-property-decorator'
 
 import Grid from '~/components/Grid.vue'
 import TargetAgent from '~/components/TargetAgent.vue'
-import RelatedGallery from '~/components/RelatedGallery.vue'
-import Items from '~/components/Items.vue'
+import RelatedKeywords from '~/components/RelatedKeywords.vue'
+import KeywordRelatedItems from '~/components/KeywordRelatedItems.vue'
+import KeywordRelatedAgentials from '~/components/KeywordRelatedAgentials.vue'
 import Event from '~/components/Event.vue'
 import Keywords from '~/components/Keywords.vue'
 import Europeana from '~/components/Europeana.vue'
@@ -68,8 +70,9 @@ import DPLA from '~/components/DPLA.vue'
   components: {
     Grid,
     TargetAgent,
-    RelatedGallery,
-    Items,
+    RelatedKeywords,
+    KeywordRelatedItems,
+    KeywordRelatedAgentials,
     Event,
     Europeana,
     DPLA,
@@ -82,8 +85,8 @@ export default class about extends Vue {
   title: any = this.$t('Item')
   id: any = null
 
-  name: string = "search"
-  type: string = 'agential'
+  name: string = "keywords"
+  type: string = 'keyword'
 
   get items() {
     return [
@@ -115,10 +118,11 @@ export default class about extends Vue {
 
   init() {
     const id: string =
-      this.$route.query.id + '' ||
-      'https://jpsearch.go.jp/entity/chname/葛飾北斎'
+      this.$route.query.id + '' || 'https://jpsearch.go.jp/term/keyword/教会'
     this.id = id
-    this.title = id.replace('ncname', 'chname').split('chname/')[1]
+
+    const es = id.split('/')
+    this.title = es[es.length - 1]
   }
 
   head() {
