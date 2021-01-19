@@ -5,7 +5,7 @@ import axios from 'axios'
 export default {
   name: 'Chart',
   extends: Bar,
-  props: ['query'],
+  props: ['query', 'type', 'u'],
   data: () => ({
     uris: [],
   }),
@@ -27,6 +27,8 @@ export default {
 
       const uri = this.uris[item._index]
 
+      const stmt = this.type === 'keyword' ? `schema:about <${this.u}> ` : ''
+
       const query = `
         PREFIX schema: <http://schema.org/>
         PREFIX type: <https://jpsearch.go.jp/term/type/>
@@ -41,7 +43,7 @@ export default {
         SELECT DISTINCT ?cho ?label ?image WHERE {
           {
             ?cho rdfs:label ?label;
-            schema:creator/owl:sameAs? <${this.u}> 
+            ${stmt}
           } UNION {
             ?cho rdfs:label ?label;
             ?x ?y . ?y <https://jpsearch.go.jp/term/property#value> <${this.u}>
@@ -60,38 +62,6 @@ export default {
     init() {
       this.chartData = []
 
-      const lang = this.$i18n.locale
-
-      /*
-      let query = 'PREFIX schema: <http://schema.org/> \n'
-      query += 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n'
-      query +=
-        'SELECT (count(distinct ?cho) as ?c) ?pLabel ?name ?provider WHERE { \n'
-
-      query += ' { '
-      query += '?cho rdfs:label ?label; \n'
-      query += 'schema:creator/owl:sameAs? <' + this.u + '> . \n'
-      query += ' } UNION { '
-      query += '?cho rdfs:label ?label; \n'
-      query +=
-        '?x ?y . ?y <https://jpsearch.go.jp/term/property#value> <' +
-        this.u +
-        '> . \n'
-      query += ' } '
-
-      query += 'OPTIONAL {?cho schema:image ?thumbnail} \n'
-
-      query += '?cho jps:sourceInfo ?source . \n'
-      query += '?source schema:provider ?provider . \n'
-      query += '?provider rdfs:label ?pLabel . \n'
-
-      query +=
-        lang === 'en'
-          ? '?provider schema:name ?name . filter(lang(?name) = "en") . \n'
-          : ''
-
-      query += '} group by ?pLabel ?name ?provider order by desc(?c) limit 10\n'
-      */
       const query = this.query
 
       axios

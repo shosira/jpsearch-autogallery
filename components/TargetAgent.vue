@@ -100,15 +100,15 @@ export default class about extends Vue {
     let label = obj.label.value
     label = obj.name ? obj.name.value : label
 
+    console.log(obj.thumbnail, process.env.NO_IMG)
+
     const item = {
       _id: obj.s.value,
       _source: {
         _label: label,
         kana: obj.kana ? obj.kana.value : '',
         description: obj.comment ? obj.comment.value : '',
-        _thumbnail: obj.thumbnail
-          ? obj.thumbnail.value
-          : 'https://jpsearch.go.jp/assets/img/no-image/curation-no-image_greylighter.png',
+        _thumbnail: obj.thumbnail ? obj.thumbnail.value : process.env.NO_IMG,
         _url: process.env.BASE_URL + this.$route.fullPath,
       },
     }
@@ -132,7 +132,7 @@ export default class about extends Vue {
       const obj = result.data.results.bindings[0]
       return obj.thumbnail.value
     } else {
-      return null
+      return process.env.NO_IMG
     }
   }
 }

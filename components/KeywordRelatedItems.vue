@@ -9,7 +9,7 @@
           <h3 class="mb-5">{{ $t('データベース（上位10件）') }}</h3>
         </small>
       </div>
-      <Chart :height="300" :query="query" />
+      <Chart :height="300" :query="query" type="keyword" :u="u" />
     </v-card>
   </v-container>
 </template>
@@ -83,37 +83,6 @@ export default class about extends Vue {
         group by ?pLabel ?name ?provider order by desc(?c)
         LIMIT 10
     `
-
-    /*
-    let query = 'PREFIX schema: <http://schema.org/> \n'
-    query += 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n'
-    query +=
-      'SELECT (count(distinct ?cho) as ?c) ?pLabel ?name ?provider WHERE { \n'
-
-    query += ' { '
-    query += '?cho rdfs:label ?label; \n'
-    query += 'schema:creator/owl:sameAs? <' + this.u + '> . \n'
-    query += ' } UNION { '
-    query += '?cho rdfs:label ?label; \n'
-    query +=
-      '?x ?y . ?y <https://jpsearch.go.jp/term/property#value> <' +
-      this.u +
-      '> . \n'
-    query += ' } '
-
-    query += 'OPTIONAL {?cho schema:image ?thumbnail} \n'
-
-    query += '?cho jps:sourceInfo ?source . \n'
-    query += '?source schema:provider ?provider . \n'
-    query += '?provider rdfs:label ?pLabel . \n'
-
-    query +=
-      lang === 'en'
-        ? '?provider schema:name ?name . filter(lang(?name) = "en") . \n'
-        : ''
-
-    query += '} group by ?pLabel ?name ?provider order by desc(?c) limit 10\n'
-    */
     return query
   }
 
@@ -150,7 +119,11 @@ export default class about extends Vue {
             schema:about <${u}> .
           } 
           
-          ${searchNoThumbFlag ? '' : '?cho schema:image ?thumbnail .'}
+          ${
+            searchNoThumbFlag
+              ? 'MINUS { ?cho schema:image ?thumbnail } '
+              : '?cho schema:image ?thumbnail .'
+          }
           ?cho jps:sourceInfo ?sourceInfo .
           ?sourceInfo schema:provider ?p .
           ?p rdfs:label ?p_label .
@@ -194,7 +167,7 @@ export default class about extends Vue {
       this.results.results_w_thumbnail.push(nObj)
     }
 
-    if (!searchNoThumbFlag && results.length === 0) {
+    if (!searchNoThumbFlag && results.length < 10) {
       this.search(true)
     }
   }

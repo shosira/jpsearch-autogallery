@@ -42,7 +42,8 @@ export default class about extends Vue {
     this.search()
   }
 
-  async search() {
+  async search(searchNoThumbFlag = false) {
+    console.log({ searchNoThumbFlag })
     const limit = 20
 
     const u = this.u
@@ -66,8 +67,12 @@ export default class about extends Vue {
           jps:agential
           [jps:relationType/skos:broader?/rdfs:label "制作"; jps:value ?dest ] .
           
-          ?dest schema:image ?thumbnail;
-            rdfs:label ?label .
+          ${
+            searchNoThumbFlag
+              ? 'MINUS { ?dest schema:image ?thumbnail } '
+              : '?dest schema:image ?thumbnail .'
+          }
+          ?dest rdfs:label ?label .
           optional { ?dest schema:description ?description . }
 
           ${
@@ -87,7 +92,9 @@ export default class about extends Vue {
     )
 
     const results = result.data.results.bindings
-    console.log({ results })
+
+    console.log(results.length)
+
     for (let i = 0; i < results.length; i++) {
       const obj = results[i]
 
@@ -113,6 +120,10 @@ export default class about extends Vue {
         },
       }
       this.results.results_w_thumbnail.push(nObj)
+    }
+
+    if (!searchNoThumbFlag && results.length < 10) {
+      this.search(true)
     }
   }
 }
