@@ -6,6 +6,9 @@ export default {
   name: 'Chart',
   extends: Bar,
   props: ['u'],
+  data: () => ({
+    uris: [],
+  }),
   watch: {
     u() {
       this.init()
@@ -15,6 +18,45 @@ export default {
     this.init()
   },
   methods: {
+    handle(point, event) {
+      const item = event[0]
+      if (!item) {
+        console.log({ point })
+        return
+      }
+
+      const uri = this.uris[item._index]
+
+      const query = `
+        PREFIX schema: <http://schema.org/>
+        PREFIX type: <https://jpsearch.go.jp/term/type/>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX dct: <http://purl.org/dc/terms/>
+        PREFIX hpdb: <https://w3id.org/hpdb/api/>
+        PREFIX sh: <http://www.w3.org/ns/shacl#>
+        SELECT DISTINCT ?cho ?label ?image WHERE {
+          {
+            ?cho rdfs:label ?label;
+            schema:creator/owl:sameAs? <${this.u}> 
+          } UNION {
+            ?cho rdfs:label ?label;
+            ?x ?y . ?y <https://jpsearch.go.jp/term/property#value> <${this.u}>
+          }
+          ?cho rdfs:label ?label ;  jps:sourceInfo/schema:provider <${uri}> .
+          OPTIONAL {?cho schema:image ?image}
+        }
+      `
+
+      const url =
+        'https://jpsearch.go.jp/rdf/sparql/easy/?query=' +
+        encodeURIComponent(query)
+
+      open(url, '_blank')
+    },
     init() {
       this.chartData = []
 
@@ -22,7 +64,8 @@ export default {
 
       let query = 'PREFIX schema: <http://schema.org/> \n'
       query += 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n'
-      query += 'SELECT (count(distinct ?cho) as ?c) ?pLabel ?name WHERE { \n'
+      query +=
+        'SELECT (count(distinct ?cho) as ?c) ?pLabel ?name ?provider WHERE { \n'
 
       query += ' { '
       query += '?cho rdfs:label ?label; \n'
@@ -46,7 +89,7 @@ export default {
           ? '?provider schema:name ?name . filter(lang(?name) = "en") . \n'
           : ''
 
-      query += '} group by ?pLabel ?name order by desc(?c) limit 10\n'
+      query += '} group by ?pLabel ?name ?provider order by desc(?c) limit 10\n'
 
       axios
         .get(
@@ -59,6 +102,7 @@ export default {
 
           const labels = []
           const values = []
+          const uris = []
           for (let i = 0; i < results.length; i++) {
             const obj = results[i]
 
@@ -67,7 +111,10 @@ export default {
 
             labels.push(label)
             values.push(Number(obj.c.value))
+            uris.push(obj.provider.value)
           }
+
+          this.uris = uris
 
           const data = {
             labels,
@@ -92,6 +139,7 @@ export default {
             },
             responsive: true,
             maintainAspectRatio: false,
+            onClick: this.handle,
           }
 
           this.renderChart(data, options)

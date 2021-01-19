@@ -70,7 +70,7 @@ import Event from '~/components/Event.vue'
 export default class about extends Vue {
   endpoint: string = 'https://jpsearch.go.jp/rdf/sparql?query='
 
-  title: any = ''
+  title: any = this.$t('Item')
   id: any = null
 
   get items() {
@@ -107,6 +107,13 @@ export default class about extends Vue {
       'https://jpsearch.go.jp/entity/chname/葛飾北斎'
     this.id = id
     this.title = id.replace('ncname', 'chname').split('chname/')[1]
+  }
+
+  head() {
+    const title = this.title
+    return {
+      title,
+    }
   }
 }
 </script>

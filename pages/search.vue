@@ -77,8 +77,6 @@ import Grid from '~/components/Grid.vue'
 export default class about extends Vue {
   endpoint: string = 'https://jpsearch.go.jp/rdf/sparql?query='
 
-  title: any = this.$t('人物')
-
   total: number = 0
   perPage: number = 24
 
@@ -279,6 +277,13 @@ export default class about extends Vue {
       () => {},
       () => {}
     )
+  }
+
+  head() {
+    const title = this.$t('search')
+    return {
+      title,
+    }
   }
 }
 </script>
