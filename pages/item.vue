@@ -12,6 +12,7 @@
     <TargetAgent :u="id" class="mb-5" />
     <RelatedGallery :u="id" class="mt-10 mb-5" />
     <Items :u="id" class="mt-10 mb-5" />
+    <Event :u="id" class="mt-10 mb-5" />
     <v-container class="my-10">
       <div class="text-center">
         <small>
@@ -55,6 +56,7 @@ import Grid from '~/components/Grid.vue'
 import TargetAgent from '~/components/TargetAgent.vue'
 import RelatedGallery from '~/components/RelatedGallery.vue'
 import Items from '~/components/Items.vue'
+import Event from '~/components/Event.vue'
 
 @Component({
   components: {
@@ -62,6 +64,7 @@ import Items from '~/components/Items.vue'
     TargetAgent,
     RelatedGallery,
     Items,
+    Event,
   },
 })
 export default class about extends Vue {

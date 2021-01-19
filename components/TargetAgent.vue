@@ -9,9 +9,7 @@
     </v-sheet>
     <v-container class="my-5">
       <h1>
-        <a :href="item._source._url" target="_blank">{{
-          item._source._label
-        }}</a>
+        <a :href="item._id" target="_blank">{{ item._source._label }}</a>
       </h1>
       <span v-if="lang == 'ja'">{{ item._source.kana }}</span>
       <p class="my-5">{{ item._source.description }}</p>

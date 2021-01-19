@@ -37,6 +37,11 @@ const shortName = 'shibusawa'
 const manifestIcon = 'img/icons/icon-512.png'
 
 export default {
+  router: {
+    scrollBehavior() {
+      return { x: 0, y: 0 }
+    },
+  },
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 

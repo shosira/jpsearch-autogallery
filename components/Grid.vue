@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col v-for="(obj, index) in list" :key="index" :cols="cols" :sm="sm">
-      <v-card no-body class="mb-4">
+      <v-card no-body flat class="mb-4">
         <nuxt-link :to="localePath(obj.path)">
           <v-img
             :src="obj.image"

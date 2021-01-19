@@ -2,6 +2,15 @@
   <v-container v-if="results.results_w_thumbnail.length > 0">
     <h2 class="mt-5 mb-3 text-center">{{ $t('Items') }}</h2>
     <HorizontalItems :data="results.results_w_thumbnail" />
+
+    <v-card flat class="my-5 pa-5">
+      <div class="text-center">
+        <small>
+          <h3 class="mb-5">{{ $t('データベース（上位10件）') }}</h3>
+        </small>
+      </div>
+      <Chart :height="300" :u="u" />
+    </v-card>
   </v-container>
 </template>
 
@@ -9,10 +18,12 @@
 import { Vue, Component, Watch, Prop } from 'nuxt-property-decorator'
 import axios from 'axios'
 import HorizontalItems from '~/components/display/HorizontalItems.vue'
+import Chart from '~/components/Chart.vue'
 
 @Component({
   components: {
     HorizontalItems,
+    Chart,
   },
 })
 export default class about extends Vue {
@@ -57,7 +68,7 @@ export default class about extends Vue {
         PREFIX dct: <http://purl.org/dc/terms/>
         PREFIX hpdb: <https://w3id.org/hpdb/api/>
         PREFIX sh: <http://www.w3.org/ns/shacl#>
-        SELECT ?cho ?label ?thumbnail ?p_label ?name ?p_name WHERE {
+        SELECT distinct ?cho ?label ?thumbnail ?p_label ?name ?p_name WHERE {
           {
             ?cho rdfs:label ?label;
             schema:creator/owl:sameAs? <${u}> .
@@ -93,8 +104,8 @@ export default class about extends Vue {
       let label = obj.label.value
       label = obj.name ? obj.name.value : label
 
-      let plabel = obj["p_label"].value
-      plabel = obj["p_name"] ? obj["p_name"].value : plabel
+      let plabel = obj.p_label.value
+      plabel = obj.p_name ? obj.p_name.value : plabel
 
       const nObj = {
         _id: obj.cho.value,
