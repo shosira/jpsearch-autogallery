@@ -12,8 +12,10 @@
     <TargetAgent :u="id" class="mb-5" />
     <RelatedGallery :u="id" class="mt-10 mb-5" />
     <Keywords :u="id" class="mt-10 mb-5" />
+
     <Items :u="id" class="mt-10 mb-5" />
     <Event :u="id" class="mt-10 mb-5" />
+    <MapC :u="id" type="agential" class="mt-10 mb-5" />
     <Europeana :u="id" class="mt-10 mb-5" />
     <DPLA :u="id" class="mt-10 mb-5" />
     <v-container class="my-10">
@@ -59,6 +61,7 @@ import Grid from '~/components/Grid.vue'
 import TargetAgent from '~/components/TargetAgent.vue'
 import RelatedGallery from '~/components/RelatedGallery.vue'
 import Items from '~/components/Items.vue'
+import MapC from '~/components/Map.vue'
 import Event from '~/components/Event.vue'
 import Keywords from '~/components/Keywords.vue'
 import Europeana from '~/components/Europeana.vue'
@@ -74,6 +77,7 @@ import DPLA from '~/components/DPLA.vue'
     Europeana,
     DPLA,
     Keywords,
+    MapC,
   },
 })
 export default class about extends Vue {

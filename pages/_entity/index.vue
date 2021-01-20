@@ -12,6 +12,7 @@
     <TargetAgent :u="id" class="mb-5" />
     <EntityRelatedKeywords :u="id" :type="type" class="mt-10 mb-5" />
     <Keywords :u="id" class="mt-10 mb-5" />
+
     <EntityRelatedEntities
       :u="id"
       :in="type"
@@ -20,6 +21,7 @@
     />
     <EntityRelatedItems :u="id" :type="type" class="mt-10 mb-5" />
     <Event :u="id" class="mt-10 mb-5" />
+    <MapC :u="id" :type="type" class="mt-10 mb-5" />
     <Europeana :u="id" class="mt-10 mb-5" />
     <DPLA :u="id" class="mt-10 mb-5" />
     <v-container class="my-10">
@@ -70,6 +72,7 @@ import Event from '~/components/Event.vue'
 import Keywords from '~/components/Keywords.vue'
 import Europeana from '~/components/Europeana.vue'
 import DPLA from '~/components/DPLA.vue'
+import MapC from '~/components/Map.vue'
 
 @Component({
   components: {
@@ -82,6 +85,7 @@ import DPLA from '~/components/DPLA.vue'
     Europeana,
     DPLA,
     Keywords,
+    MapC,
   },
 })
 export default class about extends Vue {
