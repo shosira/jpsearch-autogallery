@@ -77,7 +77,7 @@ import Grid from '~/components/Grid.vue'
 export default class about extends Vue {
   endpoint: string = 'https://jpsearch.go.jp/rdf/sparql?query='
 
-  name: string = "keywords"
+  name: string = 'keywords'
   type: string = 'keyword'
 
   total: number = 0
@@ -90,8 +90,6 @@ export default class about extends Vue {
   currentPage: number = 1
 
   keywordStr: any = ''
-
-  
 
   @Watch('$route')
   watchR(): void {
@@ -247,7 +245,7 @@ export default class about extends Vue {
     query.from = from
     this.$router.push(
       this.localePath({
-        name: name,
+        name,
         query,
       }),
       () => {},

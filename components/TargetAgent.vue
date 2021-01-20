@@ -9,11 +9,30 @@
     </v-sheet>
     <v-container class="my-5">
       <h1>
-        <a :href="item._id" target="_blank">{{ item._source._label }}</a>
+        {{ item._source._label }}
       </h1>
       <span v-if="lang == 'ja'">{{ item._source.kana }}</span>
       <p class="my-5">{{ item._source.description }}</p>
       <div class="text-center my-5">
+        <v-tooltip bottom>
+          <template #activator="{ on }">
+            <v-btn
+              class="mr-5"
+              target="_blank"
+              :href="
+                'https://jpsearch.go.jp/rdf/sparql/easy/?describe=' +
+                encodeURIComponent(item._id)
+              "
+              icon
+              v-on="on"
+              ><v-img
+                contain
+                width="30px"
+                :src="baseUrl + '/img/icons/rdf-logo.svg'"
+            /></v-btn>
+          </template>
+          <span>{{ $t('RDF') }}</span>
+        </v-tooltip>
         <ResultOption
           :item="{
             label: item._source._label,
@@ -36,6 +55,8 @@ import ResultOption from '~/components/display/ResultOption.vue'
   },
 })
 export default class about extends Vue {
+  baseUrl: any = process.env.BASE_URL
+
   @Prop()
   u!: string
 
