@@ -110,16 +110,6 @@ export default class about extends Vue {
     const stmt = 'schema:spatial <' + u + '> .'
 
     const query = `
-        PREFIX schema: <http://schema.org/>
-        PREFIX type: <https://jpsearch.go.jp/term/type/>
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX dct: <http://purl.org/dc/terms/>
-        PREFIX hpdb: <https://w3id.org/hpdb/api/>
-        PREFIX sh: <http://www.w3.org/ns/shacl#>
         SELECT distinct ?cho ?label ?thumbnail ?p ?p_label ?name ?p_name WHERE {
           {
             ?cho rdfs:label ?label;

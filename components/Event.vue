@@ -45,7 +45,7 @@ export default {
     // results: [],
     link: null,
     // Map
-    zoom: 4,
+    zoom: 5,
     center: [35.681489, 139.767136],
     center2: [],
     url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -72,16 +72,18 @@ export default {
       const u = this.u.split('/')
       const term = u[u.length - 1]
 
-      let query = 'PREFIX type: <https://jpsearch.go.jp/term/type/> \n'
+      let query = ''
 
-      query +=
-        'SELECT DISTINCT ?s ?label ?creator ?type ?spatial ?lat ?long WHERE { \n'
+      // ?creator
+      query += 'SELECT DISTINCT ?s ?label ?type ?spatial ?lat ?long WHERE { \n'
       query += '	?s rdfs:label ?label ; a type:展覧会  . \n'
-      query += '	OPTIONAL {?s schema:creator ?creator .} \n'
+      // query += '	OPTIONAL {?s schema:about ?creator . ?creator a type:Person } \n'
       query += '	?s ?p ?value. \n'
       query += '	FILTER(bif:contains(?value, \'"' + term + '"\')) . \n'
-      query += '	?s jps:sourceInfo ?source . \n'
-      query += '	?s schema:spatial ?spatial . \n'
+
+      query += '	?s jps:accessInfo/schema:provider ?provider . \n'
+      query += '	?provider schema:location ?spatial . \n'
+
       query += '	?spatial schema:geo ?geo . \n'
       query += '	?geo schema:latitude ?lat  . \n'
       query += '	?geo schema:longitude ?long . \n'

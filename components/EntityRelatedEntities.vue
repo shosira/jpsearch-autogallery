@@ -1,6 +1,6 @@
 <template>
   <v-container v-if="results.results_w_thumbnail.length > 0">
-    <h2 class="mt-5 mb-3 text-center">{{ $t('Related agential') }}</h2>
+    <h2 class="mt-5 mb-3 text-center">{{ $t('Related ' + out) }}</h2>
     <HorizontalItems :data="results.results_w_thumbnail" />
   </v-container>
 </template>
@@ -17,7 +17,13 @@ import HorizontalItems from '~/components/display/HorizontalItems.vue'
 })
 export default class about extends Vue {
   @Prop()
-  u!: any
+  u!: any;
+
+  @Prop()
+  in!: any
+
+  @Prop()
+  out!: any
 
   results: any = {
     results_w_thumbnail: [],
@@ -39,32 +45,52 @@ export default class about extends Vue {
     this.search()
   }
 
+  inStmt(type: string, u: string) {
+    if (type === 'spatial') {
+      return `?cho schema:spatial <${u}>;`
+    } else {
+      return `?cho schema:about <${u}>;`
+    }
+  }
+
+  outStmt(type: string) {
+    if (type === 'agential') {
+      return `jps:agential
+          [jps:relationType/skos:broader?/rdfs:label "制作"; jps:value ?dest ] .`
+    } else {
+      return `jps:agential
+          [jps:relationType/skos:broader?/rdfs:label "制作"; jps:value ?dest ] .`
+    }
+  }
+
   async search(searchNoThumbFlag = false) {
+    console.log({ searchNoThumbFlag })
     const limit = 20
 
     const u = this.u
 
     const lang = this.$i18n.locale
 
+    // const stmt = `?cho schema:about <${u}>;`
+
     const query = `
-        SELECT DISTINCT ?dest ?plabel ?pthumbnail ?description ?name WHERE { 
-          ?s jps:agential
-          [jps:relationType/skos:broader?/rdfs:label "制作"; jps:value/owl:sameAs? <${u}> ],
-          [jps:relationType/skos:broader?/rdfs:label "制作"; jps:value ?dest ]
-          FILTER(?dest != <${u}> )
+        SELECT distinct ?dest ?label ?thumbnail ?description ?name WHERE {
+          
+          ${this.inStmt(this.in, u)}
+          ${this.outStmt(this.out)}
           
           ${
             searchNoThumbFlag
-              ? 'MINUS { ?dest schema:image ?pthumbnail } '
-              : '?dest schema:image ?pthumbnail .'
+              ? 'MINUS { ?dest schema:image ?thumbnail } '
+              : '?dest schema:image ?thumbnail .'
           }
-          ?dest rdfs:label ?plabel;
-            schema:description ?description . 
+          ?dest rdfs:label ?label .
+          optional { ?dest schema:description ?description . }
 
           ${
             lang === 'ja'
               ? ''
-              : "OPTIONAL {?dest schema:name ?name . filter (lang(?name) = 'en')}"
+              : "OPTIONAL {?dest schema:name ?name . filter (lang(?name) = 'en')} OPTIONAL {?p schema:name ?p_name . filter (lang(?p_name) = 'en')}"
           }
         }
         ORDER BY RAND()
@@ -78,11 +104,15 @@ export default class about extends Vue {
     )
 
     const results = result.data.results.bindings
+
     for (let i = 0; i < results.length; i++) {
       const obj = results[i]
 
-      let label = obj.plabel.value
+      let label = obj.label.value
       label = obj.name ? obj.name.value : label
+
+      // let plabel = obj.p_label.value
+      // plabel = obj.p_name ? obj.p_name.value : plabel
 
       const nObj = {
         _id: obj.dest.value,
@@ -96,8 +126,8 @@ export default class about extends Vue {
           _label: label,
           description: obj.description ? obj.description.value : '',
           _url: obj.dest.value,
-          _thumbnail: obj.pthumbnail
-            ? obj.pthumbnail.value
+          _thumbnail: obj.thumbnail
+            ? obj.thumbnail.value
             : process.env.NO_PERSON,
         },
       }

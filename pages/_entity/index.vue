@@ -12,7 +12,12 @@
     <TargetAgent :u="id" class="mb-5" />
     <EntityRelatedKeywords :u="id" :type="type" class="mt-10 mb-5" />
     <Keywords :u="id" class="mt-10 mb-5" />
-    <KeywordRelatedAgentials :u="id" type="agential" class="mt-10 mb-5" />
+    <EntityRelatedEntities
+      :u="id"
+      :in="type"
+      out="agential"
+      class="mt-10 mb-5"
+    />
     <EntityRelatedItems :u="id" :type="type" class="mt-10 mb-5" />
     <Event :u="id" class="mt-10 mb-5" />
     <Europeana :u="id" class="mt-10 mb-5" />
@@ -60,7 +65,7 @@ import Grid from '~/components/Grid.vue'
 import TargetAgent from '~/components/TargetAgent.vue'
 import EntityRelatedKeywords from '~/components/EntityRelatedKeywords.vue'
 import EntityRelatedItems from '~/components/EntityRelatedItems.vue'
-import KeywordRelatedAgentials from '~/components/KeywordRelatedAgentials.vue'
+import EntityRelatedEntities from '~/components/EntityRelatedEntities.vue'
 import Event from '~/components/Event.vue'
 import Keywords from '~/components/Keywords.vue'
 import Europeana from '~/components/Europeana.vue'
@@ -72,7 +77,7 @@ import DPLA from '~/components/DPLA.vue'
     TargetAgent,
     EntityRelatedKeywords,
     EntityRelatedItems,
-    KeywordRelatedAgentials,
+    EntityRelatedEntities,
     Event,
     Europeana,
     DPLA,
