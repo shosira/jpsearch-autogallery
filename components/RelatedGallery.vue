@@ -108,7 +108,7 @@ export default class about extends Vue {
           _url: obj.dest.value,
           _thumbnail: obj.pthumbnail
             ? obj.pthumbnail.value
-            : process.env.NO_IMG,
+            : process.env.NO_PERSON,
         },
       }
       this.results.results_w_thumbnail.push(nObj)

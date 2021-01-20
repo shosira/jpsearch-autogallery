@@ -98,9 +98,7 @@ export default class about extends Vue {
         _source: {
           _label: label,
           _url: obj.keyword.value,
-          _thumbnail: obj.thumbnail
-            ? obj.thumbnail.value
-            : 'https://jpsearch.go.jp/assets/img/no-image/curation-no-image_greylighter.png',
+          _thumbnail: obj.thumbnail ? obj.thumbnail.value : process.env.NO_KEY,
         },
       }
       this.results.results_w_thumbnail.push(nObj)

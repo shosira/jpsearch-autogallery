@@ -5,6 +5,9 @@ const env = require(`./env/${environment}.ts`)
 
 env.NO_IMG =
   'https://jpsearch.go.jp/assets/img/no-image/curation-no-image_greylighter.png'
+env.NO_PERSON =
+  'https://jpsearch.go.jp/assets/img/no-image/cultural-no-image-small_greylighter.png'
+env.NO_KEY = env.BASE_URL + '/img/icons/tag.png'
 
 const routerBase =
   process.env.DEPLOY_ENV === 'GH_PAGES'
