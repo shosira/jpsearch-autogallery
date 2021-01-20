@@ -10,7 +10,7 @@
       </v-container>
     </v-sheet>
     <TargetAgent :u="id" class="mb-5" />
-    <RelatedKeywords :u="id" class="mt-10 mb-5" />
+    <EntityRelatedKeywords :u="id" :type="type" class="mt-10 mb-5" />
     <Keywords :u="id" class="mt-10 mb-5" />
     <KeywordRelatedAgentials :u="id" type="agential" class="mt-10 mb-5" />
     <EntityRelatedItems :u="id" :type="type" class="mt-10 mb-5" />
@@ -58,7 +58,7 @@ import { Vue, Component, Watch } from 'nuxt-property-decorator'
 
 import Grid from '~/components/Grid.vue'
 import TargetAgent from '~/components/TargetAgent.vue'
-import RelatedKeywords from '~/components/RelatedKeywords.vue'
+import EntityRelatedKeywords from '~/components/EntityRelatedKeywords.vue'
 import EntityRelatedItems from '~/components/EntityRelatedItems.vue'
 import KeywordRelatedAgentials from '~/components/KeywordRelatedAgentials.vue'
 import Event from '~/components/Event.vue'
@@ -70,7 +70,7 @@ import DPLA from '~/components/DPLA.vue'
   components: {
     Grid,
     TargetAgent,
-    RelatedKeywords,
+    EntityRelatedKeywords,
     EntityRelatedItems,
     KeywordRelatedAgentials,
     Event,
