@@ -127,7 +127,7 @@ export default class about extends Vue {
         _source: {
           _label: label,
           _url: obj.keyword.value,
-          _thumbnail: obj.thumbnail ? obj.thumbnail.value : process.env.NO_KEY,
+          _thumbnail: obj.thumbnail ? obj.thumbnail.value : 'mdi-map',
         },
       }
       this.results.results_w_thumbnail.push(nObj)

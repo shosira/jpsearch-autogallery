@@ -165,9 +165,16 @@
     </v-main>
 
     <v-footer :dark="true" class="mt-5">
-      <v-container>
-        <p class="text-center my-5">
-          {{ $t(siteName) }}
+      <v-container class="text-center my-5">
+        <p>
+          <nuxt-link style="color: white" :to="localePath({ name: 'index' })">{{
+            $t(siteName)
+          }}</nuxt-link>
+        </p>
+        <p>
+          <a :href="github">
+            <v-icon>mdi-github</v-icon>
+          </a>
         </p>
       </v-container>
     </v-footer>
@@ -244,6 +251,7 @@ export default class search extends Vue {
   drawer: boolean = false
   baseUrl: string = process.env.BASE_URL || ''
   siteName: string = process.env.siteName || ''
+  github: string = process.env.github || ''
 
   userName: any = null
   userPic: any = null

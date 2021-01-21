@@ -96,9 +96,7 @@ export default class about extends Vue {
           _label: label,
           description: obj.description ? obj.description.value : '',
           _url: obj.dest.value,
-          _thumbnail: obj.pthumbnail
-            ? obj.pthumbnail.value
-            : process.env.NO_PERSON,
+          _thumbnail: obj.pthumbnail ? obj.pthumbnail.value : 'mdi-account',
         },
       }
       this.results.results_w_thumbnail.push(nObj)

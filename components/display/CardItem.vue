@@ -8,24 +8,38 @@
   >
     <template v-if="item.to">
       <nuxt-link :to="item.to">
-        <v-img
-          :src="item._source._thumbnail"
-          contain
-          style="height: 150px"
-          width="100%"
-          class="grey lighten-2"
-        ></v-img>
+        <template v-if="!item._source._thumbnail.includes('mdi-')">
+          <v-img
+            :src="item._source._thumbnail"
+            contain
+            style="height: 150px"
+            width="100%"
+            class="grey lighten-2"
+          ></v-img>
+        </template>
+        <template v-else>
+          <div class="text-center grey lighten-2 pa-10" style="height: 150px">
+            <v-icon size="75">{{ item._source._thumbnail }}</v-icon>
+          </div>
+        </template>
       </nuxt-link>
     </template>
     <template v-else>
       <a :href="item.href" target="_blank">
-        <v-img
-          :src="item._source._thumbnail"
-          contain
-          style="height: 150px"
-          width="100%"
-          class="grey lighten-2"
-        ></v-img>
+        <template v-if="!item._source._thumbnail.includes('mdi-')">
+          <v-img
+            :src="item._source._thumbnail"
+            contain
+            style="height: 150px"
+            width="100%"
+            class="grey lighten-2"
+          ></v-img>
+        </template>
+        <template v-else>
+          <div class="text-center grey lighten-2 pa-10" style="height: 150px">
+            <v-icon size="75">{{ item._source._thumbnail }}</v-icon>
+          </div>
+        </template>
       </a>
     </template>
 
