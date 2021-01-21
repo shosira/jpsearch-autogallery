@@ -16,6 +16,7 @@
     <Items :u="id" class="mt-10 mb-5" />
     <Event :u="id" class="mt-10 mb-5" />
     <MapC :u="id" type="agential" class="mt-10 mb-5" />
+    <Network :u="id" class="mt-10 mb-5" />
     <Europeana :u="id" class="mt-10 mb-5" />
     <DPLA :u="id" class="mt-10 mb-5" />
     <v-container class="my-10">
@@ -66,6 +67,7 @@ import Event from '~/components/Event.vue'
 import Keywords from '~/components/Keywords.vue'
 import Europeana from '~/components/Europeana.vue'
 import DPLA from '~/components/DPLA.vue'
+import Network from '~/components/Network.vue'
 
 @Component({
   components: {
@@ -78,6 +80,7 @@ import DPLA from '~/components/DPLA.vue'
     DPLA,
     Keywords,
     MapC,
+    Network,
   },
 })
 export default class about extends Vue {
