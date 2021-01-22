@@ -21,7 +21,8 @@
               target="_blank"
               :href="
                 'https://jpsearch.go.jp/rdf/sparql/easy/?describe=' +
-                encodeURIComponent(item._id)
+                encodeURIComponent(item._id) +
+                '&qrel=contributor'
               "
               icon
               v-on="on"

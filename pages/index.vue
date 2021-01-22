@@ -47,7 +47,7 @@
           <h3 class="my-10 text-center">{{ $t('menu') }}</h3>
 
           <v-row class="mb-10">
-            <v-col v-for="(obj, key) in items" :key="key" cols="6" :sm="3">
+            <v-col v-for="(obj, key) in items" :key="key" cols="12" :sm="3">
               <v-card flat no-body class="mb-4">
                 <template v-if="obj.href">
                   <a :href="obj.href" target="_blank">

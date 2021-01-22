@@ -13,7 +13,7 @@
     <v-container>
       <h1 class="my-5">{{ $t('map') }}</h1>
       <div id="map-wrap" style="height: 80vh" class="my-2">
-        <mapc :markers="markers" :zoom="2" :center="[38, 0]" />
+        <mapc :markers="markers" :zoom="2" :center="center" />
       </div>
     </v-container>
   </div>
@@ -37,8 +37,8 @@ export default class PageMap extends Vue {
     if (payload) {
       return { item: payload }
     } else {
-      let url = 'https://jpsearch.go.jp/rdf/sparql?query='
-
+      /*
+      const url = 'https://jpsearch.go.jp/rdf/sparql?query='
       let query = ''
       query =
         'PREFIX schema: <http://schema.org/>' +
@@ -54,8 +54,16 @@ export default class PageMap extends Vue {
       url = url + encodeURIComponent(query) + '&output=json'
 
       const result = await axios.get(url)
+
+      */
+
+      const result = await axios.get(process.env.BASE_URL + '/data/map.json')
+
       const results = result.data.results.bindings
       const markers = []
+
+      let lat = 0
+      let long = 0
 
       for (let i = 0; i < results.length; i++) {
         const obj = results[i]
@@ -77,10 +85,14 @@ export default class PageMap extends Vue {
         }
 
         markers.push(marker)
+
+        lat += Number(obj.lat.value)
+        long += Number(obj.long.value)
       }
 
       return {
         markers,
+        center: [lat / markers.length, long / markers.length],
       }
     }
   }
