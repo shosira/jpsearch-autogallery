@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-sheet color="grey lighten-2">
-      <v-container fluid class="py-4">
+    <v-sheet color="grey lighten-3 rounded">
+      <v-container fluid class="py-2">
         <v-breadcrumbs class="py-0" :items="items">
           <template #divider>
             <v-icon>mdi-chevron-right</v-icon>
@@ -24,7 +24,7 @@
             <v-text-field
               v-model="keywordStr"
               single-line
-              background-color="grey lighten-3"
+              background-color="grey lighten-5"
               class="px-4"
               filled
               rounded
@@ -114,7 +114,7 @@ export default class about extends Vue {
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       SELECT DISTINCT (count(distinct ?cho) as ?c) WHERE {
         ?s ${p} ?cho .
-        ?cho rdfs:label ?label . 
+        ?cho rdfs:label ?label .
         ${keyword !== '' ? '?label bif:contains \'"' + keyword + '"\'' : ''}
       }
     `
@@ -185,8 +185,8 @@ export default class about extends Vue {
       PREFIX hpdb: <https://w3id.org/hpdb/api/>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       select distinct count(?s) as ?count ?cho ?label ?name ?thumbnail WHERE {
-        ?s ${p} ?cho . 
-        ?cho rdfs:label ?label . 
+        ?s ${p} ?cho .
+        ?cho rdfs:label ?label .
         optional { ?cho schema:image ?thumbnail . }
         ${
           lang === 'ja'

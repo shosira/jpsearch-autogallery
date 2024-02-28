@@ -1,0 +1,101 @@
+.jps {
+  @import "_block";
+  @import "_button";
+  @import "_card";
+  @import "_common";
+  @import "_form";
+  @import "_icon";
+  @import "_level";
+  @import "_list";
+  @import "_media";
+  @import "_menu";
+  @import "_notification";
+  @import "_section";
+  @import "_strip";
+  @import "_table";
+  @import "_tag";
+  @import "_title";
+  @import "_transitions";
+
+  /* fabアイコンを用いているリスト要素の管理　カード内および所蔵情報等の表示に使用 */
+
+  .jps-carousel {
+    .jps-card-body {
+      height: 8rem;
+    }
+  }
+
+  /* iOSで画面がちらつく問題の対処として、強制的にGPUレンダリングに切り替える */
+
+  .grid-item,
+  .grid-item a .jps-card,
+  .jps-card-body,
+  .jps-card-img,
+  .jps-card-icon {
+    transform: translateZ(0);
+  }
+
+  .gnav {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    ul {
+      list-style: none;
+      display: flex;
+      list-style: none;
+      li {
+        text-align: center;
+        &:last-child {
+          .grid-item {
+            margin-right: 1rem;
+          }
+        }
+      }
+    }
+  }
+
+  .grid,
+  .gnav {
+    padding: 0 auto 2rem;
+  }
+
+  @include is-tablet {
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      padding: 1.5rem 3rem;
+      grid-gap: 1rem;
+      > * {
+        backface-visibility: hidden;
+        > a {
+          display: flex;
+          flex-direction: column;
+          transition: 0.15s ease-in-out;
+          span {
+            display: inline-block;
+            padding: 0.5rem 0;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  @include is-mobile {
+    .grid {
+      .grid-item {
+        margin: 0.5rem;
+      }
+    }
+  }
+
+  .gnav {
+    .grid-item {
+      .jps-card-body {
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,0 +1,135 @@
+$card-animation-speed: 0.15s;
+
+.jps-card {
+  backface-visibility: hidden;
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+  width: 100%;
+
+  border-radius: $global-radius;
+  text-align: left;
+  background-color: $white;
+  overflow: hidden;
+
+  @include is-tablet {
+    max-width: 300px;
+    max-height: 400px;
+  }
+
+  transition: transform, background-color $card-animation-speed;
+  &:hover {
+    background-color: $jps-gray-100;
+  }
+
+  .jps-card-img {
+    //イメージを16:9に設定
+    text-align: center;
+    /*拡大時にはみ出た部分を隠す*/
+    overflow: hidden;
+    border-radius: $global-radius-small;
+    @include ratio16x9Wrapper;
+    .card-image {
+      @include ratioInner;
+    }
+  }
+  .jps-card-body {
+    position: relative;
+    margin: 0.75rem 0.75rem 2.75rem 0.75rem;
+    text-align: left !important;
+    @include is-tablet {
+      min-height: 8rem;
+    }
+    .jps-card-title {
+      font-size: $size-6;
+      @include typo-list(bolder, $black);
+      margin: -0.75rem -0.75rem -0.5rem -0.75rem;
+      a,
+      button {
+        padding: 0.75rem 0.75rem 1rem;
+        font-size: $size-6;
+        font-weight: bolder;
+        line-height: 145%;
+        display: block;
+        position: relative;
+        overflow-wrap: break-word;
+        text-align: left;
+      }
+      &.with-external-link {
+        position: relative;
+        a {
+          width: calc(100% - 2rem);
+          display: block;
+          &.external-link {
+            width: 1.5rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-right: -0.25rem;
+          }
+        }
+      }
+    }
+    .jps-card-meta {
+      color: $jps-gray-600;
+      font-size: $size-7;
+      display: block;
+      // margin-bottom: 0.25rem;
+    }
+
+    .jps-card-content {
+      font-size: $size-7;
+      line-height: 1.3125rem;
+      // margin-top:1.5rem;
+    }
+
+    .jps-card-social {
+      position: relative;
+      margin: 2em 1em;
+      text-align: right !important;
+      height: 20em;
+    }
+  }
+  .jps-card-icon {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: 3rem;
+    display: flex;
+    justify-content: flex-end;
+    @include is-tablet() {
+      padding-top: 1rem;
+      padding-bottom: 0;
+    }
+    background-image: linear-gradient(
+      -180deg,
+      rgba(255, 255, 255, 0) 0%,
+      $white 35%
+    );
+  }
+  &:hover .jps-card-icon {
+    @include is-tablet {
+      background-image: linear-gradient(
+        -180deg,
+        rgba(255, 255, 255, 0) 0%,
+        $jps-gray-100 45%
+      );
+    }
+  }
+}
+@include is-tablet {
+  .jps-card,
+  .jps-card-flexible {
+    .jps-image-selection {
+      transition-duration: $card-animation-speed;
+      /*変化に掛かる時間*/
+    }
+    &:hover {
+      .jps-image-selection {
+        transform: scale(1.05);
+        /*画像の拡大率*/
+      }
+    }
+  }
+}

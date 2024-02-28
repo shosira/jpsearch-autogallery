@@ -1,0 +1,80 @@
+$menu-item-color: $text !default;
+$menu-item-radius: 2px !default;
+$menu-item-hover-color: $jps-gray-800 !default;
+$menu-item-hover-background-color: $white !default;
+$menu-item-active-color: $white !default;
+$menu-item-active-background-color: $jps-key-blue !default;
+$menu-list-border-left: 1px solid $border-grey !default;
+$menu-list-line-height: 1.25 !default;
+$menu-list-link-padding: 0.5em 0.75em !default;
+$menu-nested-list-margin: 0.75em !default;
+$menu-nested-list-padding-left: 0.75em !default;
+
+.jps-menu-list {
+  line-height: 1.25;
+
+  p {
+    padding-left: 1rem;
+  }
+
+  a,
+  .jps-menu-list-item {
+    display: flex;
+    align-items: center;
+
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    color: $text;
+    padding: 0.375rem;
+    font-size: $size-7;
+
+    &:hover {
+      background-color: $white;
+      @include box-shadow;
+      // color: $menu-item-hover-color;
+    }
+    // Modifiers
+    &.jps-active {
+      background-color: $white;
+      font-weight: bold;
+      color: $jps-gray-800;
+      @include box-shadow;
+    }
+    .jps-icon {
+      color: $jps-gray-500;
+      margin-right: 3px;
+      &:hover {
+        color: $jps-gray-600;
+      }
+    }
+  }
+  .router-link-active {
+    background-color: $white;
+    color: $jps-gray-800;
+  }
+
+  //子階層
+  li {
+    padding-left: 0.375rem;
+    ul {
+      border-left: 1px solid $border-grey;
+      margin: 0.5rem;
+      padding-left: 0.75rem;
+    }
+  }
+}
+
+.jps-menu-label {
+  color: $jps-gray-600;
+  font-size: $size-7;
+  padding-left: 0.375rem;
+  margin-top: 1rem;
+  
+  &:not(:first-child) {
+    margin-top: 2rem;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 0.25rem;
+  }
+}

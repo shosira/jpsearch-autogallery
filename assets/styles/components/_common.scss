@@ -1,0 +1,15 @@
+.jps-btn-reset {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.jps-hint {
+  text-align: center;
+  margin: 0.25rem;
+  border-radius: 0.75rem;
+  color: $jps-gray-600;
+}

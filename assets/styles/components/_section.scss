@@ -1,0 +1,10 @@
+.jps-section-title {
+  font-size: $size-4;
+  margin: 0.75rem auto;
+  @include is-mobile() {
+    font-size: $size-6;
+    margin: 0.5rem auto;
+  }
+  font-weight: 700 !important;
+  text-align: center;
+}

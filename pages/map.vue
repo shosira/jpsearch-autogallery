@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-sheet color="grey lighten-2">
-      <v-container fluid class="py-4">
+    <v-sheet color="grey lighten-3">
+      <v-container fluid class="py-2">
         <v-breadcrumbs class="py-0" :items="bh">
           <template #divider>
             <v-icon>mdi-chevron-right</v-icon>

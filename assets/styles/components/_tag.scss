@@ -1,0 +1,174 @@
+@mixin tag-base {
+  border-radius: 9999px;
+  font-size: $size-7;
+  // line-height: $size-7;
+  padding: 0.375rem 0.75rem;
+  text-align: center;
+  white-space: nowrap;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin tag-color($color, $border, $text, $text-hover) {
+  background-color: $color;
+  // border: 1px solid $color;
+  color: $text;
+  .jps-icon-button {
+    color: $text;
+    &:not(:disabled):hover {
+      color: $text-hover;
+    }
+  }
+  &:hover,
+  &:visited,
+  &:visited:hover {
+    background-color: $color;
+    color: $text;
+  }
+}
+
+.jps-tag {
+  @include tag-base;
+
+  background-color: $jps-gray-50;
+  border: none;
+  color: $text;
+
+  .color-circle {
+    border-radius: 50%;
+    border: 1px solid $jps-gray-500;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 3px;
+  }
+  .del-icon {
+    cursor: pointer;
+  }
+  &.jps-slim {
+    padding: 0rem 0.75rem;
+  }
+
+  &.jps-tag-ricon {
+    padding-right: 0.5rem;
+    .jps-icon {
+      margin-left: 0.25rem;
+      line-height: 1.5rem;
+    }
+  }
+  &.jps-tag-licon {
+    padding-left: 0.5rem;
+    .jps-icon {
+      margin-right: 0.25rem;
+      line-height: 1.5rem;
+    }
+  }
+
+  &.jps-border {
+    border: 1px solid $jps-gray-300;
+  }
+
+  &.jps-tag:not(:last-child) {
+    margin-right: 0.75rem;
+  }
+
+  &.jps-dark {
+    @include tag-color($jps-gray-800, $jps-gray-800, $white, $white-hover);
+  }
+  &.jps-red {
+    @include tag-color($jps-key-red, $jps-key-red, $white, $white-hover);
+  }
+
+  &.jps-sub-red {
+    @include tag-color($jps-sub-red, $jps-sub-red, $white, $white-hover);
+  }
+
+  &.jps-blue {
+    @include tag-color($jps-key-blue, $jps-key-blue, $white, $white-hover);
+  }
+
+  &.jps-sub-blue {
+    @include tag-color($jps-sub-blue, $jps-sub-blue, $white, $white-hover);
+  }
+
+  &.jps-sub-green {
+    @include tag-color($jps-sub-green, $jps-sub-green, $white, $white-hover);
+  }
+
+  &.jps-orange {
+    @include tag-color($jps-key-orange, $jps-key-orange, $text, $black);
+  }
+
+  &.jps-sub-orange {
+    @include tag-color($jps-sub-orange, $jps-key-orange, $white, $white-hover);
+  }
+
+  &.jps-black {
+    @include tag-color($jps-gray-900, $jps-gray-900, $white, $white-hover);
+  }
+
+  &.jps-grey {
+    @include tag-color($jps-gray-500, $jps-gray-600, $white, $white-hover);
+  }
+
+  &.jps-linktag {
+    background-color: $jps-key-blue;
+    border: 1px solid $jps-key-blue;
+    color: $white !important;
+    &:hover {
+      background-color: $jps-key-blue-hover;
+      border: 1px solid $jps-key-blue-hover;
+      text-decoration: none;
+    }
+    &:visited {
+      background-color: $jps-key-purple;
+      border: 1px solid $jps-key-purple;
+      &:hover {
+        background-color: $jps-key-purple-hover;
+        border: 1px solid $jps-key-purple-hover;
+        color: $white !important;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// タグボタン
+button.jps-tag {
+  @include no-user-select;
+  @include no-decorative-button;
+  @include tag-base;
+  transition: all 200ms;
+  cursor: pointer;
+
+  &.jps-form {
+    color: $black;
+    background-color: $jps-gray-300;
+    &:not(:disabled):hover {
+      background-color: $jps-key-blue;
+      color: $white;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
+  @include button-colors(true);
+}
+
+.jps-tag-list {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  align-content: space-between;
+  > *:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+  > * {
+    margin-bottom: 0.5rem;
+  }
+}

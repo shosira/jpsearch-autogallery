@@ -8,10 +8,10 @@
             contain
             style="height: 150px"
             width="100%"
-            class="grey lighten-2"
+            class="grey lighten-2 rounded"
           ></v-img>
         </nuxt-link>
-        <div class="pa-4">
+        <div class="pa-2">
           <nuxt-link :to="localePath(obj.path)">
             <h3>{{ obj.label }}</h3>
           </nuxt-link>
@@ -19,8 +19,6 @@
           <p v-if="obj.description" class="mt-2 mb-0">{{ obj.description }}</p>
         </div>
         <template v-if="obj.url">
-          <v-divider />
-
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-tooltip bottom>

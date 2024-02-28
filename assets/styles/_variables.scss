@@ -1,0 +1,121 @@
+/*JPS Color set for Search Zone */
+$jps-key-purple: #610e95;
+$jps-key-purple-hover: darken($jps-key-purple, 15%);
+$jps-key-purple-active: darken($jps-key-purple, 25%);
+$jps-key-red: #d30c2f;
+$jps-key-red-hover: darken($jps-key-red, 15%);
+$jps-key-red-active: darken($jps-key-red, 25%);
+$jps-key-yellow: #d1c115;
+$jps-key-yellow-hover: darken($jps-key-yellow, 15%);
+$jps-key-yellow-active: darken($jps-key-yellow, 25%);
+$jps-key-green: #15d197;
+$jps-key-green-hover: darken($jps-key-green, 15%);
+$jps-key-green-active: darken($jps-key-green, 25%);
+$jps-key-orange: #fe8900;
+$jps-key-orange-hover: darken($jps-key-orange, 15%);
+$jps-key-orange-active: darken($jps-key-orange, 25%);
+$jps-key-blue: #196ac9;
+$jps-key-blue-hover: darken($jps-key-blue, 15%);
+$jps-key-blue-active: darken($jps-key-blue, 25%);
+
+/* JPS Color set for Editor Zone */
+$jps-sub-purple: #5b4b73;
+$jps-sub-purple-hover: lighten($jps-sub-purple, 15%);
+$jps-sub-purple-active: lighten($jps-sub-purple, 25%);
+$jps-sub-red: #734b52;
+$jps-sub-red-hover: lighten($jps-sub-red, 15%);
+$jps-sub-red-active: lighten($jps-sub-red, 25%);
+$jps-sub-yellow: #736f4b;
+$jps-sub-yellow-hover: lighten($jps-sub-yellow, 15%);
+$jps-sub-yellow-active: lighten($jps-sub-yellow, 25%);
+$jps-sub-green: #294039;
+$jps-sub-green-hover: lighten($jps-sub-green, 15%);
+$jps-sub-green-active: lighten($jps-sub-green, 25%);
+$jps-sub-orange: #ff6827;
+$jps-sub-orange-hover: lighten($jps-sub-orange, 15%);
+$jps-sub-orange-active: lighten($jps-sub-orange, 25%);
+$jps-sub-blue: #4b5d73;
+$jps-sub-blue-hover: lighten($jps-sub-blue, 15%);
+$jps-sub-blue-active: lighten($jps-sub-blue, 25%);
+
+/* JPS base color set*/
+$white: #fff;
+$white-hover: darken($white, 20%);
+$black: #1a1a1a;
+$black-hover: darken($black, 20%);
+
+$jps-gray-50: #fafafa;
+$jps-gray-100: #f5f5f5;
+$jps-gray-200: #e3e3e3;
+$jps-gray-300: #c1c1c1;
+$jps-gray-400: #a7a7a7;
+$jps-gray-500: #989898;
+$jps-gray-600: #757575;
+$jps-gray-700: #626262;
+$jps-gray-800: #424242;
+$jps-gray-900: #2D2D2D;
+$jps-gray-1000: #1c1c1c;
+
+$background-grey: $jps-gray-50;
+$highlight-yellow: $jps-key-yellow;
+
+$border-grey: $jps-gray-300;
+$border-input: $jps-gray-500;
+$basic-border: $border-grey 1px solid;
+
+$info: $jps-key-blue;
+$success: $jps-key-green;
+$warning: $jps-key-orange;
+$danger: $jps-key-red;
+$light: $jps-gray-100;
+$dark: $jps-gray-600;
+$text: $jps-gray-900;
+$text-grey: $jps-gray-300;
+$text-white: $white;
+$link-blue: $jps-key-blue;
+$link: $link-blue;
+$pagination-current-background-color: $jps-key-blue;
+$pagination-current-border-color: $jps-key-blue;
+$no-image-background-color: $white;
+
+$size-1: 3rem;
+$size-2: 2.5rem;
+$size-3: 2rem;
+$size-4: 1.5rem;
+$size-5: 1.25rem;
+$size-6: 1rem;
+$size-7: 0.875rem;
+$size-8: 0.75rem;
+
+$transition-speed: 250ms;
+$transition-timing-function: cubic-bezier(
+  0.64,
+  0.09,
+  0.08,
+  1
+); //cubic-bezier(0.4, 0, 0.2, 1)
+$transition-timing: $transition-speed $transition-timing-function;
+$transition: all $transition-timing;
+$transition-linear: all $transition-speed linear;
+
+$component-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+// $base-pathは環境によって異なるので、webpackでprependする
+
+$img-path: "../img/";
+$back-img-path: $img-path + "back-img/";
+
+$header-height-tablet: 3.5rem;
+$header-height-mobile: 3rem;
+
+$curation-content-width: 54rem;
+$content-width: 54rem;
+$wide-content-width: 72rem;
+$max-content-width: 120rem;
+
+$mobile-content-width: 80vw;
+
+$global-radius-large: 16px;
+$global-radius: 6px;
+$global-radius-small: 4px;
+$global-margin: 1.5rem;

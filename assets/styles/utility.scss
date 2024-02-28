@@ -1,0 +1,160 @@
+.jps {
+  .visually-hidden {
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    border: 0;
+    padding: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    margin: -1px;
+  }
+
+  @include is-tablet {
+    .is-hidden-tablet {
+      display: none !important;
+    }
+    .is-size-1-desktop {
+      font-size: $size-1 !important;
+    }
+    .is-size-2-desktop {
+      font-size: $size-2 !important;
+    }
+    .is-size-3-desktop {
+      font-size: $size-3 !important;
+    }
+    .is-size-4-desktop {
+      font-size: $size-4 !important;
+    }
+    .is-size-5-desktop {
+      font-size: $size-5 !important;
+    }
+    .is-size-6-desktop {
+      font-size: $size-6 !important;
+    }
+    .is-size-7-desktop {
+      font-size: $size-7 !important;
+    }
+  }
+
+  //text
+  .has-text-centered {
+    text-align: center !important;
+  }
+
+  .has-text-right {
+    text-align: right !important;
+  }
+  .has-text-weight-bold {
+    font-weight: 700 !important;
+  }
+
+  .is-size-1 {
+    font-size: $size-1 !important;
+    line-height: 125% !important;
+  }
+  .is-size-2 {
+    font-size: $size-2 !important;
+    line-height: 125% !important;
+  }
+  .is-size-3 {
+    font-size: $size-3 !important;
+    line-height: 125% !important;
+  }
+  .is-size-4 {
+    font-size: $size-4 !important;
+    line-height: 125% !important;
+  }
+  .is-size-5 {
+    font-size: $size-5 !important;
+    line-height: 125% !important;
+  }
+  .is-size-6 {
+    font-size: $size-6 !important;
+  }
+  .jps-line-6 {
+    line-height: $size-6 !important;
+  }
+  .jps-line-6 {
+    line-height: $size-6 !important;
+  }
+  .is-size-7 {
+    font-size: $size-7 !important;
+  }
+  .jps-line-7 {
+    line-height: $size-7 !important;
+  }
+  .is-size-8 {
+    font-size: $size-8 !important;
+    line-height: $size-8 * 1.5 !important;
+  }
+
+  //responsive
+  @include is-mobile {
+    .is-hidden-mobile {
+      display: none !important;
+    }
+    .is-size-1-touch {
+      font-size: $size-1 !important;
+    }
+    .is-size-2-touch {
+      font-size: $size-2 !important;
+    }
+    .is-size-3-touch {
+      font-size: $size-3 !important;
+    }
+    .is-size-4-touch {
+      font-size: $size-4 !important;
+    }
+    .is-size-5-touch {
+      font-size: $size-5 !important;
+    }
+    .is-size-6-touch {
+      font-size: $size-6 !important;
+    }
+    .is-size-7-touch {
+      font-size: $size-7 !important;
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    .is-hidden-narrow {
+      display: none;
+    }
+  }
+
+  .jps-is-hidden {
+    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    width: 4px !important;
+    height: 4px !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  .jps-flex-center {
+    display: flex;
+    align-items: center;
+  }
+
+  //その他
+  .jps-relative {
+    position: relative;
+  }
+
+  .jps-is-danger {
+    color: $jps-key-red;
+  }
+
+  .jps-fullwidth {
+    width: 100%;
+  }
+}

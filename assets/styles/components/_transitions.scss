@@ -1,0 +1,181 @@
+//Vue Transition用アニメーション
+//フェード
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity $transition-timing;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+//SPではアニメーションしないfade
+.fadetab-enter-active,
+.fadetab-leave-active {
+  @include is-tablet() {
+    transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+.fadetab-enter,
+.fadetab-leave-to {
+  @include is-tablet() {
+    opacity: 0;
+  }
+}
+
+//高速フェード
+.quick-enter-active {
+  transition: opacity 50ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.quick-leave-active {
+  transition: opacity 50ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.quick-enter,
+.quick-leave-to {
+  opacity: 0;
+}
+
+//低速フェード
+.slow-enter-active {
+  transition: opacity 750ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slow-leave-active {
+  transition: opacity 750ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slow-enter,
+.slow-leave-to {
+  opacity: 0;
+}
+
+//フェード+Zoom
+.fadezoom-enter-active {
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fadezoom-leave-active {
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fadezoom-enter,
+.fadezoom-leave-to {
+  transform: scale(0);
+  opacity: 0;
+}
+
+//右入左出スライド
+.slide-rightleft-enter-active,
+.slide-rightleft-leave-active {
+  transition-duration: $transition-speed;
+  transition-property: transform;
+  transition-timing-function: $transition-timing-function; //cubic-bezier(0.55, 0, 0.1, 1);
+  overflow: hidden;
+}
+
+.slide-rightleft-enter,
+.slide-rightleft-leave-to {
+  transform: translate(-2rem, 0);
+}
+
+//左右スライド
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition-duration: 250ms;
+  transition-property: height, opacity, transform;
+  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+  position: absolute;
+  width: 100%;
+}
+
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(2em, 0);
+  // transform: translate3d(100%, 0, 0);
+}
+
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-2em, 0);
+}
+
+//スライド
+.slide-enter {
+  transform: translateX(100%);
+}
+.slide-enter-to {
+  transform: translateX(0);
+}
+.slide-leave {
+  transform: translateX(-100%);
+}
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+.slide-enter-active,
+.slide-leave-active {
+  position: absolute;
+  transition: all 0.4s ease-in-out;
+}
+
+.slideY-enter {
+  opacity: 0;
+  transform: translateY(15px);
+}
+.slideY-enter-active {
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slideY-enter-to {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.slideY-leave {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.slideY-leave-active {
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slideY-leave-to {
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+//ページ遷移
+.slide-page-left-enter-active,
+.slide-page-left-leave-active,
+.slide-page-right-enter-active,
+.slide-page-right-leave-active {
+  transition-duration: 250ms;
+  transition-property: height, opacity, transform;
+  transition-timing-function: $transition-timing-function;
+}
+
+.slide-page-left-enter,
+.slide-page-right-leave-active {
+  opacity: 0;
+  transform: translate3d(-20%, 0, 0);
+}
+
+.slide-page-left-leave-active,
+.slide-page-right-enter {
+  opacity: 0;
+  transform: translate3d(20%, 0, 0);
+}
+
+.slide-list {
+  &-enter-active {
+    opacity: 0;
+    transition: opacity $transition-timing;
+  }
+  &-enter-to {
+    opacity: 1;
+  }
+  &-leave-active {
+    display: none;
+  }
+}

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-sheet color="grey lighten-2">
-      <v-container fluid class="py-4">
+    <v-sheet color="grey lighten-3 rounded">
+      <v-container fluid class="py-2">
         <v-breadcrumbs class="py-0" :items="items">
           <template #divider>
             <v-icon>mdi-chevron-right</v-icon>
@@ -24,7 +24,7 @@
             <v-text-field
               v-model="keywordStr"
               single-line
-              background-color="grey lighten-3"
+              background-color="grey lighten-5"
               class="px-4"
               filled
               rounded
@@ -77,7 +77,7 @@ import Grid from '~/components/Grid.vue'
 export default class about extends Vue {
   endpoint: string = 'https://jpsearch.go.jp/rdf/sparql?query='
 
-  name: string = "search"
+  name: string = 'search'
   type: string = 'agential'
 
   total: number = 0
@@ -112,7 +112,7 @@ export default class about extends Vue {
       SELECT DISTINCT (count(distinct ?cho) as ?c) WHERE {
         ?s schema:creator ?cho .
         ?cho rdfs:label ?label;
-        schema:image ?thumbnail . 
+        schema:image ?thumbnail .
         ${keyword !== '' ? '?label bif:contains \'"' + keyword + '"\'' : ''}
       }
     `
@@ -183,7 +183,7 @@ export default class about extends Vue {
       select distinct count(?s) as ?count ?cho ?label ?name ?thumbnail WHERE {
         ?s schema:creator ?cho .
         ?cho rdfs:label ?label;
-        schema:image ?thumbnail . 
+        schema:image ?thumbnail .
         ${
           lang === 'ja'
             ? ''

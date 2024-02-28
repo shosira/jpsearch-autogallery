@@ -14,11 +14,14 @@
             contain
             style="height: 150px"
             width="100%"
-            class="grey lighten-2"
+            class="grey lighten-2 rounded"
           ></v-img>
         </template>
         <template v-else>
-          <div class="text-center grey lighten-2 pa-10" style="height: 150px">
+          <div
+            class="text-center grey lighten-2 pa-10 rounded"
+            style="height: 150px"
+          >
             <v-icon size="75">{{ item._source._thumbnail }}</v-icon>
           </div>
         </template>
@@ -32,11 +35,14 @@
             contain
             style="height: 150px"
             width="100%"
-            class="grey lighten-2"
+            class="grey lighten-2 rounded"
           ></v-img>
         </template>
         <template v-else>
-          <div class="text-center grey lighten-2 pa-10" style="height: 150px">
+          <div
+            class="text-center grey lighten-2 pa-10 rounded"
+            style="height: 150px"
+          >
             <v-icon size="75">{{ item._source._thumbnail }}</v-icon>
           </div>
         </template>
@@ -44,7 +50,7 @@
     </template>
 
     <div
-      class="pa-4"
+      class="pa-3"
       :style="
         horizontal
           ? 'width: ' +
@@ -75,8 +81,6 @@
     </div>
 
     <template v-if="!item.share_hide">
-      <v-divider />
-
       <v-card-actions>
         <v-spacer></v-spacer>
         <ResultOption

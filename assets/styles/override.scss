@@ -1,0 +1,86 @@
+.jps-is-clipped-full {
+  overflow-y: hidden !important;
+}
+
+.jps-is-clipped {
+  position: fixed !important;
+  overflow-y: scroll !important;
+  width: 100% !important;
+  bottom: 0 !important;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url("https://cdn.jsdelivr.net/npm/yakuhanjp@3.3.1/dist/css/yakuhanjp.min.css");
+@import "_iconfonts.scss";
+
+.jps {
+  p {
+    line-height: 175%;
+    @include typo-paragraph();
+  }
+}
+
+/* z-index 集約（途中） */
+
+.jps-frame-totop {
+  z-index: 600;
+}
+
+.label-editor {
+  .full {
+    z-index: 1000;
+  }
+}
+
+.jps-mheader {
+  z-index: 110; //100以下にすると、ラベル定義画面で使っているhandsonテーブルのヘッダが上に来てしまう
+}
+
+.leaflet-bottom,
+.leaflet-top {
+  z-index: 450 !important;
+  .leaflet-control {
+    z-index: 460 !important;
+  }
+}
+
+.jps-zooming-bg {
+  .jps-zooming-bg-stop {
+    z-index: 300;
+  }
+}
+.jps-curation-preview {
+  z-index: 600;
+}
+
+.jps-curation-preview-control {
+  z-index: 610;
+}
+#anno_control_on,
+#anno_control_off {
+  z-index: 400;
+}
+.jps-carousel a.controller,
+.search-result-map {
+  z-index: 10;
+}
+
+/* ナビゲーション内タブの高さ調整 */
+nav.level {
+  .level-item {
+    .field.has-addons {
+      align-items: center;
+    }
+    .control {
+      a.button {
+        display: flex;
+        height: 2.75rem;
+      }
+    }
+  }
+}
+
+// leafletのstyle
+.leaflet-control-zoom .leaflet-bar .leaflet-control {
+  box-shadow: $component-shadow;
+}

@@ -1,0 +1,225 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.jps-is-static {
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+}
+
+.jps-frame {
+  &:not(.has-header-image) {
+    @include is-tablet {
+      padding-top: $header-height-tablet;
+    }
+    @include is-mobile {
+      &:before {
+        content: "";
+        display: block;
+        background-color: $jps-gray-900;
+        height: $header-height-mobile;
+      }
+    }
+  }
+
+  //ヘッダの挙動
+  &.has-header-image header.jps-header {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+    .jps-header-brand h1 {
+      a:before {
+        opacity: 1;
+      }
+      a:after {
+        opacity: 0;
+      }
+    }
+  }
+  &:not(.has-header-image) header.jps-header {
+    .jps-header-brand h1 {
+      a:before {
+        opacity: 0;
+      }
+      a:after {
+        opacity: 1;
+      }
+    }
+  }
+  header.jps-header.scrolled {
+    transition: $transition-linear;
+    pointer-events: auto;
+    background-color: $jps-gray-900;
+    .jps-header-brand h1 a:before {
+      opacity: 0;
+    }
+    .jps-header-brand h1 a:after {
+      opacity: 1;
+    }
+  }
+
+  > .jps-frame-main {
+    display: block; // IE対応 mainタグに対してbackground-colorを有効にするため
+    > h1 {
+      display: none;
+    }
+    background-color: $white;
+    min-height: calc(100vh - 3.5rem - 220px);
+    @include is-mobile() {
+      min-height: calc(100vh - 3rem - 345px);
+    }
+  }
+
+  .jps-frame-totop {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 790;
+    cursor: pointer;
+    @include no-user-select;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+
+    border: none;
+    color: white;
+    background-color: $jps-key-red;
+    border-radius: 15%;
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    transition: all 0.2s;
+    &:hover {
+      background-color: $jps-key-red-hover;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+  }
+
+  &.is-fixed {
+    $fixed-bread-height: 1.5rem;
+    /**
+    固定レイアウトではfixedにする代わりに、細くする。    
+    */
+    .jps-bread-crumbs {
+      height: $fixed-bread-height;
+      background: $jps-gray-50;
+      position: fixed;
+      z-index: 200;
+      @include is-tablet {
+        top: $header-height-tablet;
+      }
+      @include is-mobile {
+        top: $header-height-mobile;
+      }
+    }
+    > .jps-frame-main {
+      position: fixed;
+      width: 100vw;
+      background-color: $jps-gray-50;
+      bottom: 0;
+      min-height: 0;
+      @include is-tablet {
+        top: $header-height-tablet + $fixed-bread-height;
+      }
+      @include is-mobile {
+        top: $header-height-mobile;
+      }
+    }
+    .jps-footer {
+      display: none;
+      // position: fixed;
+      // width: 100vw;
+      // height: 1.5rem;
+      // bottom: 0;
+      // left: 0;
+      // .is-hidden-static {
+      //   display: none;
+      // }
+      // padding: 0;
+      // .jps-footer-content {
+      //   padding: 0;
+      //   height: 100%;
+      //   width: 100%;
+      //   .jps-footer-menu {
+      //     .jps-footer-menu-links {
+      //       margin-left: 1.5rem;
+      //     }
+      //     @include is-mobile() {
+      //       margin-bottom: 0;
+      //       display: flex;
+      //       flex-direction: row;
+      //       .jps-footer-menu-links,
+      //       .jps-footer-menu-tools {
+      //         margin-top: 0;
+      //         margin-bottom: 0;
+      //         display: flex;
+      //         flex-direction: row;
+      //         align-items: center;
+      //       }
+      //     }
+      //   }
+      // }
+    }
+  }
+
+  &.is-full {
+    .jps-header,
+    .header-search,
+    .jps-bread-crumbs,
+    .jps-footer {
+      display: none !important;
+    }
+    > .jps-frame-main {
+      top: 0 !important;
+      bottom: 0 !important;
+    }
+  }
+
+  @include is-print() {
+    .jps-header,
+    .jps-bread-crumbs,
+    .header-search,
+    .jps-footer,
+    .jps-frame-totop {
+      display: none !important;
+    }
+  }
+}
+
+.quick-links {
+  box-shadow: $component-shadow;
+  border: 0.5px solid $jps-gray-300;
+  font-size: $size-7;
+  position: absolute;
+  background: $white;
+  border-radius: 2px;
+  padding: 2px;
+  z-index: 9999;
+  display: grid;
+  a {
+    display: block;
+  }
+}
+#cal1 {
+  position: absolute;
+  height: 0px;
+  width: 0px;
+  top: 100px;
+  left: 100px;
+  overflow: none;
+  z-index: -100;
+}
+#cal2 {
+  position: absolute;
+  height: 0px;
+  width: 0px;
+  top: 0px;
+  left: 0px;
+  overflow: none;
+  z-index: -100;
+}

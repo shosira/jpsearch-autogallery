@@ -1,6 +1,6 @@
 <template>
   <div v-if="Object.keys(item).length > 0">
-    <v-sheet v-if="item._source._thumbnail" color="grey lighten-4">
+    <v-sheet v-if="item._source._thumbnail" color="grey lighten-4 rounded">
       <v-img
         :src="item._source._thumbnail"
         contain

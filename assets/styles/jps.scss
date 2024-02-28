@@ -1,0 +1,126 @@
+@import "reset.scss";
+@import "_iconfonts.scss";
+@import "_mixins.scss";
+@import "_palette.scss";
+@import "_variables.scss";
+@import "utility.scss";
+
+*:focus:not(:focus-visible),
+*::before:focus:not(:focus-visible),
+*::after:focus:not(:focus-visible) {
+  outline: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: $jps-gray-900;
+  background-repeat: no-repeat;
+  background-position: top center;
+  font-family: YakuHanJP, "Roboto", sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+  color: $jps-gray-900;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  button,
+  input,
+  select,
+  textarea {
+    font-family: YakuHanJP, "Roboto", sans-serif;
+  }
+  //フォント設定
+
+  a {
+    color: $jps-key-blue;
+    cursor: pointer;
+    text-decoration: none;
+    @include ease();
+    &:hover {
+      color: darken($jps-key-blue, 20%);
+    }
+    &:visited {
+      color: darken($jps-key-blue, 20%);
+    }
+    &:hover:visited {
+      color: darken($jps-key-blue, 30%);
+    }
+  }
+
+  h1, h2, h3, h4, h5 {
+    color: $jps-gray-900;
+    line-height: 150%;
+    font-weight: bold;
+  }
+  h1 {
+    font-size: $size-3;
+    .jps-modal-head &,
+    &.jps-heading-small {
+      font-size: $size-5;
+    }
+  }
+
+  h2 {
+    font-size: $size-4;
+    .jps-modal-head &,
+    &.jps-heading-small {
+      font-size: $size-6;
+    }
+  }
+
+  h3 {
+    font-size: $size-6;
+    .jps-modal-head &,
+    &.jps-heading-small {
+      font-size: $size-7;
+    }
+  }
+
+  h4 {
+    font-size: $size-6;
+  }
+  .jps-indented {
+    text-indent: 1rem;
+  }
+
+  .jps-text-left {
+    text-align: left;
+  }
+  .jps-text-right {
+    text-align: right;
+  }
+
+  .jps-align-center {
+    display: flex;
+    align-items: center;
+  }
+
+  // エッジは下の対応でOK（順番が逆になるとエッジでは壊れる）
+  .grid {
+    display: grid;
+  }
+
+  .image.is-64x64 {
+    overflow: hidden;
+  }
+
+  // iPhoneなどでタップしたときにハイライトさせない
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+}
+
+@import "components/_components.scss";
+@import "layouts/_layouts.scss";
+@import "override.scss";
+
+.v-pagination__item {
+  box-shadow: none !important;
+}
+.v-pagination__navigation {
+  box-shadow: none !important;
+}

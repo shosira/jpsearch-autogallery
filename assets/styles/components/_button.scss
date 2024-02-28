@@ -1,0 +1,440 @@
+.jps-licon {
+  .jps-icon {
+    margin-right: 0.5rem;
+  }
+}
+.jps-ricon {
+  .jps-icon {
+    margin-left: 0.5rem;
+  }
+}
+
+@mixin button-colors($border) {
+  &.jps-grey {
+    background: $white;
+    @if $border {
+    }
+    border-color: $jps-gray-300;
+    border: 1px solid $jps-gray-300;
+    color: $black !important;
+    &:not(:disabled):hover {
+      @if $border {
+        border-color: $jps-gray-300;
+      }
+      background-color: $jps-gray-300;
+    }
+  }
+
+  &.jps-dark {
+    background: $jps-gray-800;
+    @if $border {
+      border-color: $jps-gray-800;
+    }
+    color: $white !important;
+    &:not(:disabled):hover {
+      @if $border {
+        border-color: $jps-gray-600;
+      }
+      background-color: $jps-gray-600;
+    }
+  }
+
+  &.jps-orange {
+    background: $jps-key-orange;
+    @if $border {
+      border-color: $jps-key-orange;
+    }
+    color: $white !important;
+    &:not(:disabled):hover {
+      @if $border {
+        border-color: $jps-key-orange-hover;
+      }
+      background-color: $jps-key-orange-hover;
+    }
+  }
+
+  &.jps-sub-orange {
+    background: $jps-sub-orange;
+    @if $border {
+      border-color: $jps-sub-orange;
+    }
+    color: $white !important;
+    &:not(:disabled):hover {
+      @if $border {
+        border-color: $jps-sub-orange-hover;
+      }
+      background-color: $jps-sub-orange-hover;
+    }
+  }
+  &.jps-red {
+    background: $jps-key-red;
+    @if $border {
+      border-color: $jps-key-red;
+    }
+    color: $white !important;
+    &:not(:disabled):hover {
+      @if $border {
+        border-color: $jps-key-red-hover;
+      }
+      background-color: $jps-key-red-hover;
+    }
+  }
+  &.jps-yellow {
+    background: $jps-key-yellow;
+    @if $border {
+      border-color: $jps-key-yellow;
+    }
+    color: $white !important;
+    &:not(:disabled):hover {
+      @if $border {
+        border-color: $jps-key-yellow-hover;
+      }
+      background-color: $jps-key-yellow-hover;
+    }
+  }
+  &.jps-blue {
+    background: $jps-key-blue;
+    @if $border {
+      border-color: $jps-key-blue;
+    }
+    color: $white !important;
+    &:not(:disabled):hover {
+      @if $border {
+        border-color: $jps-key-blue-hover;
+      }
+      background-color: $jps-key-blue-hover;
+    }
+  }
+  &.jps-sub-blue {
+    background: $jps-sub-blue;
+    @if $border {
+      border-color: $jps-sub-blue-active;
+    }
+    color: $white !important;
+    &:not(:disabled):hover {
+      @if $border {
+        border-color: $jps-sub-blue;
+      }
+      background-color: $jps-sub-blue-hover;
+    }
+  }
+}
+
+@mixin focus-mixin() {
+}
+
+.jps-button-group {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem;
+}
+
+.jps-button {
+  @include j-control;
+  @include no-user-select;
+  transition: all 250ms;
+
+  background-color: $white;
+  border: 0.5px solid $jps-gray-300;
+  border-radius: $global-radius-small;
+  color: $jps-key-blue;
+  cursor: pointer;
+
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.25;
+  font-weight: 700;
+
+  &.jps-smart {
+    padding: 0 0.5rem;
+  }
+
+  &.jps-button-with-left-icon {
+    padding-right: 0.875rem;
+  }
+  &.jps-button-with-right-icon {
+    padding-left: 0.875rem;
+  }
+  &:hover:not(:disabled) {
+    border: 0.5px solid $jps-gray-500;
+    // background-color: $jps-gray-300 !important;
+    color: $jps-key-blue-hover;
+  }
+
+  &:active {
+    box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.4);
+    // background-color: $jps-gray-300 !important;
+    border: 0.5px solid $jps-key-blue-hover;
+    transition-duration: 0ms;
+  }
+
+  &:disabled {
+    background-color: $jps-gray-300;
+    color: $jps-gray-800;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  @include button-colors(true);
+}
+
+.jps-round-button {
+  @include no-user-select;
+  @include no-decorative-button;
+  border-radius: 9999px;
+
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  font-size: $size-7;
+  line-height: $size-7;
+  text-align: center;
+  white-space: nowrap;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+
+  &.jps-slim {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    line-height: 1;
+  }
+
+  &.jps-default-size {
+    width: 4rem;
+    height: 2rem;
+  }
+
+  &.jps-large {
+    padding: 0.75rem 1.25rem;
+    font-size: $size-6;
+  }
+
+  &.jps-expanded {
+    a {
+      margin: 0.25rem 0;
+      display: flex;
+      width: 100%;
+    }
+  }
+  &.jps-expanded-touch {
+    @include is-mobile() {
+      a {
+        margin: 0.25rem 0;
+        display: flex;
+        width: 100%;
+      }
+    }
+  }
+  &.jps-expanded-desktop {
+    @include is-desktop() {
+      a {
+        margin: 0.25rem 0;
+        display: flex;
+        width: 100%;
+      }
+    }
+  }
+
+  background-color: $jps-gray-900;
+  color: $text-white;
+  &:not(:disabled):hover {
+    background-color: $jps-gray-800;
+    color: $text-white;
+  }
+  &:visited {
+    background-color: $jps-gray-800;
+    color: $text-grey;
+  }
+  &:hover {
+    transition: all 250ms;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @include button-colors(true);
+
+  &.jps-outlined {
+    background-color: $jps-gray-50;
+    color: $text;
+    border: 1px solid $jps-gray-300;
+    &:not(:disabled):hover {
+      background-color: $jps-gray-50;
+      color: $text;
+    }
+    &:visited {
+      background-color: $jps-gray-50;
+      color: $text;
+    }
+    &:hover {
+      transition: all 250ms;
+    }
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.jps-icon-button {
+  @include no-user-select;
+  @include no-decorative-button;
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  cursor: pointer;
+  color: $jps-gray-600;
+  height: 1.5rem;
+  &.jps-icon-small {
+    height: 1rem;
+  }
+  &:not(:disabled):hover {
+    color: $jps-gray-800;
+  }
+
+  transition: color 250ms;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: auto;
+  }
+  &.jps-grey {
+    color: $jps-gray-300;
+    &:not(:disabled):hover {
+      color: $jps-gray-600;
+    }
+  }
+  &.jps-dark {
+    color: $jps-gray-800;
+    &:not(:disabled):hover {
+      color: $jps-gray-900;
+    }
+  }
+  &.jps-red {
+    color: $jps-key-red;
+    &:not(:disabled):hover {
+      color: $jps-key-red-hover;
+    }
+  }
+  &.jps-orange {
+    color: $jps-key-orange;
+    &:not(:disabled):hover {
+      color: $jps-key-orange-hover;
+    }
+  }
+  &.jps-sub-orange {
+    color: $jps-sub-orange;
+    &:not(:disabled):hover {
+      color: $jps-sub-orange-hover;
+    }
+  }
+  &.jps-blue {
+    color: $jps-key-blue;
+    &:not(:disabled):hover {
+      color: $jps-key-blue-hover;
+    }
+  }
+  &.jps-sub-blue {
+    color: $jps-sub-blue;
+    &:not(:disabled):hover {
+      color: $jps-sub-blue-hover;
+    }
+  }
+}
+
+.jps-text-button {
+  @include no-user-select;
+  @include no-decorative-button;
+  background-color: transparent;
+  cursor: pointer;
+  color: $jps-key-blue;
+
+  &:not(:disabled):hover {
+    color: $jps-gray-800;
+  }
+
+  transition: color 250ms;
+
+  color: $jps-key-blue;
+  &:not(:disabled):hover {
+    color: $jps-key-blue-hover;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: auto;
+  }
+
+  &.jps-sub-orange {
+    color: $jps-sub-orange !important;
+    &:not(:disabled):hover {
+      color: $jps-sub-orange-hover;
+    }
+  }
+}
+
+.jps-link-button {
+  @include no-decorative-button;
+  cursor: pointer;
+  text-align: left;
+  background-color: transparent;
+  text-decoration: none;
+  transition: all 300ms 0s ease;
+  font-size: unset;
+  font-weight: unset;
+  cursor: pointer;
+  color: $jps-key-blue;
+
+  &:not(:disabled):hover {
+    color: $jps-gray-800;
+  }
+
+  color: $jps-key-blue;
+  &:not(:disabled):hover {
+    color: $jps-key-blue-hover;
+  }
+}
+
+@mixin toggle-button-color($base-color, $text-color) {
+  border-color: $base-color;
+
+  &.jps-active {
+    color: $text-color;
+    background-color: $base-color;
+    border-color: $base-color;
+    &:not(:disabled):hover {
+      color: $text-color;
+      background-color: $base-color;
+      border-color: $jps-gray-300;
+    }
+  }
+}
+
+.jps-toggle-button {
+  transition: all 250ms;
+  border-width: 1px;
+
+  color: $jps-gray-800;
+  background-color: $jps-gray-100;
+
+  &:not(:disabled):hover {
+    color: $jps-gray-800;
+    background-color: $jps-gray-100;
+    border-color: $jps-gray-300;
+  }
+
+  @include toggle-button-color($jps-key-blue, $white);
+
+  &.jps-orange {
+    @include toggle-button-color($jps-key-orange, $white);
+  }
+
+  &.jps-purple {
+    @include toggle-button-color($jps-key-purple, $white);
+  }
+}

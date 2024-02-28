@@ -1,0 +1,26 @@
+.jps-logo-icon {
+  display: block;
+  background: url(#{$img-path}brand/logo-sq-4c.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 2rem;
+  height: 2rem;
+  &.jps-gray {
+    filter: grayscale(100%);
+  }
+  &.jps-loading {
+    animation: spin 1.5s linear infinite;
+  }
+}
+.edit-icon {
+  color: $jps-key-orange;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

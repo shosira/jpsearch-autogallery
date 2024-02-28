@@ -5,9 +5,7 @@
 
     <v-card flat class="my-5 pa-5">
       <div class="text-center">
-        <small>
-          <h3 class="mb-5">{{ $t('データベース（上位10件）') }}</h3>
-        </small>
+        <h3 class="mb-5">{{ $t('データベース（上位10件）') }}</h3>
       </div>
       <Chart :height="300" :u="u" />
     </v-card>

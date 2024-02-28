@@ -48,14 +48,14 @@
 
           <v-row class="mb-10">
             <v-col v-for="(obj, key) in items" :key="key" cols="12" :sm="3">
-              <v-card flat no-body class="mb-4">
+              <v-card flat no-body class="mb-4 jps-card">
                 <template v-if="obj.href">
                   <a :href="obj.href" target="_blank">
-                    <div class="text-center grey lighten-2 pa-10">
+                    <div class="text-center grey lighten-3 pa-10 rounded">
                       <v-icon size="100">{{ obj.icon }}</v-icon>
                     </div>
                   </a>
-                  <div class="pa-4">
+                  <div class="pa-2">
                     <a :href="obj.href" target="_blank">
                       <h4>{{ obj.label }}</h4>
                     </a>
@@ -67,11 +67,11 @@
                 </template>
                 <template v-else>
                   <nuxt-link :to="localePath(obj.path)">
-                    <div class="text-center grey lighten-2 pa-10">
+                    <div class="text-center grey lighten-3 pa-10 rounded">
                       <v-icon size="100">{{ obj.icon }}</v-icon>
                     </div>
                   </nuxt-link>
-                  <div class="pa-4">
+                  <div class="pa-2">
                     <nuxt-link :to="localePath(obj.path)">
                       <h4>{{ obj.label }}</h4>
                     </nuxt-link>

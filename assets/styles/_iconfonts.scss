@@ -1,0 +1,214 @@
+@import "_variables.scss";
+$font-path: "../fonts/";
+@font-face {
+  font-family: "jpsicon";
+  src: url("#{$font-path}icon.eot");
+  src: url("#{$font-path}icon.eot") format("embedded-opentype"),
+    url("#{$font-path}icon.ttf") format("truetype"),
+    url("#{$font-path}icon.woff") format("woff"),
+    url("#{$font-path}icon.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="koicon-"],
+[class*=" koicon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "jpsicon" !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  &.x1 {
+    font-size: 1rem;
+  }
+  &.x1-5 {
+    font-size: 1.5rem;
+  }
+  &.x2 {
+    font-size: 2rem;
+  }
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-baseline-global:before {
+  content: "\e935";
+}
+.icon-baseline-org:before {
+  content: "\e936";
+}
+.icon-sns-fb:before {
+  content: "\e937";
+}
+.icon-sns-line {
+  content: "\e938";
+}
+.icon-sns-tw {
+  content: "\e939";
+}
+
+.koicon-01:before {
+  content: "\e900";
+}
+.koicon-02:before {
+  content: "\e901";
+}
+.koicon-03:before {
+  content: "\e902";
+}
+.koicon-04:before {
+  content: "\e903";
+}
+.koicon-05:before {
+  content: "\e904";
+}
+.koicon-06:before {
+  content: "\e905";
+}
+.koicon-07:before {
+  content: "\e906";
+}
+.koicon-08:before {
+  content: "\e907";
+}
+.koicon-09:before {
+  content: "\e908";
+}
+.koicon-10:before {
+  content: "\e909";
+}
+.koicon-11:before {
+  content: "\e90a";
+}
+.koicon-12:before {
+  content: "\e90b";
+}
+.koicon-13:before {
+  content: "\e90c";
+}
+.koicon-14:before {
+  content: "\e90d";
+}
+.koicon-15:before {
+  content: "\e90e";
+}
+.koicon-16:before {
+  content: "\e90f";
+}
+.koicon-17:before {
+  content: "\e910";
+}
+.koicon-18:before {
+  content: "\e911";
+}
+.koicon-19:before {
+  content: "\e912";
+}
+.koicon-20:before {
+  content: "\e913";
+}
+.koicon-21:before {
+  content: "\e914";
+}
+.koicon-22:before {
+  content: "\e915";
+}
+.koicon-23:before {
+  content: "\e916";
+}
+.koicon-24:before {
+  content: "\e917";
+}
+.koicon-25:before {
+  content: "\e918";
+}
+.koicon-26:before {
+  content: "\e919";
+}
+.koicon-27:before {
+  content: "\e91a";
+}
+.koicon-28:before {
+  content: "\e91b";
+}
+.koicon-29:before {
+  content: "\e91c";
+}
+.koicon-30:before {
+  content: "\e91d";
+}
+.koicon-31:before {
+  content: "\e91e";
+}
+.koicon-32:before {
+  content: "\e91f";
+}
+.koicon-33:before {
+  content: "\e920";
+}
+.koicon-34:before {
+  content: "\e921";
+}
+.koicon-35:before {
+  content: "\e922";
+}
+.koicon-36:before {
+  content: "\e923";
+}
+.koicon-37:before {
+  content: "\e924";
+}
+.koicon-38:before {
+  content: "\e925";
+}
+.koicon-39:before {
+  content: "\e926";
+}
+.koicon-40:before {
+  content: "\e927";
+}
+.koicon-41:before {
+  content: "\e928";
+}
+.koicon-42:before {
+  content: "\e929";
+}
+.koicon-43:before {
+  content: "\e92a";
+}
+.koicon-45:before {
+  content: "\e92b";
+}
+.koicon-46:before {
+  content: "\e92c";
+}
+.koicon-47:before {
+  content: "\e92d";
+}
+.koicon-48:before {
+  content: "\e92e";
+}
+.koicon-49:before {
+  content: "\e92f";
+}
+.koicon-50:before {
+  content: "\e930";
+}
+.koicon-51:before {
+  content: "\e931";
+}
+.koicon-52:before {
+  content: "\e932";
+}
+.koicon-53:before {
+  content: "\e933";
+}
+.koicon-54:before {
+  content: "\e934";
+}

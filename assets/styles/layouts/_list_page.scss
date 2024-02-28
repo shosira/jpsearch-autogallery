@@ -1,0 +1,91 @@
+.jps-list-card-layout {
+  background-color: $jps-gray-50;
+  padding: 3rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+
+  @include is-mobile {
+    padding: 1.5rem;
+  }
+
+  .search-box:not(.simple) {
+    @include is-mobile {
+      padding: 0 1rem;
+    }
+    @include is-tablet {
+      padding: 0 3rem;
+    }
+  }
+  .search-result-header {
+    display: flex;
+    align-items: center;
+
+    @include is-tablet {
+      justify-content: space-between;
+    }
+    @include is-mobile {
+      flex-direction: column;
+      margin: 0;
+      .narrow-search {
+        order: 1;
+      }
+      div:first-child {
+        order: 2;
+      }
+      .search-paginaition {
+        order: 3;
+      }
+      .display-mode {
+        order: 4;
+      }
+    }
+    .narrow-search {
+      width: 20rem;
+      @include is-mobile {
+        width: 100%;
+      }
+    }
+    .search-paginaition {
+      @include is-mobile {
+        margin: 0;
+        width: 100%;
+      }
+    }
+    .display-mode {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      //   justify-content: space-between;
+      @include is-tablet {
+        min-width: 12rem;
+      }
+      a {
+        margin: 0.1rem;
+        color: #4b4b4b;
+      }
+      .jps-active {
+        color: $jps-key-blue;
+        &:hover {
+          color: $jps-key-blue-hover;
+        }
+      }
+    }
+  }
+  .grid {
+    padding: 0;
+    padding-top: 1rem;
+    .grid-item {
+      @include is-tablet() {
+        .jps-card {
+          height: 400px;
+        }
+      }
+      @include is-mobile() {
+        width: 100%;
+      }
+    }
+  }
+  .footer-paginaition {
+    margin-top: 1.5rem;
+  }
+}

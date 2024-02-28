@@ -1,0 +1,157 @@
+@include is-tablet {
+  body {
+    overflow: visible;
+  }
+  /* .indexの position:sticky を有効にするため */
+}
+
+.jps-static {
+  /*@include list-header-is-dark();*/
+  padding-top: 3rem;
+
+  header {
+    margin: 0 auto 3rem;
+    @include is-mobile {
+      margin: 2rem 1rem;
+    }
+    h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      .catch {
+        margin: 0 0 1rem;
+      }
+    }
+  }
+
+  .jps-static-main {
+    margin: 1rem;
+    .jps-static-content {
+      background: $white;
+      max-width: 60em;
+      @include is-tablet {
+        margin: auto;
+      }
+      ul,
+      dl,
+      ol {
+        margin: 1rem;
+      }
+      li,
+      dt,
+      dd {
+        @include typo-list();
+      }
+      li,
+      dd {
+        margin-bottom: 0.75rem;
+      }
+      p {
+        @include typo-paragraph();
+        @include is-tablet {
+          color: $black;
+          margin: 1rem 0 1rem;
+        }
+        @include is-mobile {
+          margin: 1rem 0;
+        }
+      }
+      a {
+        @include link-marker(rgba(62, 148, 226, 0.2), 60%);
+        &:hover {
+          @include link-marker(rgba(62, 148, 226, 0.1), 60%);
+        }
+        &:visited {
+          @include link-marker(rgba(62, 148, 226, 0.1), 60%);
+        }
+        &.card-header-icon {
+          background: $jps-gray-100;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        h1 &,
+        h2 &,
+        h3 & {
+          background: none;
+        }
+      }
+      section:not(.index) {
+        max-width: $content-width;
+        margin: 0 auto 4rem;
+        font-size: $size-6;
+      }
+      &.has-index {
+        margin-top: -3rem;
+        @include is-mobile {
+          section.index {
+            display: none;
+          }
+        }
+        @include is-tablet {
+          section:not(.index) {
+            padding-right: 18rem;
+          }
+          section.index {
+            position: -webkit-sticky;
+            position: sticky;
+            float: right;
+            top: $header-height-tablet - 1rem;
+            left: calc(50vw + 15rem);
+            width: 15rem;
+            background-color: $white;
+            font-size: $size-7;
+            display: grid;
+            justify-content: center;
+            > ul {
+              margin: 3rem 0 0;
+            }
+            li {
+              margin-bottom: 1.5rem;
+            }
+            &:after {
+              content: "";
+              clear: both;
+            }
+          }
+          /* IE11 hack */
+          _:-ms-lang(x)::-ms-backdrop,
+          section.index {
+            position: absolute;
+            top: 14.25rem;
+          }
+        }
+      }
+
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 500;
+      }
+      h2 {
+        font-weight: bold;
+        margin: 1rem 0;
+        @include is-tablet {
+          font-size: $size-4;
+        }
+        @include is-mobile {
+          font-size: $size-5;
+        }
+      }
+      .card-header h2 {
+        padding: 0.5rem;
+      }
+      .delta-renderer {
+        @include is-tablet {
+          max-width: 80%;
+          margin: 0 auto;
+        }
+        p {
+        }
+      }
+    }
+  }
+}

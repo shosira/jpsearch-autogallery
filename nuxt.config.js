@@ -28,7 +28,7 @@ const basePath = baseUrl + baseDir
 
 // meta
 const lang = 'ja'
-const siteName = 'JPS自動ギャラリー'
+const siteName = 'Japan Search Auto Generated Gallery'
 env.siteName = siteName
 const siteDesc =
   'ジャパンサーチ利活用スキーマを用いたギャラリーの自動生成アプリです。'
@@ -137,8 +137,7 @@ export default {
       },
       {
         rel: 'stylesheet',
-        href:
-          'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
+        href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
       },
     ],
   },
@@ -160,7 +159,7 @@ export default {
   loading: { color: '#E64A19', height: '5px' },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [],
+  css: ['~/assets/styles/jps.scss'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
@@ -249,6 +248,11 @@ export default {
         ['@babel/plugin-proposal-decorators', { legacy: true }],
         ['@babel/plugin-proposal-class-properties', { loose: true }],
       ],
+    },
+    loaders: {
+      scss: {
+        implementation: require('sass'),
+      },
     },
   },
 

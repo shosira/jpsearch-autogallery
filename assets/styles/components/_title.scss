@@ -1,0 +1,42 @@
+.title {
+  @include block;
+
+  word-break: break-word;
+
+  color: $jps-gray-800;
+
+  font-size: $size-3;
+  font-weight: 600;
+  line-height: 1.125;
+
+  em,
+  span {
+    font-weight: inherit;
+  }
+
+  sub {
+    font-size: 0.75rem;
+  }
+
+  sup {
+    font-size: 0.75rem;
+  }
+
+  .tag {
+    vertical-align: middle;
+  }
+
+  & + .highlight {
+    margin-top: -0.75rem;
+  }
+}
+
+.jps-page-title {
+}
+
+.jps-title {
+  word-break: break-word;
+  font-size: $size-3;
+  font-weight: 600;
+  line-height: 1.125;
+}

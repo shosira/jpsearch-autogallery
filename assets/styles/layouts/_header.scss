@@ -1,0 +1,284 @@
+.jps-header {
+  z-index: 2000;
+  width: 100%;
+  transition: $transition-linear;
+  @include is-tablet() {
+    height: $header-height-tablet;
+  }
+  @include is-mobile() {
+    height: $header-height-mobile;
+    &.hide-top.scrolled {
+      transform: translate(0, -4.5rem);
+    }
+  }
+  top: 0;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  background-color: $jps-gray-900;
+  .jps-header-brand {
+    pointer-events: auto;
+    overflow: hidden;
+    h1 {
+      @include is-tablet() {
+        padding: 0 1rem;
+        margin: 0.65rem 0;
+      }
+      @include is-mobile() {
+        padding: 0 1rem;
+        margin: 0.5rem 0;
+      }
+    }
+    h1 a {
+      display: inline-block;
+      height: 0;
+      overflow: hidden;
+      position: relative;
+      @include is-tablet() {
+        padding-top: 1.875rem;
+        width: 12rem;
+        background-size: auto 2rem;
+      }
+      @include is-mobile() {
+        padding-top: 1.725rem;
+        width: 10.8rem;
+        background-size: auto 1.625rem;
+      }
+      &:before {
+        background: url(#{$img-path}brand/logo-horizontal-1c-ww.svg) no-repeat;
+      }
+      &:after {
+        background: url(#{$img-path}brand/logo-horizontal-4c-w.svg) no-repeat;
+      }
+      &:before,
+      &:after {
+        content: "";
+        height: 0;
+        overflow: hidden;
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: $transition-linear;
+        padding-top: 2.5rem;
+        width: 12rem;
+        @include is-tablet() {
+          background-size: 12rem;
+        }
+        @include is-mobile() {
+          background-size: auto 1.625rem;
+        }
+      }
+    }
+  }
+  .jps-header-menu {
+    pointer-events: auto;
+    flex-shrink: 0;
+    align-items: stretch;
+    display: flex;
+    justify-content: flex-end;
+    color: $white;
+    > h1 {
+      display: none;
+    }
+    a {
+      color: $white;
+      display: flex;
+    }
+    .jps-mgmt-header {
+      font-size: small;
+      @include is-mobile() {
+        display: none !important;
+      }
+    }
+
+    .header-menu-item {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      flex-grow: 0;
+      @include is-tablet() {
+        padding: 0 0.5rem;
+      }
+      @include is-mobile() {
+        margin: 0 1rem 0 0;
+      }
+      > div {
+        > a {
+          color: $white !important;
+          display: flex;
+          align-items: center;
+          @include is-tablet {
+            .jps-icon {
+              margin-right: 0.25rem;
+            }
+          }
+        }
+      }
+      &.mobile-search-icon {
+        color: $white !important;
+      }
+      .header-menu-text {
+        max-width: 8rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: bold;
+      }
+      &.j-dropdown {
+        white-space: nowrap;
+        .j-dropdown-trigger {
+          .jps-icon {
+            line-height: 16px;
+          }
+          color: $white;
+          height: 100%;
+          line-height: 24px;
+          display: flex;
+          align-items: center;
+        }
+        .j-dropdown-menu-text {
+          line-height: 1.5;
+          position: relative;
+          font-size: small;
+        }
+
+        .j-dropdown-content {
+          .j-dropdown-item {
+            justify-content: space-between;
+            padding-right: 1rem;
+          }
+          a {
+            color: $black;
+          }
+          .jps-icon {
+            color: $jps-gray-600;
+            margin-right: 0.25rem;
+          }
+          .supplement {
+            font-size: 0.75rem;
+            padding: 0.375rem 1rem;
+            padding-left: 0.5rem;
+            color: $jps-gray-600;
+            display: flex;
+            align-items: center;
+          }
+          .tag {
+            margin-left: 1rem;
+            border: 1px solid $jps-gray-300;
+          }
+        }
+      }
+      &.note {
+        .j-dropdown-trigger {
+          display: flex;
+          align-items: center;
+          color: $white;
+          line-height: 24px;
+        }
+        .j-dropdown-content {
+          min-width: 14rem;
+          .jps-note-list {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            > * {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+            }
+            &.current {
+              .jps-icon {
+                color: $jps-key-blue;
+              }
+              .jps-tag {
+                background: $jps-gray-200;
+                margin-left: 1rem;
+              }
+            }
+          }
+          .note-menu {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0.375rem 1rem;
+            a {
+              font-size: 0.875rem;
+              padding-right: 1rem;
+              width: auto;
+              color: $jps-key-blue !important;
+              span {
+                display: flex;
+                align-items: center;
+              }
+            }
+          }
+          .note-functions {
+            justify-content: space-evenly;
+            padding: 0.5rem;
+            a {
+              padding-right: 0;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              .jps-icon {
+                font-size: 24px;
+                color: $jps-key-blue;
+              }
+            }
+          }
+        }
+        .j-dropdown-menu {
+          @include is-tablet() {
+            margin-right: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.jps-list-header {
+  .jps-lh-title {
+    display: flex;
+    align-items: center;
+    word-break: break-word;
+    font-weight: 600;
+    line-height: 1.125;
+    margin-bottom: 0.75rem;
+
+    @include is-mobile {
+      margin-bottom: 0.5rem;
+    }
+
+    .jps-lh-title-span {
+      font-size: $size-4;
+      @include is-mobile {
+        font-size: $size-6;
+      }
+    }
+
+    .jps-icon {
+      margin-right: 1rem;
+      font-size: $size-3;
+      @include is-mobile {
+        font-size: $size-5;
+      }
+    }
+  }
+  .jps-lh-description {
+    padding-left: 3rem;
+    font-size: $size-6;
+    @include is-mobile {
+      font-size: $size-7;
+      padding-left: 0rem;
+    }
+  }
+}
+
+.jps-list-header-margin {
+  padding: 1.5rem 3rem;
+  @include is-mobile {
+    padding: 1rem 1rem 0.5rem;
+  }
+}

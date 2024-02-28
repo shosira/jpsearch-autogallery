@@ -164,8 +164,8 @@
       <nuxt />
     </v-main>
 
-    <v-footer :dark="true" class="mt-5">
-      <v-container class="text-center my-5">
+    <v-footer :dark="true" class="mt-5 jps-footer">
+      <v-container class="text-center my-5 jps-footer-content">
         <p>
           <nuxt-link style="color: white" :to="localePath({ name: 'index' })">{{
             $t(siteName)
@@ -176,6 +176,12 @@
             <v-icon>mdi-github</v-icon>
           </a>
         </p>
+        <a href="/" class="jps-footer-logo is-hidden-static">
+          <img
+            src="~assets/img/labo/jps-labo-logo.svg"
+            alt="ジャパンサーチ・ラボ"
+          />
+        </a>
       </v-container>
     </v-footer>
 

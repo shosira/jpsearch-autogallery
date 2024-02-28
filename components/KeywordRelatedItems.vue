@@ -5,9 +5,7 @@
 
     <v-card flat class="my-5 pa-5">
       <div class="text-center">
-        <small>
-          <h3 class="mb-5">{{ $t('データベース（上位10件）') }}</h3>
-        </small>
+        <h3 class="mb-5">{{ $t('データベース（上位10件）') }}</h3>
       </div>
       <Chart :height="300" :query="query" type="keyword" :u="u" />
     </v-card>
@@ -55,8 +53,8 @@ export default class about extends Vue {
           {
             ?cho rdfs:label ?label;
             schema:about <${u}> .
-          } 
-          
+          }
+
           ?cho jps:sourceInfo ?source .
 
           ?source schema:provider ?provider .
@@ -95,8 +93,8 @@ export default class about extends Vue {
           {
             ?cho rdfs:label ?label;
             schema:about <${u}> .
-          } 
-          
+          }
+
           ${
             searchNoThumbFlag
               ? 'MINUS { ?cho schema:image ?thumbnail } '
@@ -104,7 +102,7 @@ export default class about extends Vue {
           }
           ?cho jps:sourceInfo ?sourceInfo .
           ?sourceInfo schema:provider ?p .
-          optional { ?p rdfs:label ?p_label . } 
+          optional { ?p rdfs:label ?p_label . }
 
           ${
             lang === 'ja'

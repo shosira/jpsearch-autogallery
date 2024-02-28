@@ -1,7 +1,7 @@
 <template>
   <div v-if="id">
-    <v-sheet color="grey lighten-2">
-      <v-container fluid class="py-4">
+    <v-sheet color="grey lighten-3 rounded">
+      <v-container fluid class="py-2">
         <v-breadcrumbs class="py-0" :items="items">
           <template #divider>
             <v-icon>mdi-chevron-right</v-icon>
@@ -21,35 +21,33 @@
     <DPLA :u="id" class="mt-10 mb-5" />
     <v-container class="my-10">
       <div class="text-center">
-        <small>
-          <h3 class="mb-5">{{ $t('二次利用について') }}</h3>
+        <h3 class="mb-5">{{ $t('二次利用について') }}</h3>
 
-          <template v-if="$i18n.locale == 'ja'">
-            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"
-              ><img
-                alt="クリエイティブ・コモンズ・ライセンス"
-                style="border-width: 0"
-                src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a
-            ><br />この作品は<a
-              rel="license"
-              href="http://creativecommons.org/licenses/by/4.0/"
-              >クリエイティブ・コモンズ 表示 4.0 国際 ライセンス</a
-            >の下に提供されています。
-          </template>
-          <template v-else>
-            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"
-              ><img
-                alt="Creative Commons License"
-                style="border-width: 0"
-                src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a
-            ><br />This work is licensed under a
-            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"
-              >Creative Commons Attribution 4.0 International License</a
-            >.
-          </template>
+        <template v-if="$i18n.locale == 'ja'">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"
+            ><img
+              alt="クリエイティブ・コモンズ・ライセンス"
+              style="border-width: 0"
+              src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a
+          ><br />この作品は<a
+            rel="license"
+            href="http://creativecommons.org/licenses/by/4.0/"
+            >クリエイティブ・コモンズ 表示 4.0 国際 ライセンス</a
+          >の下に提供されています。
+        </template>
+        <template v-else>
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"
+            ><img
+              alt="Creative Commons License"
+              style="border-width: 0"
+              src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a
+          ><br />This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"
+            >Creative Commons Attribution 4.0 International License</a
+          >.
+        </template>
 
-          <p class="mt-5">{{ $t('ただし、画像は個々の権利表示による') }}</p>
-        </small>
+        <p class="mt-5">{{ $t('ただし、画像は個々の権利表示による') }}</p>
       </div>
     </v-container>
   </div>

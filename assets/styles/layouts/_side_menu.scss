@@ -1,0 +1,101 @@
+.jps-layout-sm {
+  display: flex;
+  height: 100%;
+
+  $head-height: 1.5rem;
+
+  .jps-layout-sm-main {
+    .jps-layout-sm-content {
+      background-color: $white;
+      border-top-left-radius: 6px;
+      width: 100%;
+      padding: 2rem;
+      min-height: 100%;
+      &:first-child {
+        margin-top: $head-height;
+        min-height: calc(100% - #{$head-height});
+      }
+      @include is-mobile() {
+        padding: 1rem;
+        border-top-left-radius: 0px;
+      }
+    }
+    flex-grow: 1;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .jps-layout-sm-section {
+    &:not(:last-child) {
+      margin-bottom: 3rem;
+    }
+  }
+  .jps-layout-sm-title {
+  }
+
+  .jps-layout-sm-head {
+    position: sticky;
+    top: 0;
+    margin-left: 5rem;
+    display: flex;
+    z-index: 1000;
+    justify-content: flex-end;
+    pointer-events: none;
+  }
+
+  .jps-layout-sm-toolbar {
+    background: $jps-gray-50;
+    padding: 0.5rem;
+    border-bottom-left-radius: 6px;
+    // box-shadow: 0.3px 0.3px 17px #d7d7d7, -0.3px -0.3px 17px #ffffff;
+    display: flex;
+    align-items: center;
+
+    > * {
+      margin-left: 0.25rem;
+      margin-right: 0.25rem;
+    }
+    pointer-events: auto;
+  }
+}
+
+.jps-menu-open-button {
+  @include no-user-select;
+  @include no-decorative-button;
+  transition: all 250ms;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 10rem;
+  margin-right: 0.5rem;
+  color: $jps-key-blue;
+  background-color: $white;
+  border: 1px solid $jps-gray-300;
+  cursor: pointer;
+  justify-content: center;
+  padding-bottom: calc(0.375em - 1px);
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  padding-top: calc(0.375em - 1px);
+  text-align: center;
+  white-space: nowrap;
+  align-items: center;
+  box-shadow: none;
+  display: inline-flex;
+
+  line-height: 1.5;
+
+  position: relative;
+  vertical-align: top;
+
+  &.jps-menu-open-button-closed {
+    color: $jps-gray-800;
+    background-color: $jps-gray-100;
+    border-color: $jps-gray-300;
+  }
+  &:hover {
+    border-color: $jps-gray-500;
+  }
+
+  &.disable {
+  }
+}

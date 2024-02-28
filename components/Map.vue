@@ -5,9 +5,7 @@
 
     <v-card flat class="my-5 pa-5">
       <div class="text-center">
-        <small>
-          <h3 class="mb-5">{{ $t('map') }}（{{ markers.length }}）</h3>
-        </small>
+        <h3 class="mb-5">{{ $t('map') }}（{{ markers.length }}）</h3>
       </div>
       <div id="map-wrap" style="height: 40vh" class="my-2">
         <mapc :markers="markers" :zoom="2" :center="center" />
@@ -79,12 +77,12 @@ export default class about extends Vue {
     const stmt = this.getStmt(u, type)
 
     const query = `
-        SELECT DISTINCT ?keyword ?label ?name ?lat ?long WHERE { 
+        SELECT DISTINCT ?keyword ?label ?name ?lat ?long WHERE {
           ${stmt}
-          ?s schema:spatial ?keyword . 
-          FILTER(?keyword != <${u}> ) . 
-          optional { ?keyword schema:geo ?loc. ?loc schema:latitude ?lat ; schema:longitude ?long . } 
-          ?keyword rdfs:label ?label . 
+          ?s schema:spatial ?keyword .
+          FILTER(?keyword != <${u}> ) .
+          optional { ?keyword schema:geo ?loc. ?loc schema:latitude ?lat ; schema:longitude ?long . }
+          ?keyword rdfs:label ?label .
 
           ${
             lang === 'ja'
