@@ -21,6 +21,10 @@
     <DPLA :u="id" class="mt-10 mb-5" />
     <v-container class="my-10">
       <div class="text-center">
+        <h3 class="mb-5">このコンテンツについて</h3>
+        <p>
+          このコンテンツは自動生成されています。主題と関連性の低い資料が表示される場合があります。
+        </p>
         <h3 class="mb-5">{{ $t('二次利用について') }}</h3>
 
         <template v-if="$i18n.locale == 'ja'">
