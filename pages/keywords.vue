@@ -245,7 +245,7 @@ export default class about extends Vue {
     query.from = from
     this.$router.push(
       this.localePath({
-        name,
+        name : this.name,
         query,
       }),
       () => {},
