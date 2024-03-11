@@ -10,6 +10,13 @@
       </v-container>
     </v-sheet>
     <TargetAgent :u="id" class="mb-5" />
+
+    <div class="container mb-5">
+      <h3 class="mb-5">このコンテンツについて</h3>
+      <p>
+        このコンテンツは自動生成されています。主題と関連性の低い資料が表示される場合があります。
+      </p>
+    </div>
     <EntityRelatedKeywords :u="id" :type="type" class="mt-10 mb-5" />
     <Keywords :u="id" class="mt-10 mb-5" />
 
@@ -35,11 +42,14 @@
               alt="クリエイティブ・コモンズ・ライセンス"
               style="border-width: 0"
               src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a
-          ><br />この作品は<a
+          ><br /><a
             rel="license"
             href="http://creativecommons.org/licenses/by/4.0/"
             >クリエイティブ・コモンズ 表示 4.0 国際 ライセンス</a
-          >の下に提供されています。
+          ><br />
+          <span class="mt-5">{{
+            $t('ただし、画像は個々の権利表示による')
+          }}</span>
         </template>
         <template v-else>
           <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"
@@ -52,8 +62,6 @@
             >Creative Commons Attribution 4.0 International License</a
           >.
         </template>
-
-        <p class="mt-5">{{ $t('ただし、画像は個々の権利表示による') }}</p>
       </div>
     </v-container>
   </div>

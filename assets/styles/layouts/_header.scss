@@ -21,54 +21,24 @@
     pointer-events: auto;
     overflow: hidden;
     h1 {
+      display: flex;
+      align-items: flex-end;
       @include is-tablet() {
         padding: 0 1rem;
-        margin: 0.65rem 0;
       }
       @include is-mobile() {
         padding: 0 1rem;
-        margin: 0.5rem 0;
+      }
+      span {
+        color: white;
+        font-size: $size-7;
+        padding-bottom: 0.65rem;
       }
     }
     h1 a {
       display: inline-block;
-      height: 0;
-      overflow: hidden;
-      position: relative;
-      @include is-tablet() {
-        padding-top: 1.875rem;
-        width: 12rem;
-        background-size: auto 2rem;
-      }
-      @include is-mobile() {
-        padding-top: 1.725rem;
-        width: 10.8rem;
-        background-size: auto 1.625rem;
-      }
-      &:before {
-        background: url(#{$img-path}brand/logo-horizontal-1c-ww.svg) no-repeat;
-      }
-      &:after {
-        background: url(#{$img-path}brand/logo-horizontal-4c-w.svg) no-repeat;
-      }
-      &:before,
-      &:after {
-        content: "";
-        height: 0;
-        overflow: hidden;
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        transition: $transition-linear;
-        padding-top: 2.5rem;
-        width: 12rem;
-        @include is-tablet() {
-          background-size: 12rem;
-        }
-        @include is-mobile() {
-          background-size: auto 1.625rem;
-        }
+      img {
+        width: 17.875rem;
       }
     }
   }

@@ -101,7 +101,15 @@
             "
             style="color: inherit; text-decoration: inherit"
           >
-            {{ $t(siteName) }}
+            <div class="jps-header-brand">
+              <h1>
+                <a href="https://jpsearch.go.jp/static/jps-lab/"
+                  ><img
+                    src="~assets/img/labo/jps-labo-logo-header.svg"
+                    aria-label="ジャパンサーチラボ可視化機能" /></a
+                ><span>{{ $t(siteName) }}</span>
+              </h1>
+            </div>
           </nuxt-link>
         </v-toolbar-title>
 

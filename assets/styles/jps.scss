@@ -124,3 +124,29 @@ body {
 .v-pagination__navigation {
   box-shadow: none !important;
 }
+
+.jps-header-brand {
+  pointer-events: auto;
+  overflow: hidden;
+  h1 {
+    display: flex;
+    align-items: flex-end;
+    @include is-tablet() {
+      padding: 0 1rem;
+    }
+    @include is-mobile() {
+      padding: 0 1rem;
+    }
+    span {
+      color: white;
+      font-size: $size-7;
+      padding-bottom: 0.5rem;
+    }
+  }
+  h1 a {
+    display: inline-block;
+    img {
+      width: 17.875rem;
+    }
+  }
+}

@@ -31,7 +31,7 @@ const lang = 'ja'
 const siteName = 'Japan Search Auto Generated Gallery'
 env.siteName = siteName
 const siteDesc =
-  'ジャパンサーチ利活用スキーマを用いたギャラリーの自動生成アプリです。'
+  'ジャパンサーチ利活用スキーマを用いたギャラリーの自動生成を試すことができます。そのため、主題と関連性の低い資料が表示される場合があります。'
 env.siteDesc = siteDesc
 const siteKeywords = 'Linked Open Data'
 
